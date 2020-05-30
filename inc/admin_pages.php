@@ -1,6 +1,6 @@
 <?php
 
-function robo_add_admin_menu(  ) { 
+function robo_add_admin_menu() { 
 	if(is_super_admin()){
 		add_menu_page( 'RoboChat', 'RoboChat', 'manage_options', 'robochat', 'robo_orders_admin_page_render', 'dashicons-buddicons-buddypress-logo' , 2 );
 	}
@@ -58,7 +58,7 @@ function whatsappapi_options_page(  ) {
 	$api   				 = $sub_connection_data['api'];
 	$token 				 = $sub_connection_data['token'];
 
-	if($api == '' || $token == '' ){
+	if($api == '' || $token == ''){
 		echo "<h2>" .  "من فضلك تواصل مع قسم المبيعات او الدعم الفني للتحقق من تفعيل حسابك" . "</h2>" ;
 	}else {
 		$sub_status =  sub_status($api,$token); // later we will add some security here to check if the user has can go or not 
@@ -71,12 +71,28 @@ function whatsappapi_options_page(  ) {
 					//whatsapp_send_messege($api,$token);
 					whatsapp_compose_messege($api,$token,$sub);
 				}elseif ($process  == 'show_messages') {
-					whatsapp_messeges_table($api,$token);
-					//view('whatsapp_simulation2');
+
+					$data['msgs_counter'] =  sub_connection_data($sub)['msgs'];
+					$data['msgs_counter'] =  $data['msgs_counter'] >  0 ? $data['msgs_counter'] : 'لقد نفذ الرصيد اليومي' ;
+					
+					$whatsapp_messeges =  whatsapp_messeges($api,$token);
+					$prepare_msgs =  prepare_msgs($whatsapp_messeges);
+					$data['main_msgs_array'] = $prepare_msgs ;
+					//pre($prepare_msgs);
+
+					view('whatsapp_simulation', $data);
 				}elseif ($process  == 'log_out') {
 					whatsapp_log_out($api,$token,$sub);
 				}
 			}
+		}elseif ($sub_status['accountStatus'] == 'loading') {
+			echo "هناك مشكله :: </br>
+			  	1-  تاكد ان هاتفك متصل بالانترنت </br>
+			   	2- وفتح برنامج الواتساب علي الموبايل </br>
+			 	3 - انهاء توصيل الواتساب الخاص بك مع اي خدمات اخري  </br>
+			   " ;
+		}elseif (! isset($sub_status['accountStatus'])) {
+			echo  "هناك مشكله في معلومات الاتصال ,  , من فضلك راسل خدمه العملاء" ;
 		}else{
 			whatsappapi_authen($sub_status['qrCode']);
 		}	

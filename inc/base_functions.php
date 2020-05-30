@@ -24,11 +24,11 @@ function is_local(){
 	}
 };
 function get_json($file){
-	$content = file_get_contents("jsons/$file.json");
+	$content = file_get_contents(inc."jsons/$file.json");
 	return(json_decode($content, true));
 };
 function mk_json($fields,$json_file){
-	$fp = fopen("jsons/$json_file.json", 'w');
+	$fp = fopen(inc."jsons/$json_file.json", 'w');
 	fwrite($fp, json_encode($fields));
 	fclose($fp);
 };
@@ -77,7 +77,11 @@ function test_post($title){
         );
     return wp_insert_post( $my_post );
 }
-function view($view){
+function view($view,$data = array()){
+	foreach ($data as $var => $value) {
+		$$var =  $value; 	// make a variable for each data
+		unset($data[$key]);	// remove it 
+	}
 	$view =  views.$view.".php";
 	if(! include_once($view)){
 		$error_counter ++ ;

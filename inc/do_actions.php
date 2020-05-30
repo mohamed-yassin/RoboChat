@@ -23,3 +23,7 @@ add_action( 'admin_menu', 'client_dashboard' );
 
 // compose a new message
 add_action( 'admin_post_compose_messages', 'compose_messages_handler' );
+
+// filter the saved phone number
+//add_filter('acf/update_value', 'filter_phone_number', 10, 3);
+

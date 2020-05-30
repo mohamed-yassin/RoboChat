@@ -60,7 +60,7 @@ function cpt_clients() {
 		"hierarchical" => false,
 		"rewrite" => [ "slug" => "clients", "with_front" => true ],
 		"query_var" => true,
-		"supports" => [ "title"],
+		"supports" => [ "title", "thumbnail"],
 	];
 
 	register_post_type( "clients", $args );

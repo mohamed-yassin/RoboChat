@@ -18,9 +18,12 @@ define('name', 'RoboChat');
 define('slug', 'robo');
 define('domain', 'localhost');
 define('inc',plugin_dir_path(__FILE__).'inc/');
-define('views',plugin_dir_path(__FILE__).'views/');
-define('css',plugin_dir_url( __FILE__ ).'views/assets/css/');
-define('js',plugin_dir_url( __FILE__ ).'views/assets/js/');
+define('views',inc. 'views/');
+define( 'assets', plugin_dir_url( __FILE__ ).'inc/views/assets/');
+define('css',assets .'css/');
+define('js',assets .'js/');
+define('imgs',assets .'imgs/');
+define('dflt_user_img',imgs .'dflt_user.png');
 
 
 $understrap_includes = array(
@@ -31,7 +34,7 @@ $understrap_includes = array(
 	'admin_pages_functions',
 	'admin_columns',
 	'plugin_functions',
-	'extra_acf_fields/hock/hock',
+	'plugins/extra_acf_fields/hock/hock',
 	'api',
 	'dp',
 	'subscriptions',
@@ -39,6 +42,9 @@ $understrap_includes = array(
 	'acf',
 	'do_actions',
 	'enqueue',
+	'general_views_functions',
+	'global_test',
+	
 	//'carbon_fields/carbon_fields',
 	//'crb',
 );

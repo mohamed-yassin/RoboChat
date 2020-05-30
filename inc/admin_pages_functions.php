@@ -1,45 +1,4 @@
 <?php 
-function render_table($headers = array() ,$body,$footers  =  false){
-    echo '<table class="wp-list-table widefat fixed striped posts">';
-    if(is_array($headers)){ ?>
-        <thead>
-            <tr>
-                <?php 
-                    foreach ($headers as $head) { 
-                        echo "<th scope='col' id='$head' class='manage-column column-$head'>$head</th>";
-                    }
-                ?>
-            </tr>
-        </thead>
-    <?php };
-    if(is_array($body)){ ?>
-        <thead>
-                <?php 
-                    foreach ($body as $row) { 
-                        echo  "<tr>";
-                        foreach ($row as $row_item_key => $row_item) {
-                            echo "<td scope='col' id='$row_item_key' class='manage-column column-$row_item_key'>$row_item</td>";
-                        }
-                        echo  "</tr>";
-
-                    }
-                ?>
-        </thead>
-    <?php };
-        if($footers ==  true ){ ?>
-        	<thead>
-                <tr>
-                    <?php 
-                        foreach ($headers as $header) { 
-                            echo "<td scope='col' id='$header' class='manage-column column-$header'>$header</td>";
-                        }
-                    ?>
-                </tr>
-            </thead>
-    <?php }
-    echo "</table>";
-}
-
 function whatsappapi_settings_init(  ) { 
 
 	register_setting( 'pluginPage', 'whatsappapi_settings' );
@@ -131,10 +90,15 @@ function whatsappapi_settings_section_callback(  ) {
 }
 
 
-function whatsapp_messeges($api,$token)
+function whatsapp_messeges($api,$token,$filters= array())
 {
-    
-    $url = $api.'messages?token='.$token;
+    $filter_tas_string =  "";
+    if(is_array($filters)){
+        foreach ($filters as $key => $filter) {
+            $filter_tas_string .=  '';
+        }
+    }
+    $url = $api.'messages?token='.$token.$filter_tas_string;
 
 
     $result = file_get_contents($url);
@@ -142,33 +106,6 @@ function whatsapp_messeges($api,$token)
     // pre($result);
     return $result['messages'];
 }
-
-function whatsapp_messeges_table($api,$token)
-{
-    $messeges =  whatsapp_messeges($api,$token) ;
-    echo '<br><h2> عرض الرسائل  </h2><table class="wp-list-table widefat fixed striped posts">
-            <thead>
-                <tr>
-                    <th scope="col" id="author" class="manage-column column-author">نص الرساله</th>
-                    <th scope="col" id="categories" class="manage-column column-categories">المرسل</th>
-                    <th scope="col" id="tags" class="manage-column column-tags">اسم المحادثه</th>
-                </tr>
-            </thead>
-            <tbody id="the-list">';
-            foreach($messeges as $key =>$messege){
-                $time =  $messege->time ; 
-                echo "
-                    <tr>
-                        <td>$messege->body</td>
-                        <td>$messege->senderName</td>
-                        <td>$messege->chatName</td>
-                    </tr>
-                    ";
-                }
-            echo "</tbody>
-        </table>";
-}
-
 function whatsapp_send_messege($api,$token)
 {
 
@@ -208,9 +145,7 @@ function whatsapp_log_out($api,$token,$sub)
 {
 
     $url            = $url = $api.'logout?token='.$token;
-
     $data = [
-
     ];
     $json = json_encode($data); // Encode data to JSON
 
@@ -228,26 +163,6 @@ function whatsapp_log_out($api,$token,$sub)
 
     
 }
-function whatsappapi_form (){ ?>
-    <form action='options.php' method='post'>
-    <?php
-    settings_fields( 'pluginPage' );
-    do_settings_sections( 'pluginPage' );
-    submit_button('احفظ');
-    ?>
-
-</form>
-<?php } ; 
-
-function whatsappapi_processes(){ ?>
-
-    <h2>عمليات</h2>
-
-    <a href="<?php echo current_sub_page_url('&process=show_messeges'); ?>" class="button button-primary" > مشاهده الرسائل  </a>
-    <a href="<?php echo current_sub_page_url('&process=send_messege'); ?>" class="button button-primary" > ارسال رساله نصيه </a>
-    <a href="<?php echo current_sub_page_url('&process=log_out'); ?>" class="button button-primary" > انهاء الجلسه </a>
-
-<?php };
 function whatsappapi_authen ($qr){
     echo '<h2>امسح الكود باستخدام برنامج الواتساب</h2>';
     echo '<img src="'.$qr.'" alt="Base64 encoded image"/>';
@@ -289,6 +204,7 @@ function sub_connection_data($sub){
     $sub_connection_data['instant']= get_post_meta( $sub ,'instant_name'  , true) ;
     $sub_connection_data['api']= get_post_meta( $sub ,'api'  , true) ;
     $sub_connection_data['token']= get_post_meta( $sub ,'token'  , true) ;
+    $sub_connection_data['msgs'] = get_post_meta( $sub ,'available_daily_msgs'  , true) ;
     restore_current_blog(); // back to the current
     return $sub_connection_data;
 }
@@ -310,67 +226,67 @@ function get_clients_list(){
     }
     return $clients;
 }
-function whatsapp_compose_messege($api,$token,$sub){
-    ?>
-    <h2>انشاء رساله جديدة</h2>
-    <form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="post">
-    <textarea  name="messege" placeholder ="نص الرساله" style="width :  90%"></textarea>
-    <div class ="clients">
-        <?php 
-
-        // prepare data
-        $clients =get_clients_list();
-
-        // pre($customer_subscriptions);
-        foreach ($clients as $key => $client) {
-            $table_body[$key]['ID'] 			=  '<input name="phones[]" value="'.$client->ID.'" type="checkbox" id="check_'.$client->ID.'" > '; 
-            $table_body[$key]['post_title'] 	=  $client->post_title;
-            $table_body[$key]['phone'] 	=  $client->phone;
-        }
-        $header = array(
-            '#'			    => ' ',
-            'post_title' 	=> 'اسم العميل', 
-            'phone'			=> 'رقم الهاتف',
-        );
-        echo "<h2>اختر عملاء الرسالة</h2>";
-        render_table($header,$table_body);
-
-
-
-$lists = get_terms([
-    'taxonomy' => 'list',
-    'hide_empty' => false,
-]);
-
-
-$table_body = array();
-// pre($customer_subscriptions);
-foreach ($lists as $key => $list) {
-    $table_body[$key]['term_id'] 			=  '<input name="phones[]" value="'.$list->term_id.'" type="checkbox" id="check_'.$list->term_id.'" > '; 
-    $table_body[$key]['name'] 	=  $list->name;
-    $table_body[$key]['count'] 	=  $list->count;
+function message_time($time){
+    return  $time ;
 }
-$header = array(
-    'term_id'   => ' ',
-    'name'      => 'قائمه العملاء', 
-    'count'     => 'عدد العملاء بداخلها',
-);
-echo "<h2>اختر من قوائم العملاء</h2>";
+function message_reciever_number($chatid){
+    $number  =  explode ('@' , $chatid);
+    $number  =  pure_phone ($number[0]);
+    return $number ;
+}
 
-render_table($header,$table_body);
+function is_group($chatId){
+    $id   =  explode ('@' , $chatId);
+    $type =  explode ('.' , $id[1])[0];
 
-
-
-?>
-    <input type="hidden" name="action" value="compose_messages">
-    <input type="hidden" name="redirect" value="<?php echo current_sub_page_url('&process=send_messege'); ?>">
-    <input type="hidden" name="table" value="<?php echo related_msgs_table(); ?>">
-
-    
-    <center><input style ="margin-top :  30px" class="button button-primary"  value="اضف في طابور الرسائل" type="submit" ></center>
-    </form>
-    </div>
-<?php } ;
-
-
-    
+    return $type == 'g' ?  true :  false ;
+}
+function contact_info($number){
+    $args = array(
+        'post_type'  => 'clients',
+        'meta_query' => array(
+            array(
+                'key'     => 'phone',
+                'value'   => pure_phone($number) ,
+                'compare' => '=',
+            ),
+        ),
+    );
+    $contacts =  get_posts($args);
+    $return  =  is_array($contacts) && count($contacts) >  0 ?  array('name' => $contacts[0]->post_title , 'img' => get_the_post_thumbnail_url($contacts[0]->ID ) ) :  array() ;
+    return $return  ;
+}
+function prepare_msgs($msgs){
+        foreach ($msgs as $key => $msg) {
+            if(!is_group($msg->chatId)){
+                $msg->real_time = date("H:i",$msg->time);
+                $prepared_msgs[$msg->chatId]['msgs'][msg_day($msg->time)][$msg->time] =  $msg ;
+                $prepared_msgs[$msg->chatId]['last_msg'] =   isset($prepared_msgs[$msg->chatId]['last_msg']) && $prepared_msgs[$msg->chatId]['last_msg'] >   $msg->time  ? $prepared_msgs[$msg->chatId]['last_msg'] :  $msg->body   ;
+                if(! isset($prepared_msgs[$msg->chatId]['last_msg']) ||  $prepared_msgs[$msg->chatId]['last_msg'] <   $msg->time  ){
+                    $prepared_msgs[$msg->chatId]['last_msg']      = $msg->body;
+                    $prepared_msgs[$msg->chatId]['original_last_msg_time'] = $msg->time;
+                    $prepared_msgs[$msg->chatId]['last_msg_time'] = msg_time($msg->time);
+                    $prepared_msgs[$msg->chatId]['last_msg_direction'] =  $msg->fromMe ;  // from me 1 else 0 or impty
+                }
+                $contact_info = contact_info(message_reciever_number($msg->chatId)) ;
+                $prepared_msgs[$msg->chatId]['name'] =  isset($contact_info['name']) ? $contact_info['name'] :  $msg->chatName ;
+                $prepared_msgs[$msg->chatId]['img']  =  $contact_info['img'] != '' ? $contact_info['img']   :  dflt_user_img ;                    
+            }
+        }
+        array_multisort(array_column($prepared_msgs, 'original_last_msg_time'), SORT_DESC, $prepared_msgs);
+        return $prepared_msgs  ;
+}
+function pure_phone($num){
+    return  (int) preg_replace('/\D/', '', $num); 
+}
+function filter_phone_number( $value, $post_id, $field ) {
+    pre($_REQUEST);
+    return pure_phone($value);  
+}
+function msg_time($time){
+    $time =  date("H:i d/m",$time) ;
+    return  $time; 
+}
+function  msg_day($time){
+    return date("d/m",$time) ;
+}

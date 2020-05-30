@@ -2,13 +2,13 @@
 if( function_exists('acf_add_local_field_group') ):
 
     acf_add_local_field_group(array(
-        'key' => 'group_5ec2128872d4f',
-        'title' => 'client info',
+        'key' => 'group_5ed0e237a5238',
+        'title' => 'Client Info',
         'fields' => array(
             array(
-                'key' => 'field_5ec21292bf358',
-                'label' => 'Phone Number',
-                'name' => 'phone_number',
+                'key' => 'field_5ed0e2431a67d',
+                'label' => 'Phone',
+                'name' => 'phone',
                 'type' => 'text',
                 'instructions' => '',
                 'required' => 0,
