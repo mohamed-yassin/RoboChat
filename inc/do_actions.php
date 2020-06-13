@@ -12,8 +12,14 @@ add_action('woocommerce_after_order_notes', 'user_dashboards_option_field');
 // Displaying a message on cart page for non logged users (Optional)
 //add_action( 'woocommerce_before_cart', 'customer_redirected_displaying_message');
 
-// Add clients dasboard
+// Custom Posts
 add_action( 'init', 'cpt_clients' );
+add_action( 'init', 'cpt_templates' );
+
+// Custom Taxonomies
+add_action( 'init', 'cptui_register_my_taxes_template_category' );
+add_action( 'init', 'cptui_register_my_taxes_list' );
+
 
 // admin pages 
 add_action( 'admin_menu', 'robo_add_admin_menu' );
@@ -27,3 +33,9 @@ add_action( 'admin_post_compose_messages', 'compose_messages_handler' );
 // filter the saved phone number
 //add_filter('acf/update_value', 'filter_phone_number', 10, 3);
 
+// send message with ajax
+add_action( 'wp_ajax_send_instant_msg_action', 'send_instant_msg' );
+add_action( 'wp_ajax_update_session_action', 'update_session' );
+
+// enqueue CSS & JS files
+add_action( 'admin_enqueue_scripts', 'enqueue' );

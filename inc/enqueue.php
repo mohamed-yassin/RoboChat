@@ -1,23 +1,18 @@
 <?php
 
 function enqueue() {	
-	
+	$css_files = array();
 
-	if($_GET['process']='show_messages'){
+	if($_GET['process'] == 'show_msgs'){
 
 		$css_files[] = 'bootstrap.min';
 		$css_files[] = 'whatsapp_simulation';
 
+		
+		$js_files[]	 = array('popper.min');
+		$js_files[]	 = array('bootstrap.min');
 		$js_files[]	 = array('whatsapp_simulation');
 	}
-
-
-
-
-
-
-
-
 
 	foreach ($css_files as $css) {
 		$src = css.$css.'.css';
@@ -33,8 +28,5 @@ function enqueue() {
 	
 			wp_enqueue_script($handle,$src,$deps,1,$in_footer);
 		}
-	
 	}
-} 
-
-add_action( 'admin_enqueue_scripts', 'enqueue' );
+}

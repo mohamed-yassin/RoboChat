@@ -144,3 +144,8 @@
 .outcome-msg{
 	color :  red ;
 }
+#loading { clear:both; background:url(images/loading.gif) center top no-repeat; text-align:center;padding:33px 0px 0px 0px; font-size:12px;display:none; font-family:Verdana, Arial, Helvetica, sans-serif; }
+#helloworld {
+	text-align:center;
+	margin: 0, auto;
+}

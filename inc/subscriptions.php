@@ -5,12 +5,11 @@ function subscription_handler($sub){
 
     if($blog  ==  0){
         // make blog for the client 
-        $title   = "#".$sub->ID ;
+        $title   = " :: MY RoboChat Sub" ;
         $path    = "sub_" . $sub->ID; 
         $options = array();
         $blog    = wpmu_create_blog( domain , $path, $title, $user , $options ,  1);
     }
-
     // add the sub to the realated blog
     add_sub_to_blog($blog,$sub->ID);
 
@@ -82,4 +81,34 @@ function customer_redirected_displaying_message() {
 
         wc_add_notice(  $message . '<a href="' . $cart_link . '" class="button wc-forward">' . $button_text . '</a>', 'notice' );
     }
+}
+function sub_connection_data($sub){
+    switch_to_blog(1); // go to the master
+    $sub_connection_data['instant']= get_post_meta( $sub ,'instant_name'  , true) ;
+    $sub_connection_data['api']= get_post_meta( $sub ,'api'  , true) ;
+    $sub_connection_data['token']= get_post_meta( $sub ,'token'  , true) ;
+    $sub_connection_data['msgs'] = get_post_meta( $sub ,'available_daily_msgs'  , true) ;
+    restore_current_blog(); // back to the current
+    return $sub_connection_data;
+}
+function reduce_msgs_counter($sub,$reduce = 1 ){
+    switch_to_blog(1);
+    $msgs_balance = (int)(get_post_meta( $sub ,'available_daily_msgs'  , true)) ;
+    $msgs_balance = ($msgs_balance -  $reduce) ;
+    update_post_meta( $sub ,'available_daily_msgs'  , $msgs_balance );
+    restore_current_blog(); 
+    return $msgs_balance;
+}
+function get_open_hock(){
+    $hock  = rand(10000,15000);
+    return $hock ;
+};
+function sub_errors_log($sub, $error){
+    switch_to_blog(1);
+    $msgs_balance = get_post_meta( $sub ,'errors_log'  , true);
+    $msgs_balance =  json_decode($msgs_balance , true );
+    $msgs_balance[date('Y/m/d H:i:s')]= $error ;
+    $msgs_balance = json_encode($msgs_balance);
+    update_post_meta( $sub ,'errors_log',$msgs_balance);
+    restore_current_blog(); 
 }

@@ -1,4 +1,5 @@
 <?php
+/////////////////////////////////////////////////////////////  Posts /////////////////////////////////////////////////////////////
 function cpt_clients() {
 
 	/**
@@ -63,5 +64,168 @@ function cpt_clients() {
 		"supports" => [ "title", "thumbnail"],
 	];
 
-	register_post_type( "clients", $args );
+	register_post_type( "client", $args );
+};
+function cpt_templates() {
+
+	/**
+	 * Post Type: Message Template.
+	 */
+
+	$labels = [
+		"name" => __( "Templates", "twentytwenty" ),
+		"singular_name" => __( "Template", "twentytwenty" ),
+		"menu_name" => __( "My Templates", "twentytwenty" ),
+		"all_items" => __( "All Templates", "twentytwenty" ),
+		"add_new" => __( "Add new", "twentytwenty" ),
+		"add_new_item" => __( "Add new Template", "twentytwenty" ),
+		"edit_item" => __( "Edit Template", "twentytwenty" ),
+		"new_item" => __( "New Template", "twentytwenty" ),
+		"view_item" => __( "View Template", "twentytwenty" ),
+		"view_items" => __( "View Templates", "twentytwenty" ),
+		"search_items" => __( "Search Templates", "twentytwenty" ),
+		"not_found" => __( "No Templates found", "twentytwenty" ),
+		"not_found_in_trash" => __( "No Templates found in trash", "twentytwenty" ),
+		"parent" => __( "Parent Template:", "twentytwenty" ),
+		"featured_image" => __( "Featured image for this Template", "twentytwenty" ),
+		"set_featured_image" => __( "Set featured image for this Template", "twentytwenty" ),
+		"remove_featured_image" => __( "Remove featured image for this Template", "twentytwenty" ),
+		"use_featured_image" => __( "Use as featured image for this Template", "twentytwenty" ),
+		"archives" => __( "Template archives", "twentytwenty" ),
+		"insert_into_item" => __( "Insert into Template", "twentytwenty" ),
+		"uploaded_to_this_item" => __( "Upload to this Template", "twentytwenty" ),
+		"filter_items_list" => __( "Filter Templates list", "twentytwenty" ),
+		"items_list_navigation" => __( "Templates list navigation", "twentytwenty" ),
+		"items_list" => __( "Templates list", "twentytwenty" ),
+		"attributes" => __( "Templates attributes", "twentytwenty" ),
+		"name_admin_bar" => __( "Template", "twentytwenty" ),
+		"item_published" => __( "Template published", "twentytwenty" ),
+		"item_published_privately" => __( "Template published privately.", "twentytwenty" ),
+		"item_reverted_to_draft" => __( "Template reverted to draft.", "twentytwenty" ),
+		"item_scheduled" => __( "Template scheduled", "twentytwenty" ),
+		"item_updated" => __( "Template updated.", "twentytwenty" ),
+		"parent_item_colon" => __( "Parent Template:", "twentytwenty" ),
+	];
+
+	$args = [
+		"label" => __( "Templates", "twentytwenty" ),
+		"labels" => $labels,
+		"description" => "",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"has_archive" => false,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"rewrite" => [ "slug" => "Templates", "with_front" => true ],
+		"query_var" => true,
+		"supports" => [ "title", "editor"],
+	];
+
+	register_post_type( "template", $args );
+}
+/////////////////////////////////////////////////////////////  Taxonomies /////////////////////////////////////////////////////////////
+function cptui_register_my_taxes_list() {
+
+	/**
+	 * Taxonomy: Clients Lists.
+	 */
+
+	$labels = [
+		"name" => __( "Clients Lists", "twentytwenty" ),
+		"singular_name" => __( "Client List", "twentytwenty" ),
+		"menu_name" => __( "Lists", "twentytwenty" ),
+		"all_items" => __( "All Lists", "twentytwenty" ),
+		"edit_item" => __( "Edit List", "twentytwenty" ),
+		"view_item" => __( "View List", "twentytwenty" ),
+		"update_item" => __( "Update List name", "twentytwenty" ),
+		"add_new_item" => __( "Add new List", "twentytwenty" ),
+		"new_item_name" => __( "New List name", "twentytwenty" ),
+		"parent_item" => __( "Parent List", "twentytwenty" ),
+		"parent_item_colon" => __( "Parent List:", "twentytwenty" ),
+		"search_items" => __( "Search Lists", "twentytwenty" ),
+		"popular_items" => __( "Popular Lists", "twentytwenty" ),
+		"separate_items_with_commas" => __( "Separate Lists with commas", "twentytwenty" ),
+		"add_or_remove_items" => __( "Add or remove Lists", "twentytwenty" ),
+		"choose_from_most_used" => __( "Choose from the most used Lists", "twentytwenty" ),
+		"not_found" => __( "No Lists found", "twentytwenty" ),
+		"no_terms" => __( "No Lists", "twentytwenty" ),
+		"items_list_navigation" => __( "Lists list navigation", "twentytwenty" ),
+		"items_list" => __( "Lists list", "twentytwenty" ),
+	];
+
+	$args = [
+		"label" => __( "Clients Lists", "twentytwenty" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'list', 'with_front' => true, ],
+		"show_admin_column" => false,
+		"show_in_rest" => true,
+		"rest_base" => "list",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"show_in_quick_edit" => false,
+		];
+	register_taxonomy( "list", [ "client" ], $args );
+}
+function cptui_register_my_taxes_template_category() {
+
+	/**
+	 * Taxonomy: Template Categories.
+	 */
+
+	$labels = [
+		"name" => __( "Template Categories", "twentytwenty" ),
+		"singular_name" => __( "Template Categories", "twentytwenty" ),
+		"menu_name" => __( "Template Categories", "twentytwenty" ),
+		"all_items" => __( "All Template Categories", "twentytwenty" ),
+		"edit_item" => __( "Edit Template Categories", "twentytwenty" ),
+		"view_item" => __( "View Template Categories", "twentytwenty" ),
+		"update_item" => __( "Update Template Categories name", "twentytwenty" ),
+		"add_new_item" => __( "Add new Template Categories", "twentytwenty" ),
+		"new_item_name" => __( "New Template Categories name", "twentytwenty" ),
+		"parent_item" => __( "Parent Template Categories", "twentytwenty" ),
+		"parent_item_colon" => __( "Parent Template Categories:", "twentytwenty" ),
+		"search_items" => __( "Search Template Categories", "twentytwenty" ),
+		"popular_items" => __( "Popular Template Categories", "twentytwenty" ),
+		"separate_items_with_commas" => __( "Separate Template Categories with commas", "twentytwenty" ),
+		"add_or_remove_items" => __( "Add or remove Template Categories", "twentytwenty" ),
+		"choose_from_most_used" => __( "Choose from the most used Template Categories", "twentytwenty" ),
+		"not_found" => __( "No Template Categories found", "twentytwenty" ),
+		"no_terms" => __( "No Template Categories", "twentytwenty" ),
+		"items_list_navigation" => __( "Template Categories list navigation", "twentytwenty" ),
+		"items_list" => __( "Template Categories list", "twentytwenty" ),
+	];
+
+	$args = [
+		"label" => __( "Template Categories", "twentytwenty" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => false,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'template_category', 'with_front' => true, ],
+		"show_admin_column" => false,
+		"show_in_rest" => true,
+		"rest_base" => "template_category",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"show_in_quick_edit" => false,
+		];
+	register_taxonomy( "template_category", [ "template" ], $args );
 }

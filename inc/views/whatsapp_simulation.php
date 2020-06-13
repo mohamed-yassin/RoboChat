@@ -1,6 +1,12 @@
+<?php
+//pre($temps);
+
+?>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
 	integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-
+	
 <div class="container-fluid" id="main-container">
 	<div class="row h-100">
 		<div class="col-12 col-sm-5 col-md-3 d-flex flex-column" id="chat-list-area" style="position:relative;">
@@ -22,7 +28,7 @@
 				<?php 
 		
 			foreach ($main_msgs_array as $key => $contact) { 
-				$main_id  =  message_reciever_number($key) ;
+				$main_id  	 =  message_reciever_number($key) ;
 				$arrow_class =  $contact->last_msg_direction == 1 ? "fas fa-arrow-down income-msg" :  "fas fa-arrow-up outcome-msg" ;
 			?>
 				<div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom active" onclick="show_msgs('<?= $main_id ;?>')">
@@ -30,7 +36,7 @@
 					<div class="w-50">
 						<div id="<?= $main_id?>_name" class="name">
 							<?= $contact['name']; ?>
-							<i id="<?= $main_id ?>_available_icon"  class="fas "></i>	
+							<i id="<?= $main_id ?>_available_icon"  class="fas <?= $contact['available_icon']; ?>"></i>	
 						</div>
 						<div class="small last-message"><i class="<?= $arrow_class; ?>"></i>
 							<?= $contact['last_msg']; ?></div>
@@ -39,7 +45,8 @@
 						<div class="small time"><?= $contact['last_msg_time']; ?></div>
 					</div>
 					<input id="<?= $main_id ?>_hdn_inpt" type ="hidden" value='<?= json_encode($contact['msgs']); ?>' >
-					<input id="<?= $main_id ?>_available" type ="hidden" value='1' >
+					<input id="<?= $main_id ?>_available" type ="hidden" value='<?= $contact['available']; ?>' >
+					<input id="<?= $main_id ?>_signature" type ="hidden" value='0' >
 				</div>
 				<?php }		
 		?>
@@ -101,15 +108,46 @@
 
 			<!-- Input -->
 			<div class="justify-self-end align-items-center flex-row d-flex" id="input-area">
-				<span  onclick="open_send_msg_ability()">
+				<span  onclick="update_session('<?= get_current_user_id();?>','<?= $_GET['page'] ?>')">
 					<i id="lock" class="fas fa-lock text-muted px-3" style="font-size:1.5rem;"></i>
 				</span>
+				<input id="current_open_contacts" type ="hidden" value="">
 				<input id="handle_send_msg_ability" type ="hidden" value="0">
-				<input id="current_contact" type ="hidden" value="0">
-				<input type="text" name="message" id="input" placeholder="اكتب رسالة" disabled="disabled"
-					class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm">
-				<i class="fas fa-paper-plane text-muted px-3" style="cursor:pointer;" onclick="sendMessage()"></i>
+				<input id="current_contact"  name= "current_contact" type ="hidden" value="0">
+				<input id="current_sub" name="current_sub" type="hidden" value="<?=  get_page_sub_id() ?>" >
+				<textarea name="input" id="input" placeholder="اكتب رسالة" disabled="disabled" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm"></textarea>
+				<i id="msg_sending_btn" class="fas fa-paper-plane text-muted px-3" style="cursor:pointer;" onclick="sendMessage()"></i>
+				<div class="nav-item dropdown ml-auto">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"> قوالب جاهزه </i>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<?php
+								foreach ($temps as $key => $temp) {
+									echo '<a class="dropdown-item template" data-content="'.$temp->post_content.'" >'.$temp->post_title.'</a>';
+								}
+							?>
+						</div>
+					</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+
+
+
+<script>
+	function societ_listen(link , action){
+		var socket =  io.connect(link);
+		socket.on(action , function (data){
+			if(data.action ==  'update_session'){
+				console.log(data);
+				update_session_graphical(data.contact,data.user , '<?= get_current_user_id();?>');
+			}
+			// if new messege comming 
+			// if onother one make a massege the counter must be descrease 
+		})
+	}
+	societ_listen('<?= societ_link; ?>' , '<?= societ_action; ?>');
+</script>

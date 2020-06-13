@@ -35,14 +35,14 @@ function mk_json($fields,$json_file){
 
 function json_response($response){
 	header('Content-Type: application/json');
-	echo  json_encode($response);
+	echo json_encode($response);
 }
 function not_null_auther_name($id){
 	$user = get_userdata($id);
-	if ($user->display_name != '') {
-		$user_name = $user->display_name ;
-	}elseif ($user->nickname != '') {
+	if ($user->nickname   != '') {
 		$user_name = $user->nickname ;
+	}elseif ($user->display_name  != '') {
+		$user_name = $user->display_name  ;
 	}elseif ($user->first_name != '') {
 		$user_name = $user->first_name ;
 	}else {

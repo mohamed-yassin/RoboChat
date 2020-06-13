@@ -1,7 +1,8 @@
 <?php
 
+
 function robo_add_admin_menu() { 
-	if(is_super_admin()){
+	if(get_current_blog_id() == 1 ){
 		add_menu_page( 'RoboChat', 'RoboChat', 'manage_options', 'robochat', 'robo_orders_admin_page_render', 'dashicons-buddicons-buddypress-logo' , 2 );
 	}
 }
@@ -45,14 +46,14 @@ function client_dashboard(  ) {
     $user_blogs =  get_option( $option_name );
 	$user_blogs = json_decode($user_blogs, true);
 
-	if(!is_super_admin()){
+	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
 		foreach ($user_blogs as $blog) {
 			add_menu_page( "#$blog", "#$blog", 'manage_options', "sub_$blog", 'whatsappapi_options_page' , '' , 3);
 		}
 	}
 }
 
-function whatsappapi_options_page(  ) { 
+function whatsappapi_options_page() { 
 	$sub 				 = get_page_sub_id();
 	$sub_connection_data = sub_connection_data($sub);
 	$api   				 = $sub_connection_data['api'];
@@ -67,22 +68,16 @@ function whatsappapi_options_page(  ) {
 			$process = $_GET['process'] ;
 
 			if($process != ''){
-				if($process== 'send_messege'){
-					//whatsapp_send_messege($api,$token);
+				if($process== 'send_msg'){
 					whatsapp_compose_messege($api,$token,$sub);
-				}elseif ($process  == 'show_messages') {
-
+				}elseif ($process  == 'show_msgs') {
 					$data['msgs_counter'] =  sub_connection_data($sub)['msgs'];
-					$data['msgs_counter'] =  $data['msgs_counter'] >  0 ? $data['msgs_counter'] : 'لقد نفذ الرصيد اليومي' ;
-					
+					$data['msgs_counter'] =  $data['msgs_counter'] >  0 ? $data['msgs_counter'] : 'لقد نفذ الرصيد اليومي' ;					
 					$whatsapp_messeges =  whatsapp_messeges($api,$token);
 					$prepare_msgs =  prepare_msgs($whatsapp_messeges);
 					$data['main_msgs_array'] = $prepare_msgs ;
-					//pre($prepare_msgs);
-
+					$data['temps'] = get_templates();
 					view('whatsapp_simulation', $data);
-				}elseif ($process  == 'log_out') {
-					whatsapp_log_out($api,$token,$sub);
 				}
 			}
 		}elseif ($sub_status['accountStatus'] == 'loading') {
