@@ -1,33 +1,19 @@
 <?php 
-
-function whatsappapi_authen ($qr){
-    echo '<h2>امسح الكود باستخدام برنامج الواتساب</h2>';
-    echo '<img src="'.$qr.'" alt="Base64 encoded image"/>';
-};
 function current_sub_page_url($extention = NULL)
 {
     return admin_url('admin.php?page='.$_GET['page'].$extention);
 }
 function get_page_sub_id()
 {
-    $sub = $_GET['page'];
-	$sub = explode('_', $sub);
-    $sub = $sub[1];
+    if(isset($_GET['page'])){
+        $sub = $_GET['page'];
+        $sub = explode('_', $sub);
+        $sub = $sub[1];    
+    }else {
+        $sub =  0;
+    }
     
     return  $sub;
-}
-function sub_status($api,$token){
-    $login =  whatsapp_login($api,$token);
-    return  $login ;
-}
-
-function whatsapp_login($api,$token)
-{
-    $url =   $api.'status?token='.$token;
-    $result = @file_get_contents($url);
-    $result = (array)json_decode($result);
-
-    return $result;
 }
 function get_clients(){
     $args =  array(
@@ -42,7 +28,7 @@ function get_clients(){
 function get_templates(){
     $args =  array(
         'post_type' =>'template',
-    );
+    ); 
     return (array)get_posts($args);
 }
 function message_time($time){
@@ -85,7 +71,7 @@ function contact_info($num){
     return $return  ;
 }
 function prepare_msgs($msgs){
-        $sessions =  available_sessions($_GET['page']);
+        $sessions =  available_sessions(get_page_sub_id());
         foreach ($msgs as $key => $msg) {
             if(!is_group($msg->chatId)){
                 $chat_id = pure_phone($msg->chatId);  
@@ -93,13 +79,19 @@ function prepare_msgs($msgs){
 
                 $contact_info = contact_info(message_reciever_number($msg->chatId)) ;
                 $prepared_msgs[$chat_id]['name'] =  isset($contact_info['name']) ? $contact_info['name'] :  $msg->chatName ;
-                $prepared_msgs[$chat_id]['img']  =  $contact_info['img'] != '' ? $contact_info['img']   :  dflt_user_img ; 
+                $prepared_msgs[$chat_id]['img']  =  isset($contact_info['img']) && $contact_info['img'] != '' ? $contact_info['img']   :  dflt_user_img ; 
 
-                $prepared_msgs[$chat_id]['available']  =  $sessions[$chat_id]['available'];                    
-                $prepared_msgs[$chat_id]['available_icon']      =  $sessions[$chat_id]['available_icon'];                    
+                $prepared_msgs[$chat_id]['available']  =  isset($sessions[$chat_id]['available']) ? $sessions[$chat_id]['available'] : 1 ;                    
+                $prepared_msgs[$chat_id]['available_icon']      =  isset($sessions[$chat_id]['available_icon']) ?  $sessions[$chat_id]['available_icon'] :  '';                    
                 $prepared_msgs[$chat_id]['last_msg'] =   isset($prepared_msgs[$chat_id]['last_msg']) && $prepared_msgs[$chat_id]['last_msg'] >   $msg->time  ? $prepared_msgs[$chat_id]['last_msg'] :  $msg->body   ;
                 if(! isset($prepared_msgs[$chat_id]['last_msg']) ||  $prepared_msgs[$chat_id]['last_msg'] <   $msg->time  ){
-                    $prepared_msgs[$chat_id]['last_msg']      = $msg->body;
+                    if($msg->type == 'image'){
+                        $prepared_msgs[$chat_id]['last_msg'] = '<i id="00447449492715_arrow_class" class="fas fa-image "></i> ';
+                        $prepared_msgs[$chat_id]['last_msg'] .=  property_exists($msg , 'caption') && $msg->caption != "" ?  $msg->caption :  "image" ;
+
+                    }else {
+                        $prepared_msgs[$chat_id]['last_msg'] =  $msg->body ;
+                    }
                     $prepared_msgs[$chat_id]['original_last_msg_time'] = $msg->time;
                     $prepared_msgs[$chat_id]['last_msg_time'] = msg_time($msg->time);
                     $prepared_msgs[$chat_id]['last_msg_direction'] =  $msg->fromMe ;  // from me 1 else 0 or impty
@@ -107,6 +99,7 @@ function prepare_msgs($msgs){
                 $prepared_msgs[$chat_id]['msgs'][msg_day($msg->time)][$msg->time] =  $msg ;
             }
         }
+        
         array_multisort(array_column($prepared_msgs, 'original_last_msg_time'), SORT_DESC, $prepared_msgs);
         return $prepared_msgs  ;
 }
@@ -122,4 +115,9 @@ function msg_time($time){
 }
 function  msg_day($time){
     return date("d/m",$time) ;
+}
+function has_access_to_this_sub(){
+    $sub  = $_GET['sub'];
+    $subs = subs_option_field_array();
+    return in_array($sub,$subs) ?  true :  false ; 
 }

@@ -78,7 +78,8 @@ class NAMESPACE_acf_plugin_FIELD_NAME {
 		
 		
 		// include
-		include_once('fields/class-NAMESPACE-acf-field-FIELD-NAME-v' . $version . '.php');
+		include_once('fields/open_port.php');
+		include_once('fields/connection_button.php');
 	}
 	
 }

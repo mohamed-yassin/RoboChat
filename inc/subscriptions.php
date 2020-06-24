@@ -112,3 +112,12 @@ function sub_errors_log($sub, $error){
     update_post_meta( $sub ,'errors_log',$msgs_balance);
     restore_current_blog(); 
 }
+function robo_nonce(){
+    return wp_create_nonce(subs_option_field_value());
+}
+function verify_robo_nonce($action = NULL){
+    if($action == NULL){
+        $action = isset($_REQUEST['_wpnonce']) ? $_REQUEST['_wpnonce'] :  robo_nonce();
+    }
+    wp_verify_nonce($action,robo_nonce());
+}

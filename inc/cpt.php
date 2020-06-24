@@ -209,23 +209,4 @@ function cptui_register_my_taxes_template_category() {
 		"items_list_navigation" => __( "Template Categories list navigation", "twentytwenty" ),
 		"items_list" => __( "Template Categories list", "twentytwenty" ),
 	];
-
-	$args = [
-		"label" => __( "Template Categories", "twentytwenty" ),
-		"labels" => $labels,
-		"public" => true,
-		"publicly_queryable" => true,
-		"hierarchical" => false,
-		"show_ui" => true,
-		"show_in_menu" => true,
-		"show_in_nav_menus" => true,
-		"query_var" => true,
-		"rewrite" => [ 'slug' => 'template_category', 'with_front' => true, ],
-		"show_admin_column" => false,
-		"show_in_rest" => true,
-		"rest_base" => "template_category",
-		"rest_controller_class" => "WP_REST_Terms_Controller",
-		"show_in_quick_edit" => false,
-		];
-	register_taxonomy( "template_category", [ "template" ], $args );
 }

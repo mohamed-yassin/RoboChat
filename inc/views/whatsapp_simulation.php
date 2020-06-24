@@ -1,15 +1,9 @@
-<?php
-//pre($temps);
-
-?>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
 	integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-	
+
 <div class="container-fluid" id="main-container">
 	<div class="row h-100">
-		<div class="col-12 col-sm-5 col-md-3 d-flex flex-column" id="chat-list-area" style="position:relative;">
+		<div class="col-12 col-sm-5 col-md-3 d-flex flex-column h-100" id="chat-list-area" style="position:relative;">
 			<!-- Navbar -->
 			<div class="row d-flex flex-row align-items-center p-2" id="navbar">
 				<div class="text-white font-weight-bold" id="username"><?= get_bloginfo('name');?></div>
@@ -29,22 +23,23 @@
 		
 			foreach ($main_msgs_array as $key => $contact) { 
 				$main_id  	 =  message_reciever_number($key) ;
-				$arrow_class =  $contact->last_msg_direction == 1 ? "fas fa-arrow-down income-msg" :  "fas fa-arrow-up outcome-msg" ;
+				$arrow_class =  isset($contact->last_msg_direction) && $contact->last_msg_direction == 1 ? "fas fa-arrow-down income-msg" :  "fas fa-arrow-up outcome-msg" ;
 			?>
-				<div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom active" onclick="show_msgs('<?= $main_id ;?>')">
+				<div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom active main-contact" id="<?= $main_id ;?>" onclick="show_msgs('<?= $main_id ;?>')">
 					<img id="<?= $main_id?>_pic" src="<?= $contact['img']; ?>" alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
 					<div class="w-50">
 						<div id="<?= $main_id?>_name" class="name">
 							<?= $contact['name']; ?>
 							<i id="<?= $main_id ?>_available_icon"  class="fas <?= $contact['available_icon']; ?>"></i>	
 						</div>
-						<div class="small last-message"><i class="<?= $arrow_class; ?>"></i>
-							<?= $contact['last_msg']; ?></div>
+						<div class="small last-message"><i id="<?= $main_id?>_arrow_class" class="<?= $arrow_class; ?>"></i>
+							<span id='<?= $main_id ?>_last_msg' ><?= $contact['last_msg']; ?></span>
+						</div>
 					</div>
 					<div class="flex-grow-1 text-right">
 						<div class="small time"><?= $contact['last_msg_time']; ?></div>
 					</div>
-					<input id="<?= $main_id ?>_hdn_inpt" type ="hidden" value='<?= json_encode($contact['msgs']); ?>' >
+					<input id="<?= $main_id ?>_hdn_inpt" type ="hidden" value='<?= json_encode($contact['msgs'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);     ; ?>' >
 					<input id="<?= $main_id ?>_available" type ="hidden" value='<?= $contact['available']; ?>' >
 					<input id="<?= $main_id ?>_signature" type ="hidden" value='0' >
 				</div>
@@ -99,11 +94,12 @@
 
 			<!-- Messages -->
 			<div class="d-flex flex-column" id="messages">
-				<div class="mx-auto my-2 bg-primary text-white small py-1 px-2 rounded">
+				<div id="current_messages" class="mx-auto my-2 bg-primary text-white small py-1 px-2 rounded">
 					<H2>
 						من فضلك ابقي علي هاتفك متصل بالانترنت
 					</H2>
-				</div>				
+				</div>
+				<span  class="float" id="float"><i id="my-float" class="fas fa-arrow-down  my-float"></i></span>			
 			</div>
 
 			<!-- Input -->
@@ -111,15 +107,22 @@
 				<span  onclick="update_session('<?= get_current_user_id();?>','<?= $_GET['page'] ?>')">
 					<i id="lock" class="fas fa-lock text-muted px-3" style="font-size:1.5rem;"></i>
 				</span>
+				<input type='hidden' name='files' id='files' value=''>
 				<input id="current_open_contacts" type ="hidden" value="">
 				<input id="handle_send_msg_ability" type ="hidden" value="0">
 				<input id="current_contact"  name= "current_contact" type ="hidden" value="0">
-				<input id="current_sub" name="current_sub" type="hidden" value="<?=  get_page_sub_id() ?>" >
+				<input id="current_wpnonce"  name= "current_wpnonce" type ="hidden" value="<?= robo_nonce() ?>">
+				<input id="sub" name="sub" type="hidden" value="<?=  get_page_sub_id() ?>" >
+				<input id="last_message_number" name="last_message_number" type="hidden" value="<?=  $last_message_number ?>" >
 				<textarea name="input" id="input" placeholder="اكتب رسالة" disabled="disabled" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm"></textarea>
 				<i id="msg_sending_btn" class="fas fa-paper-plane text-muted px-3" style="cursor:pointer;" onclick="sendMessage()"></i>
 				<div class="nav-item dropdown ml-auto">
+					<div class="">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-						<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"> قوالب جاهزه </i>
+							<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"> قوالب جاهزه </i>
+						</a>
+						<a class="nav-link">
+							<i id="upload_media_button" class=" fas fa-file-image text-muted px-3" style="cursor:pointer;"> ارسال ميديا </i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<?php
@@ -129,25 +132,32 @@
 							?>
 						</div>
 					</div>
+					<div class="">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+							aria-haspopup="true" aria-expanded="false">
+							<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;">
+								وجود تعبيريه
+							</i>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<?php
+								foreach ($emojis as $group_name => $group) {
+									$group =  explode(' ' , $group);
+									foreach ($group as $emoji) {
+										echo '<span class="template" data-content="'.$emoji.'" >'.$emoji.'</span>';
+									}
+								}
+							?>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+<?php
+	// let the wp edia uploader include all the required files
+	wp_enqueue_media();
+?>
+
+
 </div>
-
-
-
-
-<script>
-	function societ_listen(link , action){
-		var socket =  io.connect(link);
-		socket.on(action , function (data){
-			if(data.action ==  'update_session'){
-				console.log(data);
-				update_session_graphical(data.contact,data.user , '<?= get_current_user_id();?>');
-			}
-			// if new messege comming 
-			// if onother one make a massege the counter must be descrease 
-		})
-	}
-	societ_listen('<?= societ_link; ?>' , '<?= societ_action; ?>');
-</script>

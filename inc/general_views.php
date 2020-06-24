@@ -78,68 +78,15 @@ function whatsappapi_form (){ ?>
 function whatsappapi_processes(){ ?>
     <div style="margin-bottom :10px; margin-top :10px">
         <h2>عمليات</h2>
-        <a href="<?= current_sub_page_url('&process=show_msgs'); ?>" class="button button-primary" > نافذه خدمه العملاء  </a>
+        <?php 
+            if(has_robo_permission('show_msgs')){ ?>
+                <a href="<?= current_sub_page_url('&process=show_msgs')."&_wpnonce=".robo_nonce(); ?>" class="button button-primary" > نافذه خدمه العملاء  </a>
+            <?php }   if(has_robo_permission('send_msg')){ ?> 
         <a href="<?= current_sub_page_url('&process=send_msg'); ?>" class="button button-primary" > ارسال رسائل جماعية </a>
+            <?php } ?> 
         <a href="<?= admin_url('post-new.php?post_type=client'); ?>" target="_blank" class="button button-primary">عميل جديد</a>
     </div>
 <?php };
-function whatsapp_compose_messege($api,$token,$sub){
-    ?>
-    <h2>انشاء رساله جديدة</h2>
-    <form action="<?= esc_url( admin_url('admin-post.php') ); ?>" method="post">
-    
-    <input type="hidden" name="action" value="compose_messages">
-    <input type="hidden" name="redirect" value="<?= current_sub_page_url('&process=send_messege'); ?>">
-    <input type="hidden" name="table" value="<?= related_msgs_table(); ?>">
-    <textarea  name="messege" placeholder ="نص الرساله" style="width :  90%" required></textarea>
-    <div class ="clients">
-        <?php 
-        // prepare data
-        $clients =get_clients();
-
-        // pre($customer_subscriptions);
-        foreach ($clients as $key => $client) {
-            $table_body[$key]['ID'] 			=  '<input name="phones[]" value="'.$client->ID.'" type="checkbox" id="check_'.$client->ID.'" > '; 
-            $table_body[$key]['post_title'] 	=  $client->post_title;
-            $table_body[$key]['phone'] 	=  $client->phone;
-        }
-        $header = array(
-            '#'			    => ' ',
-            'post_title' 	=> 'اسم العميل', 
-            'phone'			=> 'رقم الهاتف',
-        );
-        echo "<h2>اختر عملاء الرسالة</h2>";
-        render_dynamic_table($header,$table_body);
-
-
-
-$lists = get_terms([
-    'taxonomy' => 'list',
-    'hide_empty' => false,
-]);
-
-
-$table_body = array();
-// pre($customer_subscriptions);
-foreach ($lists as $key => $list) {
-    $table_body[$key]['term_id'] 			=  '<input name="lists[]" value="'.$list->term_id.'" type="checkbox" id="check_'.$list->term_id.'" > '; 
-    $table_body[$key]['name'] 	=  $list->name;
-    $table_body[$key]['count'] 	=  $list->count;
-}
-$header = array(
-    'term_id'   => ' ',
-    'name'      => 'قائمه العملاء', 
-    'count'     => 'عدد العملاء بداخلها',
-);
-echo "<h2>اختر من قوائم العملاء</h2>";
-
-render_table($header,$table_body);
-
-?>    
-    <center><input style ="margin : 30px" class="button button-primary"  value="اضف في طابور الرسائل" type="submit" ><a href="<?= admin_url('post-new.php?post_type=client'); ?>" target="_blank" style ="margin : 30px" class="button button-primary">عميل جديد</a></center>
-    </form>
-    </div>
-<?php } ;
 function render_dynamic_table($headers,$body){ 
     ?>
     
@@ -159,7 +106,7 @@ function render_dynamic_table($headers,$body){
                 foreach ($body as $key => $row) {
                     echo "<tr>";
                         foreach ($row as $item_key => $row_item) {
-                            echo "<td scope='col' id='$row_item_key' class='manage-column column-$row_item_key'>$row_item</td>";
+                            echo "<td scope='col' id='$item_key' class='manage-column column-$item_key'>$row_item</td>";
 
                             //echo "<td>$row_item</td>"
                         }

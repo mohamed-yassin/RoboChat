@@ -21,7 +21,6 @@ function robo_orders_admin_page_render(){
 		)
 	);
 
-	// pre($customer_subscriptions);
 	foreach ($customer_subscriptions as $key => $sub) {
 		$table_body[$sub->ID]['ID'] 			=  $sub->ID;
 		$table_body[$sub->ID]['post_title'] 	=  "<a href='".get_edit_post_link($sub->ID)."'>$sub->post_title</a>";
@@ -42,10 +41,7 @@ function robo_orders_admin_page_render(){
 }
 
 function client_dashboard(  ) { 
-	$option_name   =  subs_option_field_name();
-    $user_blogs =  get_option( $option_name );
-	$user_blogs = json_decode($user_blogs, true);
-
+	$user_blogs 	= subs_option_field_array();
 	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
 		foreach ($user_blogs as $blog) {
 			add_menu_page( "#$blog", "#$blog", 'manage_options', "sub_$blog", 'whatsappapi_options_page' , '' , 3);
@@ -63,24 +59,36 @@ function whatsappapi_options_page() {
 		echo "<h2>" .  "من فضلك تواصل مع قسم المبيعات او الدعم الفني للتحقق من تفعيل حسابك" . "</h2>" ;
 	}else {
 		$sub_status =  sub_status($api,$token); // later we will add some security here to check if the user has can go or not 
-		if($sub_status['accountStatus'] == 'authenticated'){
+		if(isset($sub_status['accountStatus']) && $sub_status['accountStatus'] == 'authenticated'){
 			whatsappapi_processes();
-			$process = $_GET['process'] ;
+			$process = isset($_GET['process']) ? $_GET['process'] :  "" ;
 
 			if($process != ''){
-				if($process== 'send_msg'){
-					whatsapp_compose_messege($api,$token,$sub);
-				}elseif ($process  == 'show_msgs') {
-					$data['msgs_counter'] =  sub_connection_data($sub)['msgs'];
-					$data['msgs_counter'] =  $data['msgs_counter'] >  0 ? $data['msgs_counter'] : 'لقد نفذ الرصيد اليومي' ;					
-					$whatsapp_messeges =  whatsapp_messeges($api,$token);
-					$prepare_msgs =  prepare_msgs($whatsapp_messeges);
-					$data['main_msgs_array'] = $prepare_msgs ;
+				if($process== 'send_msg' && has_robo_permission('send_msg')){
+					$data['emojis'] = get_emojis();
 					$data['temps'] = get_templates();
+					$data['api'] = $api;
+					$data['token'] = $token;
+					$data['sub'] = $sub;
+					view('send_bulk_msg', $data);
+				}elseif ($process  == 'show_msgs' && has_robo_permission('show_msgs') ) {
+					$data['msgs_counter'] =  sub_connection_data($sub)['msgs'];
+					$data['msgs_counter'] =  $data['msgs_counter'] >  0 ? $data['msgs_counter'] : 'لقد نفذ الرصيد اليومي' ;	
+					$whatsapp_messeges =  whatsapp_messeges($api,$token);
+					$prepare_msgs =  $whatsapp_messeges->messages;
+					$prepare_msgs =  prepare_msgs($prepare_msgs);
+					$data['main_msgs_array'] = $prepare_msgs ;
+					$data['last_message_number'] = $whatsapp_messeges->lastMessageNumber ;
+					$data['temps'] = get_templates();
+					$data['emojis'] = get_emojis();
 					view('whatsapp_simulation', $data);
+				}elseif ($process  == 'show_msgs') {
+					
+				}else {
+					echo "عذرا رابط  غير صحيح او لا تملك الصلاحيات";
 				}
 			}
-		}elseif ($sub_status['accountStatus'] == 'loading') {
+		}elseif (isset($sub_status['accountStatus']) &&  $sub_status['accountStatus'] == 'loading') {
 			echo "هناك مشكله :: </br>
 			  	1-  تاكد ان هاتفك متصل بالانترنت </br>
 			   	2- وفتح برنامج الواتساب علي الموبايل </br>

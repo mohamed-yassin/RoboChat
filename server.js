@@ -20,6 +20,8 @@ function emitNewOrder(http_server) {
         socket.on("new_order",function(data){
             console.log(data);
             io.emit("new_order" , data);
+            // sending to all clients in 'game' room, including sender
+            // io.in('game').emit('big-announcement', 'the game will start soon');
         })
         
 

@@ -8,7 +8,9 @@ function create_custom_msgs_table($sub) {
     $sql = "CREATE TABLE $table_name (
         id INT(11) NOT NULL AUTO_INCREMENT ,
         mobileNumber VARCHAR(20) NOT NULL ,
-        textMessage VARCHAR(2000) NOT NULL ,
+        msg_body VARCHAR(2000) NOT NULL ,
+        msg_type VARCHAR(2000) NOT NULL ,
+        msg_caption VARCHAR(2000) NOT NULL ,
         isSent TINYINT(1) NOT NULL ,
         note VARCHAR(255) NOT NULL ,
         source TINYINT(1) NOT NULL ,
@@ -50,6 +52,12 @@ function subs_option_field_name()
 {
     return slug . "_subs";
 }
+function subs_option_field_value(){
+    return get_option(subs_option_field_name());
+}
+function subs_option_field_array(){
+    return json_decode(subs_option_field_value() , true);
+}
 function add_sub_to_blog($blog,$sub){
     switch_to_blog($blog);
     $option_name   =  subs_option_field_name();
@@ -73,27 +81,3 @@ function related_msgs_table(){
     $sub    =  get_page_sub_id();
     return get_msgs_table_name($sub);
 }
-function compose_messages_handler() {
-
-    global $wpdb;
-    $messege = $_REQUEST['messege'];
-    $phones  = $_REQUEST['phones'];
-    $lists   = $_REQUEST['lists'];
-    $table   = $_REQUEST['table'];
-    $user    = get_current_user_id();
-
-    foreach ($phones as $phone) {
-        $data = array(
-            'textMessage' => $messege,
-            'mobileNumber' => $phone,
-            'isSent' => '1',
-            'note' => ' ',
-            'source' => '1',
-            'status' => '1',
-            'updatedAt' => '0000-00-00 00:00:00',
-        );
-        $wpdb->insert($table,$data);
-    };
-    wp_redirect( $_REQUEST['redirect'] );
-    exit;
-};

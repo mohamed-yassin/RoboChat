@@ -36,6 +36,7 @@ function mk_json($fields,$json_file){
 function json_response($response){
 	header('Content-Type: application/json');
 	echo json_encode($response);
+	die();
 }
 function not_null_auther_name($id){
 	$user = get_userdata($id);
@@ -80,7 +81,6 @@ function test_post($title){
 function view($view,$data = array()){
 	foreach ($data as $var => $value) {
 		$$var =  $value; 	// make a variable for each data
-		unset($data[$key]);	// remove it 
 	}
 	$view =  views.$view.".php";
 	if(! include_once($view)){

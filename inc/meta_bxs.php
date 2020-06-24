@@ -54,7 +54,7 @@ class phone_Meta_Box {
 	public function save_metabox( $post_id, $post ) {
 
 		// Add nonce for security and authentication.
-		$nonce_name   = $_POST['client_nonce'];
+		$nonce_name   = @$_POST['client_nonce'];
 		$nonce_action = 'client_nonce_action';
 
 		// Check if a nonce is set.
@@ -89,5 +89,108 @@ class phone_Meta_Box {
 	}
 
 }
-
 new phone_Meta_Box;
+
+
+// User profiles
+function customer_service_client_permissions( $user ) {  
+ ?>
+
+	<h3><?php _e("Permission", "robo"); ?></h3>
+	
+	<table class="form-table">
+		<tr>
+			<th><label for="show_msgs"><?php _e("Show Messages"); ?></label></th>
+			<td>
+				<input type="checkbox" name="show_msgs" id="show_msgs"
+					value="checked"
+					class="regular-text" <?php echo esc_attr( get_the_author_meta( 'show_msgs', $user->ID ) ); ?> ><br />
+			</td>
+		</tr>
+		<tr>
+			<th><label for="send_msg"><?php _e("Bulk Messages"); ?></label></th>
+			<td>
+				<input type="checkbox" name="send_msg" id="send_msg"
+					value="checked"class="regular-text" <?php echo esc_attr( get_the_author_meta( 'send_msg', $user->ID ) ); ?>/><br />
+			</td>
+		</tr>
+	</table>
+	<?php }
+
+
+	function update_permissions( $user_id ) {
+		if ( !current_user_can( 'edit_user', $user_id ) ) { 
+			return false; 
+		}
+		update_user_meta( $user_id, 'show_msgs', $_POST['show_msgs'] );
+		update_user_meta( $user_id, 'send_msg', $_POST['send_msg'] );
+	}
+
+
+	class template_instructions {
+
+		public function __construct() {
+	
+			if ( is_admin() ) {
+				add_action( 'load-post.php',     array( $this, 'init_metabox' ) );
+				add_action( 'load-post-new.php', array( $this, 'init_metabox' ) );
+			}
+	
+		}
+	
+		public function init_metabox() {
+	
+			add_action( 'add_meta_boxes', array( $this, 'add_metabox'  )        );
+	
+		}
+	
+		public function add_metabox() {
+	
+			add_meta_box(
+				'instructions',
+				__( 'الاكواد المتاحة', slug ),
+				array( $this, 'render_metabox' ),
+				'template',
+				'side',
+				'default'
+			);
+		}
+	
+		public function render_metabox( $post ) {
+		?>
+			<tr>
+				<td>
+				{{current_user}} 
+				</td>
+				<td>
+				المستخدم الحالي 
+				</td>
+				</br>
+			</tr>
+
+			<tr>
+				<td>
+				{{phone}}
+				</td>
+				<td>
+				رقم هاتف العميل 
+				</td>
+				</br>
+			</tr>
+
+			<tr>
+				<td>
+				{{first_name}}
+				</td>
+				<td>
+				اسم الاول للعميل  
+				</td>
+				</br>
+			</tr>
+
+
+			
+			<?php 
+		}
+	}
+	new template_instructions;
