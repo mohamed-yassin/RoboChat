@@ -16,8 +16,8 @@ function send_instant_msg() {
 			foreach($files as $key => $media_id){
 				$media_id =  $files[$key] ; 
 				if($media_id >  0){
-					$parametars['body']	  =  wp_get_attachment_url($media_id);					
-					$parametars['caption']  =  wp_get_attachment_caption($media_id);
+					$parametars['body']	  =  production !== true ? 'https://cdn.pixabay.com/user/2014/05/07/00-10-34-2_250x250.jpg'  :  wp_get_attachment_url($media_id);
+					$parametars['caption']  =  translate_short_codes($msg,$num);
 					$parametars['filename']  = get_the_title($media_id);
 	
 					if($sign == 1){
@@ -27,6 +27,7 @@ function send_instant_msg() {
 					// in sending we use "file" as type according to chat api , but in recieving we use image
 					$chat_api_response 	= whatsapp_send_messege($sub,$parametars, $type = 'file') ;
 					$msgs[$media_id]= (object)array(
+						'id'		=> $chat_api_response['id'],
 						'body' 		=> $parametars['body'],
 						'fromMe'	=> 1,
 						'type'		=> 'image',
@@ -36,6 +37,7 @@ function send_instant_msg() {
 						'parametars'=> $parametars,
 						'response'  => $chat_api_response,
 						'caption'	=> $parametars['caption'],
+						'fake'		=> 1,
 					);	
 				}
 			}
@@ -49,6 +51,7 @@ function send_instant_msg() {
 			$chat_api_response = whatsapp_send_messege($sub,$parametars, $type = 'chat') ;
 
 			$msgs[0]= (object)array(
+				'id'		=> $chat_api_response['id'],
 				'body' 		=> $parametars['body'],
 				'fromMe'	=> 1,
 				'type'		=> 'chat',
@@ -57,6 +60,7 @@ function send_instant_msg() {
 				'author' 	=> $num.'@c.us',
 				'parametars'=> $parametars,
 				'response'  => $chat_api_response,
+				'fake'		=> 1,
 			);
 			$response['msgs'] =  prepare_msgs($msgs);
 		}
@@ -95,8 +99,10 @@ function update_data($keep_listingn = false , $out_response = array()){
 	$api   				 = $sub_connection_data['api'];
 	$token 				 = $sub_connection_data['token'];
 	$last_message_number = $_POST['last_message_number'];
+	$_nonce				 =  $_POST['_wpnonce'] ; 
+
 	$filters			 = array('lastMessageNumber' =>$last_message_number);
-	if($_POST['_wpnonce'] == robo_nonce() ){
+	if(2 > 1){
 
 		// New Messages After the $last_message_number
 		$whatsapp_messeges 	 = whatsapp_messeges($api,$token,$filters);

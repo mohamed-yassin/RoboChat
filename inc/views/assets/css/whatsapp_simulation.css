@@ -192,3 +192,12 @@ img.img-fit {
 .connect_response{
 	word-wrap: break-word;
 }
+.msg-counter{
+	width:20px;
+	height:20px;
+	background-color:#0C9;
+	color:#FFF;
+	text-align:center;
+	display: none;
+}
+

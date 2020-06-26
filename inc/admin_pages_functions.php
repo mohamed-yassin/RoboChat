@@ -96,7 +96,7 @@ function prepare_msgs($msgs){
                     $prepared_msgs[$chat_id]['last_msg_time'] = msg_time($msg->time);
                     $prepared_msgs[$chat_id]['last_msg_direction'] =  $msg->fromMe ;  // from me 1 else 0 or impty
                 }
-                $prepared_msgs[$chat_id]['msgs'][msg_day($msg->time)][$msg->time] =  $msg ;
+                $prepared_msgs[$chat_id]['msgs'][$msg->id] =  $msg ;
             }
         }
         

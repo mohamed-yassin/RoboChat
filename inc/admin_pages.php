@@ -88,16 +88,21 @@ function whatsappapi_options_page() {
 					echo "عذرا رابط  غير صحيح او لا تملك الصلاحيات";
 				}
 			}
-		}elseif (isset($sub_status['accountStatus']) &&  $sub_status['accountStatus'] == 'loading') {
-			echo "هناك مشكله :: </br>
-			  	1-  تاكد ان هاتفك متصل بالانترنت </br>
-			   	2- وفتح برنامج الواتساب علي الموبايل </br>
-			 	3 - انهاء توصيل الواتساب الخاص بك مع اي خدمات اخري  </br>
-			   " ;
-		}elseif (! isset($sub_status['accountStatus'])) {
-			echo  "هناك مشكله في معلومات الاتصال ,  , من فضلك راسل خدمه العملاء" ;
-		}else{
-			whatsappapi_authen($sub_status['qrCode']);
-		}	
+		}else {
+			if(production  !=  true ){
+				pre($sub_status);
+			}
+			if(isset($sub_status['accountStatus']) &&  $sub_status['accountStatus'] == 'loading') {
+				echo "هناك مشكله :: </br>
+					  1-  تاكد ان هاتفك متصل بالانترنت </br>
+					   2- وفتح برنامج الواتساب علي الموبايل </br>
+					 3 - انهاء توصيل الواتساب الخاص بك مع اي خدمات اخري  </br>
+				   " ;
+			}elseif (! isset($sub_status['accountStatus'])) {
+				echo  "هناك مشكله في معلومات الاتصال ,  , من فضلك راسل خدمه العملاء" ;
+			}else{
+				whatsappapi_authen($sub_status['qrCode']);
+			}	
+		}
 	}
 }

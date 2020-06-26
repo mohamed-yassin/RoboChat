@@ -38,10 +38,13 @@
 					</div>
 					<div class="flex-grow-1 text-right">
 						<div class="small time"><?= $contact['last_msg_time']; ?></div>
+						<p  class="msg-counter" id="<?= $main_id ?>_msg_counter"></i>0</p>			
+
 					</div>
 					<input id="<?= $main_id ?>_hdn_inpt" type ="hidden" value='<?= json_encode($contact['msgs'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);     ; ?>' >
 					<input id="<?= $main_id ?>_available" type ="hidden" value='<?= $contact['available']; ?>' >
 					<input id="<?= $main_id ?>_signature" type ="hidden" value='0' >
+					<input id="<?= $main_id ?>_new_msgs_counter" type ="hidden" value='0' >
 				</div>
 				<?php }		
 		?>

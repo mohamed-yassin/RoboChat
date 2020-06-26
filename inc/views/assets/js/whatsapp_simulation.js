@@ -1,4 +1,4 @@
-function show_msgs(id,new_msgs =  0) {
+function show_msgs(id,new_msgs=0,fake=0) {
 	var msgs_box = 'current_messages';
 	document.getElementById("name").innerHTML  =  document.getElementById(id+"_name").innerHTML ;
 	document.getElementById("pic").src = document.getElementById(id+"_pic").src;
@@ -7,13 +7,25 @@ function show_msgs(id,new_msgs =  0) {
 	handle_send_msg_ability();
 	
 	var contact_msgs = JSON.parse(get_msgs_from_hdn_inpt(id));
-	jQuery.each(contact_msgs , function( day, day_msgs ){
+	jQuery.each(contact_msgs , function( key, msg ){
+		
+		
+		
+		if(!(fake ==  0 &&  msg.fake == 1) ){
+			//append_msg_html(msg);
+		}
+
+		append_msg_html(msg);
+
+
+		/*
 		jQuery("#"+msgs_box).append("<div class='mx-auto my-2 bg-primary text-white small py-1 px-2 rounded'>"+  day + " </div>");
 		var day_msgs_array = obj_into_array(day_msgs);
 		for (const [msg_gen_key, msg_gen] of Object.entries(day_msgs_array)) {
 			real_msg = msg_gen[1] ;
 			append_msg_html(real_msg);
 		}
+		*/
 	});	
 
 
@@ -118,7 +130,7 @@ function update_contact_reservation(current_contact,new_current_user_availabilit
 		type: "post",url: "admin-ajax.php",data: { action: 'update_session_action' , contact : current_contact , availability :  new_current_user_availability   },
 		beforeSend: function() {jQuery("#helloworld").fadeOut('fast');}, 
 		success: function(rsp){ 
-			//console.log("this is the emited rsp" +  rsp);
+
 		}
 	});	
 }
@@ -145,8 +157,10 @@ function sendMessage (){
 			type: "post",url: "admin-ajax.php",data: { action: 'send_instant_msg_action' , _wpnonce: _wpnonce , msg :  msg , num : num , sub : sub , sign :  sign , files : files , last_message_number :  last_message_number },
 			success: function(rsp){ 
 				var msgs =	rsp.msgs;
+
+				
 				update_msgs_graphical(msgs);		
-				show_msgs(num) ;
+				//show_msgs(num,0,1) ; // edtied : update_msgs_graphical has his own show msgs
 				document.getElementById(num+'_signature').value =  2 ;
 			}
 		});	
@@ -173,6 +187,7 @@ function append_sent_msg(data){
 	append_msg_html(msg,time,status);
 }
 function update_session(current_user){
+	
 	var current_contact =  document.getElementById('current_contact').value ;
 	var sub =  document.getElementById('sub').value ;
 	var available =  document.getElementById(current_contact +'_available').value ;
@@ -184,7 +199,6 @@ function update_session(current_user){
 				type: "post",url: "admin-ajax.php",data: { action: 'update_session_action' , contact : current_contact , user : current_user , sub : sub  },
 				success: function(sessions){ 
 					jQuery.each(sessions , function( session_key, session ){
-						console.log(session_key,session);
 						update_session_graphical(session_key,session);
 					});
 					document.getElementById('current_contact').value =  current_contact ;
@@ -249,9 +263,16 @@ function update_data_process(rsp){
 }
 function update_msgs_graphical(msgs){
 
-	var new_current_contact_msgs =  document.getElementById("my-float").innerHTML  ; 
-	jQuery.each(msgs , function( contact, contact_msgs ){	
-		new_current_contact_msgs  ++  ;
+	jQuery.each(msgs , function( contact, contact_msgs ){
+		// test
+		console.log(contact);
+		console.log(contact_msgs.msgs);
+
+
+		// update counter
+		var current_contact_unread_msgs =  document.getElementById(contact+"_msg_counter").innerHTML  ; 
+		current_contact_unread_msgs = parseInt(current_contact_unread_msgs) + parseInt(Object.keys(contact_msgs.msgs).length);
+		
 		// update the current msgs saced in the hidden inputs 	
 		var old_contact_msgs = JSON.parse(get_msgs_from_hdn_inpt(contact));  // old messeges -> day -> day_msgs
 		all_msgs =  jQuery.extend(true, old_contact_msgs, contact_msgs.msgs);
@@ -274,7 +295,11 @@ function update_msgs_graphical(msgs){
 
 		// change the content of the curren selected contect
 		if(contact == document.getElementById('current_contact').value ){
-			show_msgs(contact,new_current_contact_msgs) ;
+			document.getElementById(contact+"_msg_counter").innerHTML = current_contact_unread_msgs ;
+			if(current_contact_unread_msgs > 0){
+				document.getElementById(contact+"_msg_counter").style.display = 'block'; 
+			}
+			show_msgs(contact,current_contact_unread_msgs) ;
 		}
 	});
 }
@@ -286,10 +311,11 @@ function reset_defults(){
 /****************************************************** Executive Code ******************************************************/
 reset_defults();
 // update_data();
-setInterval(update_data,5*1000);
+setInterval(update_data,3*1000);
 jQuery("#input").keydown(function(e){
 	if(e.which === 13){
 		jQuery("#msg_sending_btn").click();
+		document.getElementById('input').value='';
 		document.getElementById('input').value='';
 	}
 });
@@ -328,7 +354,6 @@ jQuery( document ).ready( function( $ ) {
 		});
 		// When an image is selected, run a callback.
 		file_frame.on( 'select', function() {
-			//console.log(file_frame);
 			var attachs =  [];
 			// We set multiple to false so only get one image from the uploader
 			attachment = file_frame.state().get('selection').toJSON();
@@ -354,13 +379,17 @@ jQuery( document ).ready( function( $ ) {
 	});
 });
 jQuery(function(n) {
-    jQuery('#messages').on('scroll', function() {
+	jQuery('#messages').on('scroll', function() {
         if(jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight) {
-			document.getElementById('float').style.display = 'none'; 
+			var current_contact =  document.getElementById('current_contact').value ; 
+
+			document.getElementById('float').style.display = 'none';
+			document.getElementById(current_contact+'_msg_counter').innerHTML = 0;
+			document.getElementById(current_contact+'_msg_counter').style.display = 'none';
         }
     })
 });
-jQuery(".float").click(function(e){
+jQuery(".float").click(function(e){ // no changing
 	scroll_to_last_msg();
 });
 

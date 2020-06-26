@@ -19,8 +19,8 @@ function whatsapp_messeges($api,$token,$filters= array())
 {
     if(! isset($filters['lastMessageNumber'])){
         $filters['last'] = 'true'; 
+        $filters['limit'] = '0';   
     }
-    $filters['limit'] = '0';   
 
     $filter_as_string = "";
     foreach ((array)$filters as $filter => $value) {
