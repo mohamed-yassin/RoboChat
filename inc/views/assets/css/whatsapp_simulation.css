@@ -157,7 +157,8 @@
 	direction : rtl ;
 }
 .media-message {
-    width: 250px;
+    height: 250px;
+    max-width: 250px;
     max-height: 250px;
 }
 img.img-fit {

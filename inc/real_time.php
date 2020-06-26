@@ -34,8 +34,8 @@ function send_instant_msg() {
 						'time'		=> time(),
 						'chatId' 	=> $num.'@c.us',
 						'author' 	=> $num.'@c.us',
-						'parametars'=> $parametars,
-						'response'  => $chat_api_response,
+						//'parametars'=> $parametars,
+						//'response'  => $chat_api_response,
 						'caption'	=> $parametars['caption'],
 						'fake'		=> 1,
 					);	
@@ -58,8 +58,8 @@ function send_instant_msg() {
 				'time'		=> time(),
 				'chatId' 	=> $num.'@c.us',
 				'author' 	=> $num.'@c.us',
-				'parametars'=> $parametars,
-				'response'  => $chat_api_response,
+				//'parametars'=> $parametars,
+				//'response'  => $chat_api_response,
 				'fake'		=> 1,
 			);
 			$response['msgs'] =  prepare_msgs($msgs);

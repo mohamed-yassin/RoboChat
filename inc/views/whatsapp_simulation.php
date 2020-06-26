@@ -97,10 +97,12 @@
 
 			<!-- Messages -->
 			<div class="d-flex flex-column" id="messages">
-				<div id="current_messages" class="mx-auto my-2 bg-primary text-white small py-1 px-2 rounded">
-					<H2>
-						من فضلك ابقي علي هاتفك متصل بالانترنت
-					</H2>
+				<div id="current_messages" class="d-flex flex-column">
+					<div id="" class="mx-auto my-2 bg-primary text-white small py-1 px-2 rounded">
+						<H2>
+							من فضلك ابقي علي هاتفك متصل بالانترنت
+						</H2>
+					</div>
 				</div>
 				<span  class="float" id="float"><i id="my-float" class="fas fa-arrow-down  my-float"></i></span>			
 			</div>
