@@ -11,30 +11,15 @@ function show_msgs(id,new_msgs=0,fake=0,reset_counter=0) {
 	
 	var contact_msgs = JSON.parse(get_msgs_from_hdn_inpt(id));
 	jQuery.each(contact_msgs , function( key, msg ){
-		
-		
-		
 		if(!(fake ==  0 &&  msg.fake == 1) ){
 			//append_msg_html(msg);
 		}
-
 		append_msg_html(msg);
-
-
-		/*
-		jQuery("#"+msgs_box).append("<div class='mx-auto my-2 bg-primary text-white small py-1 px-2 rounded'>"+  day + " </div>");
-		var day_msgs_array = obj_into_array(day_msgs);
-		for (const [msg_gen_key, msg_gen] of Object.entries(day_msgs_array)) {
-			real_msg = msg_gen[1] ;
-			append_msg_html(real_msg);
-		}
-		*/
 	});	
 
-
+	//
 	document.getElementById(id+"_last_msg").classList.remove('font-weight-bold');
 	document.getElementById("files").value = '';
-
 
 	if(new_msgs >  0){
 		document.getElementById('float').style.display = 'block'; 
@@ -42,12 +27,12 @@ function show_msgs(id,new_msgs=0,fake=0,reset_counter=0) {
 	}else{
 		scroll_to_last_msg();
 	}
-
-
 };
 function scroll_to_last_msg(){
 	var element = document.getElementById('messages');
 	element.scrollTop = element.scrollHeight;	
+	var current_contact =  document.getElementById('current_contact').value ; 
+	reset_msg_counters (current_contact);
 }
 function append_msg_html(msg_data) {
 
@@ -269,24 +254,28 @@ function update_data_process(rsp){
 function update_msgs_graphical(msgs){
 
 	jQuery.each(msgs , function( contact, contact_msgs ){
-		// test
-
-
-		// update counter
-		var current_contact_unread_msgs =  document.getElementById(contact+"_msg_counter").innerHTML  ; 
-		current_contact_unread_msgs = parseInt(current_contact_unread_msgs) + parseInt(Object.keys(contact_msgs.msgs).length);
+		var new_recieved_msgs =  0;
 		
+		jQuery.each(contact_msgs.msgs , function( key, msg ){
+			if(msg.fromMe != 1){
+				new_recieved_msgs ++ ;
+			}
+		});
+		
+		var current_contact_unread_msgs =  document.getElementById(contact+"_new_msgs_counter").value  ; 
+		current_contact_unread_msgs = parseInt(current_contact_unread_msgs) + parseInt(new_recieved_msgs);
+		document.getElementById(contact+"_msg_counter").style.display = 'block'; 
+		document.getElementById(contact+"_new_msgs_counter").value =  current_contact_unread_msgs
+		document.getElementById(contact+"_msg_counter").innerHTML = current_contact_unread_msgs;
+	
+
+
+
 		// update the current msgs saced in the hidden inputs 	
 		var old_contact_msgs = JSON.parse(get_msgs_from_hdn_inpt(contact));  // old messeges -> day -> day_msgs
-
-		console.log(old_contact_msgs);
-
 		all_msgs =  jQuery.extend(old_contact_msgs, contact_msgs.msgs);
-		
 		document.getElementById(contact+'_hdn_inpt').value = "";
-		console.log("current is " + document.getElementById(contact+'_hdn_inpt').value );
 		document.getElementById(contact+'_hdn_inpt').value =  JSON.stringify(all_msgs);
-		console.log("current is " + document.getElementById(contact+'_hdn_inpt').value );
 
 		// update the last msg
 		document.getElementById(contact+'_last_msg').innerHTML =  contact_msgs.last_msg ;
@@ -393,17 +382,16 @@ jQuery( document ).ready( function( $ ) {
 	});
 });
 jQuery(function(n) {
-	jQuery('#current_messages').on('scroll', function() {
+	jQuery('#messages').on('scroll', function() {
         if(jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight) {
-			var current_contact =  document.getElementById('current_contact').value ; 
-
-			reset_msg_counters (current_contact);
+			reset_msg_counters();
         }
     })
 });
 function reset_msg_counters(contact){
+	var current_contact =  document.getElementById('current_contact').value ; 
 	document.getElementById('float').style.display = 'none';
-	document.getElementById(contact+'_msg_counter').innerHTML = 0;
+	document.getElementById(contact+'_new_msgs_counter').value = 0;
 	document.getElementById(contact+'_msg_counter').style.display = 'none';
 }
 jQuery(".float").click(function(e){ // no changing

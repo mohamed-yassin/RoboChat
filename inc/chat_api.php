@@ -113,7 +113,7 @@ function chat_api_main_processes(){
     if($process == 'connect' ){
         $result = chat_api_whatsapp_connect($api,$token);
         $result_array =  json_decode($result ,true);
-        if(isset($result['accountStatus']) && $result['accountStatus'] == 'got qr code'){
+        if(isset($result_array['accountStatus']) && $result_array['accountStatus'] == 'got qr code'){
             echo 'افحص الكود بالموبايل ثم اعد الضغط علي الزر';
             echo '<img src="'.$result_array['qrCode'].'" alt="Base64 encoded image"/>';    
         }
