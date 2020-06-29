@@ -138,9 +138,23 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 		*/
 		
 		?>
-		<button type="button" id="connect" class="button button-primary connection-button">Connect</button>
-		<button type="button" id="disconnect" class="button button-primary connection-button">Disconnect</button>
-		<button type="button" id="reboot" class="button button-primary connection-button">Reboot</button>
+		<div style="width: 75%; display :inline"> 
+			<button type="button" id="connect" class="button button-primary connection-button">Connect</button>
+			<button type="button" id="disconnect" class="button button-primary connection-button">Disconnect</button>
+			<button type="button" id="reboot" class="button button-primary connection-button">Reboot</button>
+		</div>
+		<div style="width: 25%; display :inline ; float :  right  "> 
+				<p style="font-weight: bold">Connect :</p>
+				<p>Get the account status and QR code for authorization. </p> 
+
+
+			<p style="font-weight: bold" >Disconnect :</p>
+			<p>Close the connection between your instance and the connected phone </p>
+
+			<p style="font-weight: bold">Reboot :</p>
+			<p>Reboot your whatsapp instance </p>
+
+		</div>
 		<div class="connect_response" id="chat_api_response"></div>
 		<?php
 	}

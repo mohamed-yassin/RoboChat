@@ -1,6 +1,6 @@
-function show_msgs(id,new_msgs=0,fake=0,reset_counter=0) {
+function show_msgs(id,new_msgs=0,fake=0,reset_counter=0,active_this=0) {
 	if(reset_counter == 1){
-		reset_msg_counters(id);
+		reset_msg_counters();
 	}
 	var msgs_box = 'current_messages';
 	document.getElementById("name").innerHTML  =  document.getElementById(id+"_name").innerHTML ;
@@ -32,7 +32,7 @@ function scroll_to_last_msg(){
 	var element = document.getElementById('messages');
 	element.scrollTop = element.scrollHeight;	
 	var current_contact =  document.getElementById('current_contact').value ; 
-	reset_msg_counters (current_contact);
+	reset_msg_counters ();
 }
 function append_msg_html(msg_data) {
 
@@ -112,24 +112,6 @@ function handle_send_msg_ability() {
 		
 	}
 }
-function update_contact_reservation(current_contact,new_current_user_availability){
-
-	jQuery.ajax({
-		type: "post",url: "admin-ajax.php",data: { action: 'update_session_action' , contact : current_contact , availability :  new_current_user_availability   },
-		beforeSend: function() {jQuery("#helloworld").fadeOut('fast');}, 
-		success: function(rsp){ 
-
-		}
-	});	
-}
-function open_send_msg_ability(current_contact ,  current_user_availability  , current_user  ) {
-	if(current_contact !=  0){
-		
-		
-		//update_sessions(current_contact,new_current_user_availability);
-	}
-}
-
 function sendMessage (){
 	var msg   = document.getElementById('input').value ;
 	var files = document.getElementById('files').value ; 
@@ -146,10 +128,7 @@ function sendMessage (){
 			type: "post",url: "admin-ajax.php",data: { action: 'send_instant_msg_action' , _wpnonce: _wpnonce , msg :  msg , num : num , sub : sub , sign :  sign , files : files , last_message_number :  last_message_number },
 			success: function(rsp){ 
 				var msgs =	rsp.msgs;
-
-				console.log('instant');
 				update_msgs_graphical(msgs);		
-				//show_msgs(num,0,1) ; // edtied : update_msgs_graphical has his own show msgs
 				document.getElementById(num+'_signature').value =  2 ;
 			}
 		});	
@@ -187,37 +166,55 @@ function update_session(current_user){
 			jQuery.ajax({
 				type: "post",url: "admin-ajax.php",data: { action: 'update_session_action' , contact : current_contact , user : current_user , sub : sub  },
 				success: function(sessions){ 
+
 					jQuery.each(sessions , function( session_key, session ){
 						update_session_graphical(session_key,session);
 					});
 					document.getElementById('current_contact').value =  current_contact ;
 					handle_send_msg_ability();
-
-
 				}
 			});	
 		}
 	}
 }
+function pre(obj){
+	let keepKeyOrder = function(obj) {
+		if (typeof obj === 'object' && !Array.isArray(obj)) {
+			let transformKey = (k) => [k, keepKeyOrder(obj[k])];
+			return Object.keys(obj).map(transformKey);
+		} else {
+			return obj;
+		}
+	};
+	console.log(keepKeyOrder(obj));
+}
 function update_session_graphical(current_contact,session){
+	
 	var status_code =  session[0];
-	document.getElementById(current_contact +"_available").value = status_code  ;
-	if(status_code == 2 ){  // current user serving
-		document.getElementById(current_contact + "_available_icon").classList.add('fa-comments');
-		document.getElementById(current_contact + "_available_icon").classList.remove('outcome-msg');
-		document.getElementById(current_contact + "_available_icon").classList.add('income-msg');
-		
-		// document.getElementById(current_contact + "_signature").value = 1; make problem : after the 
-	}else if(status_code == 0){ // another user serving
-		document.getElementById(current_contact + "_available_icon").classList.add('fa-comments');
-		document.getElementById(current_contact + "_available_icon").classList.remove('income-msg');
-		document.getElementById(current_contact + "_available_icon").classList.add('outcome-msg');
-		document.getElementById(current_contact + "_signature").value = 0  ;
-	}else{ // no one serving 
-		document.getElementById(current_contact + "_available_icon").classList.remove('fa-comments'); 
-		document.getElementById(current_contact + "_available_icon").classList.remove('income-msg');
-		document.getElementById(current_contact + "_available_icon").classList.remove('outcome-msg');
-		document.getElementById(current_contact + "_signature").value = 0  ;
+	
+
+	if(document.getElementById(current_contact +"_available") !== null)
+	{
+		document.getElementById(current_contact +"_available").value = status_code;
+		if(status_code == 2 ){  // current user serving
+			document.getElementById(current_contact + "_available_icon").classList.add('fa-comments');
+			document.getElementById(current_contact + "_available_icon").classList.remove('outcome-msg');
+			document.getElementById(current_contact + "_available_icon").classList.add('income-msg');
+			
+			// document.getElementById(current_contact + "_signature").value = 1; make problem : after the 
+		}else if(status_code == 0){ // another user serving
+			document.getElementById(current_contact + "_available_icon").classList.add('fa-comments');
+			document.getElementById(current_contact + "_available_icon").classList.remove('income-msg');
+			document.getElementById(current_contact + "_available_icon").classList.add('outcome-msg');
+			document.getElementById(current_contact + "_signature").value = 0  ;
+		}else{ // no one serving 
+			document.getElementById(current_contact + "_available_icon").classList.remove('fa-comments'); 
+			document.getElementById(current_contact + "_available_icon").classList.remove('income-msg');
+			document.getElementById(current_contact + "_available_icon").classList.remove('outcome-msg');
+			document.getElementById(current_contact + "_signature").value = 0  ;
+		}
+	}else{
+		// crete a new div;
 	}
 };
 function update_data(){
@@ -229,31 +226,27 @@ function update_data(){
 		type: "post",url: "admin-ajax.php",data: { action: 'update_data_action' , last_message_number : last_message_number  , _wpnonce , _wpnonce , sub : sub },
 		beforeSend: function() {jQuery("#helloworld").fadeOut('fast');}, 
 		success: function(rsp){ 
-			update_data_process(rsp);
+			
+
+			var sessions = rsp.sessions;
+			jQuery.each(sessions , function( session_key, session ){
+				update_session_graphical(session_key,session);
+			});	
+					
+			if(rsp.last_message_number !=  null ){
+				// save the new last message number for the next requests 
+				document.getElementById('last_message_number').value = rsp.last_message_number ; 
+
+				// update the messages
+				var msgs =	rsp.msgs;
+				update_msgs_graphical(msgs);		
+			}
 		}
 	});	
 }
-function update_data_process(rsp){
-
-	//  update the sessions
-	var sessions = rsp.sessions;
-	jQuery.each(sessions , function( session_key, session ){
-		update_session_graphical(session_key,session);
-	});	
-			
-	if(rsp.last_message_number !=  null ){
-		// save the new last message number for the next requests 
-		document.getElementById('last_message_number').value = rsp.last_message_number ; 
-
-		// update the messages
-		var msgs =	rsp.msgs;
-
-		update_msgs_graphical(msgs);		
-	}
-}
 function update_msgs_graphical(msgs){
-
 	jQuery.each(msgs , function( contact, contact_msgs ){
+		//move_to_top(contact);
 		var new_recieved_msgs =  0;
 		
 		jQuery.each(contact_msgs.msgs , function( key, msg ){
@@ -268,9 +261,6 @@ function update_msgs_graphical(msgs){
 		document.getElementById(contact+"_new_msgs_counter").value =  current_contact_unread_msgs
 		document.getElementById(contact+"_msg_counter").innerHTML = current_contact_unread_msgs;
 	
-
-
-
 		// update the current msgs saced in the hidden inputs 	
 		var old_contact_msgs = JSON.parse(get_msgs_from_hdn_inpt(contact));  // old messeges -> day -> day_msgs
 		all_msgs =  jQuery.extend(old_contact_msgs, contact_msgs.msgs);
@@ -311,9 +301,23 @@ function reset_defults(){
 		document.getElementById('00201096808707_hdn_inpt').value =  '{}' ;
 	}		
 }
+function move_to_top(id){
+		var contact = jQuery('#'+id).clone();
+		jQuery( "#"+id ).remove();
+		jQuery("#chat-list").prepend(contact);
+}
 /****************************************************** Executive Code ******************************************************/
 reset_defults();
-// update_data();
+jQuery(".chat-list-item").click(function(e){
+	var current =  this.id;
+	show_msgs(current);
+	// change the selected contact / mark the contact
+	jQuery(".active").each(function() {
+		document.getElementById(this.id).classList.remove('active');
+	});	
+	document.getElementById(current).classList.add('active');
+});
+
 setInterval(update_data,3*1000);
 jQuery("#input").keydown(function(e){
 	if(e.which === 13){
@@ -388,28 +392,12 @@ jQuery(function(n) {
         }
     })
 });
-function reset_msg_counters(contact){
+function reset_msg_counters(){
 	var current_contact =  document.getElementById('current_contact').value ; 
 	document.getElementById('float').style.display = 'none';
-	document.getElementById(contact+'_new_msgs_counter').value = 0;
-	document.getElementById(contact+'_msg_counter').style.display = 'none';
+	document.getElementById(current_contact+'_new_msgs_counter').value = 0;
+	document.getElementById(current_contact+'_msg_counter').style.display = 'none';
 }
 jQuery(".float").click(function(e){ // no changing
 	scroll_to_last_msg();
 });
-
-
-function societ_listen(link , action){
-	var socket =  io.connect(link);
-	socket.on(action , function (data){
-		if(data.action ==  'update_session'){
-			update_session_graphical(data.contact,data.user , '<?= get_current_user_id();?>');
-		}else if (data.action ==  'send_msg'){
-			//check if the current user has access to the new messages
-			append_sent_msg(data);
-		}else if (data.action ==  'update_msgs'){
-			//foreach append msg
-		}
-	})
-}
-//societ_listen('<?= societ_link; ?>' , '<?= societ_action; ?>');

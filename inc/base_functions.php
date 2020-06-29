@@ -4,6 +4,8 @@
 // ini_set('display_errors', 1);
 // define( 'WP_DEBUG', false );
 
+// Start session 
+session_start();
 
 // Gloabal Functions
 function pre($array , $title= ''){
@@ -86,5 +88,42 @@ function view($view,$data = array()){
 	if(! include_once($view)){
 		$error_counter ++ ;
 		echo "$error_counter  ::  Error when including the view  $view </br>";
+	}
+}
+function clear_value($value = ''){
+	return $value;
+}
+function render_custom_fields($fields){
+	/*
+		field => array(
+			'name',
+			'type,
+			'width'
+			'note'
+		)
+
+	*/
+	
+	foreach ((array)$fields as $field) {
+		$name 	= clear_value($field['name']);
+		$type 	= clear_value($field['type']);
+		$width	= clear_value($field['width']);
+		$note	= clear_value($field['note']);
+		$key	= $name;
+		$val	= get_post_meta( $post->ID, $key , true );
+
+
+
+		echo "<div class='rob-custom-field' ";
+			echo '<h4>' . __($name, slug ) . ' </h4>';
+			echo '<span> ' . __( $note , slug ) . '</span>';
+			echo '<input class="rob-custom-field" type="text" name="first_name" value="' . esc_attr__( $first_name ) . '">';
+		echo "</div>";
+
+		if(isset($field['name'])){
+			if ($field['type']) {
+				# code...
+			}
+		}
 	}
 }

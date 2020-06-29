@@ -3,7 +3,7 @@ function whatsappapi_authen ($qr){
     echo '<h2>امسح الكود باستخدام برنامج الواتساب ثم حمل الصفحه مره اخري</h2>';
     echo '<img src="'.$qr.'" alt="Base64 encoded image"/>';
 };
-function sub_status($api,$token){
+function chatapi_sub_status($api,$token){
     $login =  whatsapp_login($api,$token);
     return  $login ;
 }

@@ -121,3 +121,9 @@ function verify_robo_nonce($action = NULL){
     }
     wp_verify_nonce($action,robo_nonce());
 }
+function get_post_data_from_the_main_blog($sub){
+    switch_to_blog(1);
+    $post =  get_post($sub);
+    restore_current_blog(); 
+    return $post ; 
+}

@@ -36,19 +36,34 @@ class phone_Meta_Box {
 		wp_nonce_field( 'client_nonce_action', 'client_nonce' );
 
 		// Retrieve an existing value from the database.
-		$phone = get_post_meta( $post->ID, 'phone', true );
+		$phone 		= get_post_meta( $post->ID, 'phone', true );
 		$first_name = get_post_meta( $post->ID, 'first_name', true );
-
+		$notes 		= get_post_meta( $post->ID, 'notes', true );
+		$jop_title 	= get_post_meta( $post->ID, 'jop_title', true );
 		// Set default values.
-		if( empty( $phone ) ) $phone = '';
 
 		// Form fields.
-		echo '<h4>' . __( 'First Name', slug ) . ' </h4>';
-		echo '<input type="text" name="first_name" value="' . esc_attr__( $first_name ) . '">';
-		echo '<span> ' . __( 'the name of the client which will be used in messaging process', slug ) . '</span>';
-		
-		echo '<h4>' . __( 'Phone', slug ) . ' </h4>';
-		echo '<input type="text" name="phone" value="' . esc_attr__( $phone ) . '">';
+		echo '<div class="">';
+			echo '<h4 class="rob-custom-field-title">' . __( 'First Name', slug ) . ' </h4>';
+			echo '<span> ' . __( 'the name of the client which will be used in messaging process', slug ) . '</span>';
+			echo '<input class="rob-custom-field" type="text" name="first_name" value="' . esc_attr__( $first_name ) . '">';
+		echo "</div>";
+		echo "<div>";
+			echo '<h4 class="rob-custom-field-title">' . __( 'Phone', slug ) . ' </h4>';
+			echo '<input class="rob-custom-field" type="text" name="phone" value="' . esc_attr__( $phone ) . '">';
+		echo "</div>";
+
+		echo "<div>";
+			echo '<h4 class="rob-custom-field-title">' . __( 'Jop Title', slug ) . ' </h4>';
+			echo '<input class="rob-custom-field" type="text" name="jop_title" value="' . esc_attr__( $jop_title ) . '">';
+		echo "</div>";
+
+
+		echo "<div>";
+			echo '<h4 class="rob-custom-field-title">' . __( 'Notes', slug ) . ' </h4>';
+			echo '<textarea class="rob-custom-field" name="notes">'. esc_attr__( $notes ) .'</textarea>';
+		echo "</div>";
+
 	}
 
 	public function save_metabox( $post_id, $post ) {
@@ -77,15 +92,18 @@ class phone_Meta_Box {
 		if ( wp_is_post_revision( $post_id ) )
 			return;
 
-		// Sanitize user input. first_name
-		//$phone = isset( $_POST[ 'phone' ] ) ? sanitize_text_field( $_POST[ 'phone' ] ) : '';
 		
 		$phone= pure_phone($_POST[ 'phone' ] );
 		$first_name = isset( $_POST[ 'first_name' ] ) ? sanitize_text_field( $_POST[ 'first_name' ] ) : '';
+		$notes = isset( $_POST[ 'notes' ] ) ? sanitize_text_field( $_POST[ 'notes' ] ) : '';
+		$jop_title = isset( $_POST[ 'jop_title' ] ) ? sanitize_text_field( $_POST[ 'jop_title' ] ) : '';
 
+		
 		// Update the meta field in the database.
 		update_post_meta( $post_id, 'phone', $phone );
 		update_post_meta( $post_id, 'first_name', $first_name );
+		update_post_meta( $post_id, 'notes', $notes );
+		update_post_meta( $post_id, 'jop_title', $jop_title );
 	}
 
 }
@@ -100,7 +118,7 @@ function customer_service_client_permissions( $user ) {
 	
 	<table class="form-table">
 		<tr>
-			<th><label for="show_msgs"><?php _e("Show Messages"); ?></label></th>
+			<th><label for="show_msgs"><?php _e("Customer Services"); ?></label></th>
 			<td>
 				<input type="checkbox" name="show_msgs" id="show_msgs"
 					value="checked"
@@ -108,7 +126,7 @@ function customer_service_client_permissions( $user ) {
 			</td>
 		</tr>
 		<tr>
-			<th><label for="send_msg"><?php _e("Bulk Messages"); ?></label></th>
+			<th><label for="send_msg"><?php _e("Send Messages"); ?></label></th>
 			<td>
 				<input type="checkbox" name="send_msg" id="send_msg"
 					value="checked"class="regular-text" <?php echo esc_attr( get_the_author_meta( 'send_msg', $user->ID ) ); ?>/><br />
@@ -145,7 +163,6 @@ function customer_service_client_permissions( $user ) {
 		}
 	
 		public function add_metabox() {
-	
 			add_meta_box(
 				'instructions',
 				__( 'الاكواد المتاحة', slug ),
@@ -187,9 +204,6 @@ function customer_service_client_permissions( $user ) {
 				</td>
 				</br>
 			</tr>
-
-
-			
 			<?php 
 		}
 	}

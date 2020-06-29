@@ -28,20 +28,15 @@
 }
 
 .chat-list-item {
-	background: white;
+	background: #F2F2F2;
 	cursor: pointer;
 }
 
 .chat-list-item:hover {
-	background: hsl(0, 0%, 95%);
+	background: #a9dfbf  ;
 }
-
-.chat-list-item:active {
-	background: hsl(0, 0%, 85%);
-}
-
 .chat-list-item.active {
-	background: hsl(0, 0%, 90%);
+	background: #a9dfbf  ;
 }
 
 .chat-list-item .chat-details {
@@ -201,4 +196,3 @@ img.img-fit {
 	text-align:center;
 	display: none;
 }
-

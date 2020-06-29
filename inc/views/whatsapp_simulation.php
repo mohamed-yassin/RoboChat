@@ -25,7 +25,7 @@
 				$main_id  	 =  message_reciever_number($key) ;
 				$arrow_class =  isset($contact->last_msg_direction) && $contact->last_msg_direction == 1 ? "fas fa-arrow-down income-msg" :  "fas fa-arrow-up outcome-msg" ;
 			?>
-				<div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom active main-contact" id="<?= $main_id ;?>" onclick="show_msgs('<?= $main_id ;?>')">
+				<div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom  main-contact" id="<?= $main_id ;?>" >
 					<img id="<?= $main_id?>_pic" src="<?= $contact['img']; ?>" alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
 					<div class="w-50">
 						<div id="<?= $main_id?>_name" class="name">

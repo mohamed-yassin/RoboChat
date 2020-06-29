@@ -70,39 +70,6 @@ function contact_info($num){
     }
     return $return  ;
 }
-function prepare_msgs($msgs){
-        $sessions =  available_sessions(get_page_sub_id());
-        foreach ($msgs as $key => $msg) {
-            if(!is_group($msg->chatId)){
-                $chat_id = pure_phone($msg->chatId);  
-                $msg->real_time = date("H:i",$msg->time);
-
-                $contact_info = contact_info(message_reciever_number($msg->chatId)) ;
-                $prepared_msgs[$chat_id]['name'] =  isset($contact_info['name']) ? $contact_info['name'] :  $msg->chatName ;
-                $prepared_msgs[$chat_id]['img']  =  isset($contact_info['img']) && $contact_info['img'] != '' ? $contact_info['img']   :  dflt_user_img ; 
-
-                $prepared_msgs[$chat_id]['available']  =  isset($sessions[$chat_id]['available']) ? $sessions[$chat_id]['available'] : 1 ;                    
-                $prepared_msgs[$chat_id]['available_icon']      =  isset($sessions[$chat_id]['available_icon']) ?  $sessions[$chat_id]['available_icon'] :  '';                    
-                $prepared_msgs[$chat_id]['last_msg'] =   isset($prepared_msgs[$chat_id]['last_msg']) && $prepared_msgs[$chat_id]['last_msg'] >   $msg->time  ? $prepared_msgs[$chat_id]['last_msg'] :  $msg->body   ;
-                if(! isset($prepared_msgs[$chat_id]['last_msg']) ||  $prepared_msgs[$chat_id]['last_msg'] <   $msg->time  ){
-                    if($msg->type == 'image'){
-                        $prepared_msgs[$chat_id]['last_msg'] = '<i id="00447449492715_arrow_class" class="fas fa-image "></i> ';
-                        $prepared_msgs[$chat_id]['last_msg'] .=  property_exists($msg , 'caption') && $msg->caption != "" ?  $msg->caption :  "image" ;
-
-                    }else {
-                        $prepared_msgs[$chat_id]['last_msg'] =  $msg->body ;
-                    }
-                    $prepared_msgs[$chat_id]['original_last_msg_time'] = $msg->time;
-                    $prepared_msgs[$chat_id]['last_msg_time'] = msg_time($msg->time);
-                    $prepared_msgs[$chat_id]['last_msg_direction'] =  $msg->fromMe ;  // from me 1 else 0 or impty
-                }
-                $prepared_msgs[$chat_id]['msgs'][$msg->id] =  $msg ;
-            }
-        }
-        
-        array_multisort(array_column($prepared_msgs, 'original_last_msg_time'), SORT_DESC, $prepared_msgs);
-        return $prepared_msgs  ;
-}
 function pure_phone($num){
     return  "00".(int) preg_replace('/\D/', '', $num); 
 }

@@ -1,12 +1,25 @@
 <?php 
     wp_enqueue_media();
-
     ?>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
 	integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 
 
     <h5>انشاء رساله جديدة</h5>
+	<?php 
+	if(isset($_SESSION['bulk_msg_error'])){ ?>
+			<div class="notice is-dismissible">
+				<center><h5><?=  $_SESSION['bulk_msg_error'] ?></h5></center>
+				<button type="button" class="notice-dismiss">
+					<span class="screen-reader-text">
+						Dismiss this notice.
+					</span>
+				</button>
+			</div>
+
+	<?php 
+			unset($_SESSION['bulk_msg_error']);
+} ?>
     <form action="<?= esc_url( admin_url('admin-post.php') ); ?>" method="post">
     
     <input type="hidden" name="action" value="compose_messages">
@@ -54,6 +67,13 @@
 					</div>
 				</div>
 			</div>
+
+			<center>
+				<input style ="margin : 30px" class="button button-primary"  value="اضف رساله جديده" type="submit" >
+			</center>
+
+
+
     <div class ="clients">
         <?php 
         // prepare data
@@ -69,7 +89,7 @@
             'post_title' 	=> 'اسم العميل', 
             'phone'			=> 'رقم الهاتف',
         );
-        echo "<h5>اختر عملاء الرسالة</h5>";
+        echo "<h5  style='margon-top :  100px'>اختر عملاء الرسالة</h5>";
         render_dynamic_table($header,$table_body);
 
 
@@ -91,11 +111,13 @@ $header = array(
     'name'      => 'قائمه العملاء', 
     'count'     => 'عدد العملاء بداخلها',
 );
-echo "<h5>اختر قوائم العملاء</h5>";
+echo "<h5  style='margon-top :  100px'>اختر قوائم العملاء</h5>";
 
 render_table($header,$table_body);
 
 ?>    
-    <center><input style ="margin : 30px" class="button button-primary"  value="اضف في طابور الرسائل" type="submit" ><a href="<?= admin_url('post-new.php?post_type=client'); ?>" target="_blank" style ="margin : 30px" class="button button-primary">عميل جديد</a></center>
+    <center>
+		<input style ="margin : 30px" class="button button-primary"  value="اضف رساله جديده" type="submit" >
+	</center>
     </form>
     </div>

@@ -2,14 +2,15 @@
 function enqueue() {	
 	$css_files = array();
 	$js_files = array();
-		
-		// msgsboxs
+	
 		$css_files[] = 'bootstrap.min';
 		$css_files[] = 'whatsapp_simulation';
+		$css_files[] = 'robochat';
+
 		$js_files[]	 = array('popper.min');
 		$js_files[]	 = array('bootstrap.min');
 		$js_files[]	 = array('whatsapp_simulation');
-		$js_files[]	 = array('robo');
+		$js_files[]	 = array('robochat');
 
 	foreach ((array)$css_files as $css) {
 		$src = css.$css.'.css';

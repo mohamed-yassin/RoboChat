@@ -27,7 +27,7 @@ add_action( 'admin_menu', 'robo_add_admin_menu' );
 
 add_action( 'admin_menu', 'client_dashboard' );
 
-// compose a new message
+// HTTP Custom Requests Handler
 add_action( 'admin_post_compose_messages', 'compose_messages_handler' );
 
 // filter the saved phone number
