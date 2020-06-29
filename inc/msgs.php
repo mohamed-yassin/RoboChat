@@ -13,18 +13,16 @@ function prepare_msgs($msgs){
             $prepared_msgs[$chat_id]['available']  =  isset($sessions[$chat_id]['available']) ? $sessions[$chat_id]['available'] : 1 ;                    
             $prepared_msgs[$chat_id]['available_icon']      =  isset($sessions[$chat_id]['available_icon']) ?  $sessions[$chat_id]['available_icon'] :  '';                    
             $prepared_msgs[$chat_id]['last_msg'] =   isset($prepared_msgs[$chat_id]['last_msg']) && $prepared_msgs[$chat_id]['last_msg'] >   $msg->time  ? $prepared_msgs[$chat_id]['last_msg'] :  $msg->body   ;
-            if(! isset($prepared_msgs[$chat_id]['last_msg']) ||  $prepared_msgs[$chat_id]['last_msg'] <   $msg->time  ){
-                if($msg->type == 'image'){
-                    $prepared_msgs[$chat_id]['last_msg'] = '<i id="00447449492715_arrow_class" class="fas fa-image "></i> ';
-                    $prepared_msgs[$chat_id]['last_msg'] .=  property_exists($msg , 'caption') && $msg->caption != "" ?  $msg->caption :  "image" ;
 
-                }else {
-                    $prepared_msgs[$chat_id]['last_msg'] =  $msg->body ;
-                }
-                $prepared_msgs[$chat_id]['original_last_msg_time'] = $msg->time;
-                $prepared_msgs[$chat_id]['last_msg_time'] = msg_time($msg->time);
-                $prepared_msgs[$chat_id]['last_msg_direction'] =  $msg->fromMe ;  // from me 1 else 0 or impty
+            if($msg->type == 'image'){
+                $prepared_msgs[$chat_id]['last_msg'] = '<i id="00447449492715_arrow_class" class="fas fa-image "></i> ';
+                $prepared_msgs[$chat_id]['last_msg'] .=  property_exists($msg , 'caption') && $msg->caption != "" ?  $msg->caption :  "image" ;
+            }else {
+                $prepared_msgs[$chat_id]['last_msg'] =  $msg->body ;
             }
+            $prepared_msgs[$chat_id]['original_last_msg_time'] = $msg->time;
+            $prepared_msgs[$chat_id]['last_msg_time'] = msg_time($msg->time);
+            $prepared_msgs[$chat_id]['last_msg_direction'] =  $msg->fromMe == 1 ?  1 : 0 ; // out==1 && in == 0
             $prepared_msgs[$chat_id]['msgs'][$msg->id] =  $msg ;
         }
     }

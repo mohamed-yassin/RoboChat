@@ -40,7 +40,7 @@ function send_instant_msg() {
 				}
 			}
 			$response['balance'] =  $chat_api_response['balance'];
-			$response['msgs'] =  prepare_msgs($msgs);
+			//$response['msgs'] =  prepare_msgs($msgs);  // stop it because of 
 		}else {
 			if($sign == 1){
 				$msg =  $msg . " \n\n   #{{current_user}}" ;
@@ -56,15 +56,11 @@ function send_instant_msg() {
 				'time'		=> time(),
 				'chatId' 	=> $num.'@c.us',
 				'author' 	=> $num.'@c.us',
-				//'parametars'=> $parametars,
-				//'response'  => $chat_api_response,
 				'fake'		=> 1,
 			);
 			$response['balance'] =  $chat_api_response['balance'];
-			$response['msgs'] =  prepare_msgs($msgs);
+			//$response['msgs'] =  prepare_msgs($msgs);
 		}
-
-		
 	}
 	json_response($response);
 }

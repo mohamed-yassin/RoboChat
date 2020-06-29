@@ -165,5 +165,78 @@
 	wp_enqueue_media();
 ?>
 
-
 </div>
+
+<button type="button" id="btn-one" class="btn btn-primary fas fa-lock px-3"></button>
+
+
+<div class="spinner" id="load_screen">
+	<div class="bounce1"></div>
+	<div class="bounce2"></div>
+	<div class="bounce3"></div>
+  </div>
+
+
+
+<script>
+jQuery('#btn-one').click(function() {
+	jQuery('#btn-one').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> ...').addClass('disabled');
+  });
+
+
+  window.addEventListener("load",function () {
+	  var load_screen= document.getElementById("load_screen");
+	  document.body.removeChild(load_screen)
+	  
+  });
+
+  </script>
+
+
+  <style>
+			.spinner {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #009688;
+		z-index: 999999;
+		text-align: center;
+	  }
+	  
+	  .spinner > div {
+		width: 18px;
+		height: 18px;
+		background-color: rgb(255, 255, 255);
+		margin-top: 25%;
+		display: inline-block;
+		-webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+		animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+	  }
+	  
+	  .spinner .bounce1 {
+		-webkit-animation-delay: -0.32s;
+		animation-delay: -0.32s;
+	  }
+	  
+	  .spinner .bounce2 {
+		-webkit-animation-delay: -0.16s;
+		animation-delay: -0.16s;
+	  }
+	  
+	  @-webkit-keyframes sk-bouncedelay {
+		0%, 80%, 100% { -webkit-transform: scale(0) }
+		40% { -webkit-transform: scale(1.0) }
+	  }
+	  
+	  @keyframes sk-bouncedelay {
+		0%, 80%, 100% { 
+		  -webkit-transform: scale(0);
+		  transform: scale(0);
+		} 40% { 
+		  -webkit-transform: scale(1.0);
+		  transform: scale(1.0);
+		}
+	  }
+  </style>

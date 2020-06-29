@@ -247,7 +247,7 @@ function update_data(){
 }
 function update_msgs_graphical(msgs){
 	jQuery.each(msgs , function( contact, contact_msgs ){
-		//move_to_top(contact);
+		move_to_top(contact);
 		var new_recieved_msgs =  0;
 		
 		jQuery.each(contact_msgs.msgs , function( key, msg ){
@@ -274,12 +274,18 @@ function update_msgs_graphical(msgs){
 
 		
 		
-		if(contact_msgs.last_msg_direction != false){ // comming msg      fas fa-arrow-up outcome-msg
+		if(contact_msgs.last_msg_direction != false){ // comming msg      fas fa-arrow-up outcome-msg      fa-arrow-up 
 			document.getElementById(contact + "_arrow_class").classList.add('outcome-msg');
+			document.getElementById(contact + "_arrow_class").classList.add('fa-arrow-up');
+
 			document.getElementById(contact + "_arrow_class").classList.remove('income-msg');
+			document.getElementById(contact + "_arrow_class").classList.remove('fa-arrow-down');
 		}else{
-			document.getElementById(contact + "_arrow_class").classList.remove('outcome-msg');
 			document.getElementById(contact + "_arrow_class").classList.add('income-msg');
+			document.getElementById(contact + "_arrow_class").classList.add('fa-arrow-down');
+
+			document.getElementById(contact + "_arrow_class").classList.remove('outcome-msg');
+			document.getElementById(contact + "_arrow_class").classList.remove('fa-arrow-up');
 		}
 
 		// change the content of the curren selected contect
@@ -299,19 +305,18 @@ jQuery( document ).ready( function( $ ) {
 function reset_defults(){
 	if(!document.getElementsByName("current_contact")){
 		document.getElementById('current_contact').value =  0 ;
-		document.getElementById('00201096808707_hdn_inpt').value =  '{}' ;
 	}		
 }
 function move_to_top(id){
-		var contact = jQuery('#'+id).clone();
-		jQuery( "#"+id ).remove();
-		jQuery("#chat-list").prepend(contact);
+	const contact = document.getElementById(id); 
+	const list = document.getElementById("chat-list"); 
+	list.prepend(contact);
 }
 /****************************************************** Executive Code ******************************************************/
 reset_defults();
 jQuery(".chat-list-item").click(function(e){
 	var current =  this.id;
-	show_msgs(current);
+	// show_msgs(current);
 	// change the selected contact / mark the contact
 	jQuery(".active").each(function() {
 		document.getElementById(this.id).classList.remove('active');

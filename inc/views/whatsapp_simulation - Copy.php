@@ -22,15 +22,14 @@
 				<?php 
 		
 			foreach ($main_msgs_array as $key => $contact) { 
-				
 				$main_id  	 =  message_reciever_number($key) ;
-				$arrow_class =  $contact['last_msg_direction'] == 1 ? "fas fa-arrow-up outcome-msg" :  "fas fa-arrow-down income-msg" ;
+				$arrow_class =  isset($contact->last_msg_direction) && $contact->last_msg_direction == 1 ? "fas fa-arrow-down income-msg" :  "fas fa-arrow-up outcome-msg" ;
 			?>
-				<div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom  main-contact" id="<?= $main_id ;?>" onclick="show_msgs('<?= $main_id ;?>')" >
+				<div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom  main-contact" id="<?= $main_id ;?>" >
 					<img id="<?= $main_id?>_pic" src="<?= $contact['img']; ?>" alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
 					<div class="w-50">
 						<div id="<?= $main_id?>_name" class="name">
-							<?= $contact['name']; ?> 
+							<?= $contact['name']; ?>
 							<i id="<?= $main_id ?>_available_icon"  class="fas <?= $contact['available_icon']; ?>"></i>	
 						</div>
 						<div class="small last-message"><i id="<?= $main_id?>_arrow_class" class="<?= $arrow_class; ?>"></i>
@@ -167,3 +166,84 @@
 
 
 </div>
+
+
+<script>
+jQuery(function(){
+jQuery('input').on('click', function(){
+  var valeur = 0;
+  jQuery('input:checked').each(function(){
+       if ( jQuery(this).attr('value') > valeur )
+       {
+           valeur =  jQuery(this).attr('value');
+       }
+  });
+  jQuery('.progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);    
+});
+
+});
+</script>
+<style>
+.tasks{
+	background-color: #F6F8F8;
+	padding: 10px;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+.tasks span{
+	font-weight: bold;
+}
+.tasks input{
+	display: block;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+.tasks a{
+	color: #000;
+	text-decoration: none;
+	border:none;
+}
+.tasks a:hover{
+	border-bottom: dashed 1px #0088cc;
+}
+.tasks label{
+	display: block;
+	text-align: center;
+}
+</style>
+
+ <div class="progress progress-striped active">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        </div>
+    </div>
+<div class="row tasks">
+        <div class="col-md-6">
+          <p><span>Identify your campaign audience.</span>Who are we talking to here? Understand your buyer persona before launching into a campaign, so you can target them correctly.</p>
+        </div>
+        <div class="col-md-2">
+          <label>2014-01-29</label>
+        </div>
+        <div class="col-md-2">
+          <input name="progress" class="progress" type="checkbox" value="10">
+        </div>
+        <div class="col-md-2">
+          <input name="done" class="done" type="checkbox" value="20">
+        </div>
+      </div><!-- tasks -->
+
+<div class="row tasks">
+        <div class="col-md-6">
+          <p><span>Set your goals + benchmarks</span>Having SMART goals can help you be
+sure that you’ll have tangible results to share with the world (or your
+boss) at the end of your campaign.</p>
+        </div>
+        <div class="col-md-2">
+          <label>2014-01-25</label>
+        </div>
+        <div class="col-md-2">
+          <input name="progress" class="progress" type="checkbox" value="30">
+        </div>
+        <div class="col-md-2">
+          <input name="done" class="done" type="checkbox" value="40">
+        </div>
+      </div><!-- tasks -->
