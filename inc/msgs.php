@@ -124,3 +124,27 @@ function get_emojis(){
     $emojis['smiles'] =  '😀 😃 😄 😁 😆 😅 😂 🤣 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾';
     return $emojis ;
 }
+
+function get_unsent_queried_msgs($sub) {
+	global $wpdb;
+	$charset_collate = $wpdb->get_charset_collate();
+    $table_name = get_sessions_name($sub);
+    
+    $tables[$sub] = $table_name ; 
+    return $tables ;
+    
+    $sql = "CREATE TABLE $table_name (
+        id INT(11) NOT NULL AUTO_INCREMENT ,
+        mobileNumber VARCHAR(20) NOT NULL ,
+        textMessage VARCHAR(2000) NOT NULL ,
+        isSent TINYINT(1) NOT NULL ,
+        note VARCHAR(255) NOT NULL ,
+        source TINYINT(1) NOT NULL ,
+        status TINYINT(1) NOT NULL ,
+        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+        updatedAt DATETIME NOT NULL ,
+        PRIMARY KEY (id)
+	)"; $charset_collate;
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
+}

@@ -127,6 +127,7 @@ function sendMessage (){
 		jQuery.ajax({
 			type: "post",url: "admin-ajax.php",data: { action: 'send_instant_msg_action' , _wpnonce: _wpnonce , msg :  msg , num : num , sub : sub , sign :  sign , files : files , last_message_number :  last_message_number },
 			success: function(rsp){ 
+				document.getElementById("msgs_counter").innerHTML = rsp.balance;
 				var msgs =	rsp.msgs;
 				update_msgs_graphical(msgs);		
 				document.getElementById(num+'_signature').value =  2 ;
