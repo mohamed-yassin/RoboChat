@@ -9,7 +9,7 @@ function cpt_clients() {
 	$labels = [
 		"name" => __( "Clients", "twentytwenty" ),
 		"singular_name" => __( "Client", "twentytwenty" ),
-		"menu_name" => __( "My Clients", "twentytwenty" ),
+		"menu_name" => __( "Clients", "twentytwenty" ),
 		"all_items" => __( "All Clients", "twentytwenty" ),
 		"add_new" => __( "Add new", "twentytwenty" ),
 		"add_new_item" => __( "Add new Client", "twentytwenty" ),
@@ -75,7 +75,7 @@ function cpt_templates() {
 	$labels = [
 		"name" => __( "Templates", "twentytwenty" ),
 		"singular_name" => __( "Template", "twentytwenty" ),
-		"menu_name" => __( "My Templates", "twentytwenty" ),
+		"menu_name" => __( "Templates", "twentytwenty" ),
 		"all_items" => __( "All Templates", "twentytwenty" ),
 		"add_new" => __( "Add new", "twentytwenty" ),
 		"add_new_item" => __( "Add new Template", "twentytwenty" ),
@@ -132,6 +132,74 @@ function cpt_templates() {
 
 	register_post_type( "template", $args );
 }
+function cptui_register_my_cpts_chatbox() {
+
+	/**
+	 * Post Type: Chat Boxes.
+	 */
+
+	$labels = [
+		"name" => __( "Chat Boxes", "twentytwenty" ),
+		"singular_name" => __( "Chat Box", "twentytwenty" ),
+		"menu_name" => __( "Chat Boxes", "twentytwenty" ),
+		"all_items" => __( "All Chat Boxes", "twentytwenty" ),
+		"add_new" => __( "Add new", "twentytwenty" ),
+		"add_new_item" => __( "Add new Chat Box", "twentytwenty" ),
+		"edit_item" => __( "Edit Chat Box", "twentytwenty" ),
+		"new_item" => __( "New Chat Box", "twentytwenty" ),
+		"view_item" => __( "View Chat Box", "twentytwenty" ),
+		"view_items" => __( "View Chat Boxes", "twentytwenty" ),
+		"search_items" => __( "Search Chat Boxes", "twentytwenty" ),
+		"not_found" => __( "No Chat Boxes found", "twentytwenty" ),
+		"not_found_in_trash" => __( "No Chat Boxes found in trash", "twentytwenty" ),
+		"parent" => __( "Parent Chat Box:", "twentytwenty" ),
+		"featured_image" => __( "Featured image for this Chat Box", "twentytwenty" ),
+		"set_featured_image" => __( "Set featured image for this Chat Box", "twentytwenty" ),
+		"remove_featured_image" => __( "Remove featured image for this Chat Box", "twentytwenty" ),
+		"use_featured_image" => __( "Use as featured image for this Chat Box", "twentytwenty" ),
+		"archives" => __( "Chat Box archives", "twentytwenty" ),
+		"insert_into_item" => __( "Insert into Chat Box", "twentytwenty" ),
+		"uploaded_to_this_item" => __( "Upload to this Chat Box", "twentytwenty" ),
+		"filter_items_list" => __( "Filter Chat Boxes list", "twentytwenty" ),
+		"items_list_navigation" => __( "Chat Boxes list navigation", "twentytwenty" ),
+		"items_list" => __( "Chat Boxes list", "twentytwenty" ),
+		"attributes" => __( "Chat Boxes attributes", "twentytwenty" ),
+		"name_admin_bar" => __( "Chat Box", "twentytwenty" ),
+		"item_published" => __( "Chat Box published", "twentytwenty" ),
+		"item_published_privately" => __( "Chat Box published privately.", "twentytwenty" ),
+		"item_reverted_to_draft" => __( "Chat Box reverted to draft.", "twentytwenty" ),
+		"item_scheduled" => __( "Chat Box scheduled", "twentytwenty" ),
+		"item_updated" => __( "Chat Box updated.", "twentytwenty" ),
+		"parent_item_colon" => __( "Parent Chat Box:", "twentytwenty" ),
+	];
+
+	$args = [
+		"label" => __( "Chat Boxes", "twentytwenty" ),
+		"labels" => $labels,
+		"description" => "",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"has_archive" => false,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"rewrite" => [ "slug" => "chatbox", "with_front" => true ],
+		"query_var" => true,
+		"supports" => [ "title", "editor", "thumbnail" ],
+	];
+
+	register_post_type( "chatbox", $args );
+}
+
+add_action( 'init', 'cptui_register_my_cpts_chatbox' );
 /////////////////////////////////////////////////////////////  Taxonomies /////////////////////////////////////////////////////////////
 function cptui_register_my_taxes_list() {
 

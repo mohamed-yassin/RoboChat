@@ -23,6 +23,7 @@ define('js',assets .'js/');
 define('imgs',assets .'imgs/');
 define('dflt_user_img',imgs .'dflt_user.png');
 define('autoloader_path' , plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' );
+define('daily_msgs' , 3*60*24 );  //3msg/min * 60 min/hr * 24 hr/day
 
 $understrap_includes = array(
 	'config',								// Main Config Settings
@@ -43,7 +44,8 @@ $understrap_includes = array(
 	'global_test',  						// just for testing
 	'meta_bxs',								// custom meta boxes
 	'users',								// Users
-	
+	'chatbot',								// ChatBot
+	'api',									// RoboChat  Api End Points 
 	'do_actions',							// THE MAIN CONTROLLER USING WP HOCK
 );
 

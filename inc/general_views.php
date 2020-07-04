@@ -103,7 +103,7 @@ function render_dynamic_table($headers,$body){
     	</thead>
 		<tbody>
             <?php
-                foreach ($body as $key => $row) {
+                foreach ((array)$body as $key => $row) {
                     echo "<tr>";
                         foreach ($row as $item_key => $row_item) {
                             echo "<td scope='col' id='$item_key' class='manage-column column-$item_key'>$row_item</td>";

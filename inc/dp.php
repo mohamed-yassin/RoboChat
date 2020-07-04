@@ -16,13 +16,14 @@ function create_custom_msgs_table($sub) {
         source TINYINT(1) NOT NULL ,
         status TINYINT(1) NOT NULL ,
         createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-        updatedAt DATETIME NOT NULL ,
+        updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
 	)"; $charset_collate;
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta( $sql );
 }
 function create_sessions_table($sub) {
+    /*
 	global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
     $table_name = get_sessions_name($sub);
@@ -36,14 +37,18 @@ function create_sessions_table($sub) {
         source TINYINT(1) NOT NULL ,
         status TINYINT(1) NOT NULL ,
         createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-        updatedAt DATETIME NOT NULL ,
+        updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
 	)"; $charset_collate;
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	dbDelta( $sql );
+    dbDelta( $sql );
+    */
 }
 function get_msgs_table_name($sub){
     return slug."_msgs_".$sub;
+}
+function get_table_name($sub,$table){
+    return slug."_".$table."_".$sub;
 }
 function get_sessions_name($sub){
     return slug."_sessions_".$sub;

@@ -39,10 +39,8 @@ add_action( 'wp_ajax_update_session_action', 'update_session' );
 add_action( 'wp_ajax_update_data_action', 'update_data' );
 add_action( 'wp_ajax_chat_api_main_processes_action', 'chat_api_main_processes' );
 
-// enqueue CSS & JS files
+// Enqueue CSS & JS files
 add_action( 'admin_enqueue_scripts', 'enqueue' );
-
-// add the media uploader
 add_action( 'wp_enqueue_scripts', function () { wp_enqueue_media ();}  );
 
 // Custom Meta Boxes
@@ -50,3 +48,6 @@ add_action( 'show_user_profile', 'customer_service_client_permissions' );
 add_action( 'edit_user_profile', 'customer_service_client_permissions' );
 add_action( 'personal_options_update', 'update_permissions' );
 add_action( 'edit_user_profile_update', 'update_permissions' );
+
+// Admin Pages
+add_action( 'admin_init', 'roboChat_settings_init' );

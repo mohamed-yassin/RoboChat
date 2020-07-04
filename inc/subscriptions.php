@@ -1,28 +1,43 @@
 <?php
 function subscription_handler($sub){
     $blog =  isset( $_REQUEST['dashboards_option_field'] ) ? $_REQUEST['dashboards_option_field']  : 0  ;
+    involve_sub_to_dashboard($blog , $sub->ID);
+}
+function sub_path($sub){
+    return "sub_" . $sub;
+}
+function  involve_sub_to_dashboard($blog , $sub ,    $old_parent = 0){
     $user = get_current_user_id();
 
     if($blog  ==  0){
         // make blog for the client 
-        $title   = " :: MY RoboChat Sub" ;
-        $path    = "sub_" . $sub->ID; 
+        $title   = "MY #$sub Sub" ;
+        $path    = sub_path($sub);
         $options = array();
         $blog    = wpmu_create_blog( domain , $path, $title, $user , $options ,  1);
+        if(!(is_numeric($blog) && $blog >  0)){ // if their is an error 
+            $blog =  0 ; 
+        }
     }
     // add the sub to the realated blog
-    add_sub_to_blog($blog,$sub->ID);
+    add_sub_to_blog($blog,$sub);
 
     // make new dp_tables
-    create_custom_msgs_table($sub->ID);
+    create_custom_msgs_table($sub);
 
     // update data of the supscription
-    update_field('web_hock',get_open_hock(),  $sub->ID);        
-    
+    update_field('web_hock', get_web_hook_link($blog , $sub) ,  $sub);        
+    update_field('parent_blog', $blog ,  $sub);        
+    update_field(' defult_daily_msgs',daily_msgs,  $sub);        
+    update_field('available_daily_msgs',daily_msgs,  $sub);        
+
     // save data of the proceess in posts for testing
     test_post($dashboard);
+    return $blog ;
 }
+function get_web_hook_link($blog , $sub){
 
+}
 function user_dashboards_option_field($checkout)
 
 {
@@ -126,4 +141,23 @@ function get_post_data_from_the_main_blog($sub){
     $post =  get_post($sub);
     restore_current_blog(); 
     return $post ; 
+}
+function is_sub_page(){
+    if(  !isset($_GET['page'])    ){
+        return false ;
+    }
+    $page       =  $_GET['page'];
+    $explode    = explode('_',$page);
+    if($explode[0] == 'sub'){
+        return true ; 
+    }else {
+        return false ;
+    }
+}
+function is_client_screen(){
+    if( (isset($_GET['post_type']) &&   $_GET['post_type'] == 'client') || get_post($_GET['post'])->post_status == 'client' ){
+        return  true ;
+    }else {
+        return  false ;
+    }
 }

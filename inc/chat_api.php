@@ -31,6 +31,7 @@ function whatsapp_messeges($api,$token,$filters= array())
     $url = $api.'messages?token='.$token.$filter_as_string;
     $result = file_get_contents($url);
     $result = json_decode($result);
+    pre($result);
     return $result;
 }
 function whatsapp_send_messege($sub,$parametars, $type = 'chat')
@@ -39,7 +40,7 @@ function whatsapp_send_messege($sub,$parametars, $type = 'chat')
     if($sub_connection_data['msgs']  && $sub_connection_data['msgs'] >  0 ){
         if($type == 'file'){
             $url =  $sub_connection_data['api'].'sendFile?token='.$sub_connection_data['token'];
-        }else { // if type == msg
+        }else {
             $url =  $sub_connection_data['api'].'sendMessage?token='.$sub_connection_data['token'];
             $response['msg'] =  restore_new_line($parametars['body']) ; 
         }
@@ -110,6 +111,7 @@ function chat_api_main_processes(){
     $token      =  $_POST['token'];
     $process    =  $_POST['process'];
     $result     =  array();
+    $post       =  $_POST['post'];
     if($process == 'connect' ){
         $result = chat_api_whatsapp_connect($api,$token);
         $result_array =  json_decode($result ,true);
@@ -122,6 +124,12 @@ function chat_api_main_processes(){
     }elseif($process == 'reboot') {
         echo 'يناء علي chat api فانه لن يتم توصيل عمليات علي السيرفر لمده 5 دقايق من الان وستكون كل ردود الapi غير مكتمله </br>';
         $result = chat_api_whatsapp_reboot($api,$token);
+    }elseif($process == 'reactive') {
+        $my_sub = array(
+            'ID'           => $post,
+            'post_status' => 'wc-active',
+        );
+        echo  wp_update_post( $my_sub ) >  0  ?  "تم تجديد الاشتراك"  :  "هناك مشكله في التحديث";
     }
 
     $result = @json_decode($result,true);
@@ -142,4 +150,39 @@ function make_response_ul($ul,$ul_name=''){
     }else {
         echo "</br><li>$ul</li></br>";
     }
+}
+function chat_api_set_webhock($api,$token,$hook)
+{
+    $url = $api.'webhook?token='.$token;
+    $data = array( 'webhookUrl' => $hook );
+    $json = json_encode($data); // Encode data to JSON
+
+    // Make a POST request
+    $options = stream_context_create(['http' => [
+            'method'  => 'POST',
+            'header'  => 'Content-type: application/json',
+            'content' => $json
+        ]
+    ]);
+    // Send a request
+    $result = array();
+    // return  file_get_contents($url, false, $options);
+}
+function demo_chat_api_msg(){
+    $msg = new \stdClass();
+	$msg->id 			= 'true_966599950800@c.us_3EB01A731400C85F8867';
+	$msg->body 			= 'رساله تجريبيه';
+	$msg->fromMe 		= 1;
+	$msg->author 		= '201096808707@c.us';
+	$msg->time 			= 1564611595;
+	$msg->chatId 		= '966599950800@c.us';
+	$msg->messageNumber = 23;
+	$msg->type	 		= 'chat';
+	$msg->senderName 	= 'Business Expert';
+	$msg->self 			= '0';
+	$msg->isForwarded 	= '0';
+	$msg->quotedMsgBody = '';
+	$msg->quotedMsgId 	= '';
+	$msg->chatName 		= '+966 59 995 0800';
+	return $msg ;
 }

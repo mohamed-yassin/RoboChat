@@ -15,7 +15,7 @@ function robo_orders_admin_page_render(){
 		array(
 			'numberposts' => -1,
 			'post_type'   => 'shop_subscription',
-			'post_status' => 'all' // because the defult of the wp is publish so it will not get data 
+			'post_status' => 'wc-active' // because the defult of the wp is publish so it will not get data 
 		)
 	);
 	$conditions =  array(
@@ -59,8 +59,8 @@ function robochat_settings(){ ?>
 	<h3>اعاده تسميه الاشتراكات</h3>
 
 			<?php
-			settings_fields( 'pluginPage' );
-			do_settings_sections( 'pluginPage' );
+			settings_fields( 'roboChat_settings' );
+			do_settings_sections( 'roboChat_settings' );
 			submit_button();
 			?>
 
@@ -132,31 +132,44 @@ function whatsappapi_options_page() {
 		echo " لا يمكن الدخول الي الحساب من فضلك راسل الاداره لتفعيل الحساب" ;
 	}
 }
-add_action( 'admin_init', 'roboChat_settings_init' );
 
 
 function roboChat_settings_init(  ) { 
 
-	register_setting( 'pluginPage', 'roboChat_settings' );
+	register_setting( 'roboChat_settings', 'roboChat_settings' );
 
 	add_settings_section(
-		'roboChat_pluginPage_section', 
+		'roboChat_roboChat_settings_section', 
 		__( '', 'robo' ), 
 		'roboChat_settings_section_callback', 
-		'pluginPage'
+		'roboChat_settings'
 	);
 
 	add_settings_field( 
 		'roboChat_text_field_0', 
 		__( 'Rename Subscriptios', 'robo' ), 
 		'roboChat_text_field_0_render', 
-		'pluginPage', 
-		'roboChat_pluginPage_section' 
+		'roboChat_settings', 
+		'roboChat_roboChat_settings_section' 
+	);
+	/*
+	add_settings_field( 
+		'roboChat_settings_webhock', 
+		__( 'Web Hock', 'robo' ), 
+		'roboChat_settings_webhock_render', 
+		'roboChat_settings', 
+		'roboChat_roboChat_settings_section' 
+	);
+	*/
+	add_settings_field( 
+		'roboChat_settings_chatbox', 
+		__( 'Select Chat Box', 'robo' ), 
+		'roboChat_settings_chatbox_render', 
+		'roboChat_settings', 
+		'roboChat_roboChat_settings_section' 
 	);
 
-
 }
-
 
 function roboChat_text_field_0_render(  ) { 
 	$user_blogs 	= subs_option_field_array();
@@ -167,7 +180,7 @@ function roboChat_text_field_0_render(  ) {
 			$name=  'sub_'.$blog.'_name';
 			?>
 			<tr>
-				<th scope="row">Subscriptions #<?= $blog ?></th>
+				<th scope="row">Subscription #<?= $blog ?></th>
 				<td>
 					<input type="text" name="roboChat_settings[<?= $name ?>]" value='<?=  isset($options[$name]) ?  $options[$name] :  '' ; ?>'>
 				</td>
@@ -178,6 +191,68 @@ function roboChat_text_field_0_render(  ) {
 	?>	
 	<?php
 }
+function roboChat_settings_webhock_render(  ) { 
+	$user_blogs 	= subs_option_field_array();
+	$options = get_option( 'roboChat_settings' );
+
+	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
+		foreach ($user_blogs as $blog) { 
+			$name=  'sub_'.$blog.'_webhock';
+			?>
+			<tr>
+				<th scope="row">Subscription #<?= $blog ?></th>
+				<td>
+					<input class="rob-custom-field" type="text" name="roboChat_settings[<?= $name ?>]" value='<?=  isset($options[$name]) ?  $options[$name] :  '' ; ?>'>
+				</td>
+			</tr>
+		<?php }
+	}
+
+	?>	
+
+<?php }
+
+function roboChat_settings_chatbox_render(  ) { 
+	$user_blogs 	= subs_option_field_array();
+	$options = get_option( 'roboChat_settings' );
+	$chat_boxex =  get_posts(array(
+		'numberposts' => -1,
+		'post_type'   => 'chatbox',
+	));
+	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
+		foreach ($user_blogs as $blog) { 
+			$name=  'sub_'.$blog.'_chatbox';
+			$value =  isset($options[$name]) && $options[$name] >  0 ? $options[$name] :  0 ;
+			?>
+			<tr>
+				<th scope="row">Subscription #<?= $blog ?>   
+			</th>
+				<td>
+					<?php
+						$title=  'No Automated Ansering' ;
+						$val =  0 ; 
+						$id=  $val."_".$blog;
+						$checked =  $value == $val ? 'checked'  : '';
+						echo "<input id='$id'  type='radio' name='roboChat_settings[$name]' $checked value='$val'>";
+						echo "<label for='$id'>$title</label>";
+
+						foreach ($chat_boxex as $chat_box) {
+							$title=  $chat_box->post_title ;
+							$val =  $chat_box->ID ; 
+							$id=  $val."_".$blog;
+							$checked =  $value == $val ? 'checked'  : '';
+							echo "<input id='$id' type='radio' name='roboChat_settings[$name]' $checked value='$val'>";
+							echo "<label for='$id'>$title</label>";
+						}
+					?>
+				</td>
+			</tr>
+		<?php }
+	}
+
+	?>	
+
+<?php }
 
 
 function roboChat_settings_section_callback(  ) { 
@@ -194,11 +269,22 @@ function roboChat_options_page(  ) {
 			<h2>RoboChat Settings</h2>
 
 			<?php
-			settings_fields( 'pluginPage' );
-			do_settings_sections( 'pluginPage' );
+			settings_fields( 'roboChat_settings' );
+			do_settings_sections( 'roboChat_settings' );
 			submit_button();
 			?>
 
 		</form>
 		<?php
 }
+
+
+
+ function roboChat_settings_page_options_after_save( $old_value, $new_value ) {
+	$body =  array_to_text($old_value , 'old_value');
+	$body .= array_to_text($new_value , 'new_value');
+
+	//test_post("roboChat_settings  change" ,  $body );
+   }
+
+   add_action( 'update_option_roboChat_settings', 'roboChat_settings_page_options_after_save', 10, 2 );

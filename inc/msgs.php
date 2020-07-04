@@ -90,7 +90,7 @@ function compose_messages_handler() {
         $clients[]  = $client->ID ;     ; 
     }
 
-    $clients = array_unique($clients);
+    $clients = array_unique((array)$clients);
 
 
     if(is_array($clients)  &&  count($clients) >  0){
@@ -100,14 +100,15 @@ function compose_messages_handler() {
             $msg_body  =  translate_short_codes($msg_body ,$phone);
 
             $data = array(
-                'msg_body' => $msg_body,
-                'type' => $table,
-                'msg_caption' =>$caption, 
                 'mobileNumber' => $phone,
-                'isSent' => '1',
+                'msg_body' => $msg_body,
+                'msg_type' => $table,
+                'msg_caption' =>$caption, 
+                'isSent' => '0',
                 'note' => ' ',
                 'source' => '1',
                 'status' => '1',
+                'createdAt' => '0000-00-00 00:00:00',
                 'updatedAt' => '0000-00-00 00:00:00',
             );
             $wpdb->insert($table,$data);
@@ -115,34 +116,35 @@ function compose_messages_handler() {
     }else {
         $_SESSION['bulk_msg_error'] =  ' ------ لم يتم اضافه اي عملاء ------ ';
     }
-    wp_redirect( $_REQUEST['redirect'] );
-    exit;
+    //wp_redirect( $_REQUEST['redirect'] );
+    //exit;
 };
 function get_emojis(){
     $emojis['smiles'] =  '😀 😃 😄 😁 😆 😅 😂 🤣 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾';
     return $emojis ;
 }
 
-function get_unsent_queried_msgs($sub) {
+function send_unsent_queried_msgs($sub) {
 	global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
-    $table_name = get_sessions_name($sub);
+    $table_name = get_table_name($sub,'msgs');
     
-    $tables[$sub] = $table_name ; 
-    return $tables ;
-    
-    $sql = "CREATE TABLE $table_name (
-        id INT(11) NOT NULL AUTO_INCREMENT ,
-        mobileNumber VARCHAR(20) NOT NULL ,
-        textMessage VARCHAR(2000) NOT NULL ,
-        isSent TINYINT(1) NOT NULL ,
-        note VARCHAR(255) NOT NULL ,
-        source TINYINT(1) NOT NULL ,
-        status TINYINT(1) NOT NULL ,
-        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-        updatedAt DATETIME NOT NULL ,
-        PRIMARY KEY (id)
-	)"; $charset_collate;
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	dbDelta( $sql );
+    $unsent_msgs = $wpdb->get_results( "SELECT * FROM $table_name WHERE isSent = 0 " );
+    foreach ($unsent_msgs as $key => $msg) {
+        $parametars['phone'] =  $msg->mobileNumber ; 
+        if($msg->msg_type == 'file'){
+            $parametars['body']     = production !== true ? 'https://cdn.pixabay.com/user/2014/05/07/00-10-34-2_250x250.jpg' : $msg->msg_body ;
+            $parametars['caption']  = $msg->msg_caption;
+            $parametars['filename'] = 'image';
+        }else {
+            $parametars['body']     = $msg->msg_body;
+        }
+        $response =  whatsapp_send_messege($sub,$parametars, $msg->msg_type);
+        if($response['status']  == 1 ){
+            $data  = array('isSent' => '1');
+            $where = array('id' => $msg->id);
+            $wpdb->update( $table_name, $data, $where ); // Also works in this case.    
+        }
+    }
+    return $myrows ;
 }

@@ -1,20 +1,14 @@
 <?php
 
-// vars
-//**   FIELD_LABEL
-//**   FIELD_LABEL
-
-
-
 // exit if accessed directly
 if( ! defined( 'ABSPATH' ) ) exit;
 
 
 // check if class already exists
-if( !class_exists('NAMESPACE_acf_field_connection_button') ) :
+if( !class_exists('NAMESPACE_acf_field_web_hook_link') ) :
 
 
-class NAMESPACE_acf_field_connection_button extends acf_field {
+class NAMESPACE_acf_field_web_hook_link extends acf_field {
 	
 	
 	/*
@@ -36,14 +30,14 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 		*  name (string) Single word, no spaces. Underscores allowed
 		*/
 		
-		$this->name = 'connection_button';
+		$this->name = 'web_hook_link';
 		
 		
 		/*
 		*  label (string) Multiple words, can include spaces, visible when selecting a field type
 		*/
 		
-		$this->label = __('Connection Button', 'TEXTDOMAIN');
+		$this->label = __('web hook link', 'TEXTDOMAIN');
 		
 		
 		/*
@@ -61,7 +55,7 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 		
 		/*
 		*  l10n (array) Array of strings that are used in JavaScript. This allows JS strings to be translated in PHP and loaded via:
-		*  var message = acf._e('connection_button', 'error');
+		*  var message = acf._e('web_hook_link', 'error');
 		*/
 		
 		$this->l10n = array(
@@ -97,15 +91,7 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 	
 	function render_field_settings( $field ) {
 		
-		/*
-		*  acf_render_field_setting
-		*
-		*  This function will create a setting for your field. Simply pass the $field parameter and an array of field settings.
-		*  The array of settings does not require a `value` or `prefix`; These settings are found from the $field array.
-		*
-		*  More than one setting can be added by copy/paste the above code.
-		*  Please note that you must also have a matching $defaults value for the field name (font_size)
-		*/
+
 
 	}
 	
@@ -125,8 +111,10 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 	*  @param	$field (array) the $field being edited
 	*  @return	n/a
 	*/
-
-	function render_field( $field ) {		
+	
+	function render_field( $field ) {
+		
+		
 		/*
 		*  Review the data of $field.
 		*  This will show what data is available
@@ -137,58 +125,8 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 		*  Create a simple text input using the 'font_size' setting.
 		*/
 		
-
-		
 		?>
-		<?php 
-			$post  = get_post($_GET['post']) ;
-			
-			$buttons =  array(
-				array('id' => 'connect','title'=>'Connect'),
-				array('id' => 'disconnect','title'=>'Disconnect'),
-				array('id' => 'reboot','title'=>'Reboot'),	
-			);
-			if($post->post_status == 'wc-cancelled'){
-				$buttons[] =  array('id' => 'reactive','title'=>'Reactive the Subscription') ; 
-				?>
-			<?php } ?>
-		<div style="width: 75%; display :inline"> 
-				<?php 
-					foreach ($buttons as $button) { ?>
-						<button type="button" data-post= "<?= $post->ID ?>" class="button button-primary" data-toggle="modal" data-target="#<?= $button['id']; ?>Modal" ><?= $button['title']; ?></button>
-						<!-- Modal -->
-						<div class="modal fade" id="<?= $button['id']; ?>Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel"><?= $button['title']; ?></h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary connection-button" id="<?= $button['id']; ?>"  data-dismiss="modal">Agree</button>
-							</div>
-							</div>
-						</div>
-						</div>
-					<?php }
-				?>
-		</div>
-		<div style="width: 25%; display :inline ; float :  right  "> 
-				<p style="font-weight: bold">Connect :</p>
-				<p>Get the account status and QR code for authorization. </p> 
-
-
-			<p style="font-weight: bold" >Disconnect :</p>
-			<p>Close the connection between your instance and the connected phone </p>
-
-			<p style="font-weight: bold">Reboot :</p>
-			<p>Reboot your whatsapp instance </p>
-
-		</div>
-		<div class="connect_response" id="chat_api_response"></div>
+		<input type="text" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>" />
 		<?php
 	}
 	
@@ -395,15 +333,17 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 	*  @return	$value
 	*/
 	
-	/*
+	
 	
 	function update_value( $value, $post_id, $field ) {
-		
-		return $value;
-		
+		$api 	=  get_field('api',$post_id);
+		$token 	=  get_field('token',$post_id);
+		$result = chat_api_set_webhock($api , $token ,  $value );
+		$result =json_decode($result,true);
+		return $result['webhookUrl'];
 	}
 	
-	*/
+	
 	
 	
 	/*
@@ -596,7 +536,7 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 
 
 // initialize
-new NAMESPACE_acf_field_connection_button( $this->settings );
+new NAMESPACE_acf_field_web_hook_link( $this->settings );
 
 
 // class_exists check

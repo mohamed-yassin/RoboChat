@@ -78,8 +78,10 @@ class NAMESPACE_acf_plugin_FIELD_NAME {
 		
 		
 		// include
-		include_once('fields/open_port.php');
+		include_once('fields/open_port.php'); 
 		include_once('fields/connection_button.php');
+		include_once('fields/web_hook_link.php');
+		include_once('fields/parent_blog.php');
 	}
 	
 }

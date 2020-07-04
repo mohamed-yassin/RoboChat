@@ -71,14 +71,19 @@ function test_windows()
 }
 if( production == false){ test_windows();}    // just testing purpose 
 
-function test_post($title){
-	$my_post = array(
+function test_post($title , $body = ''){
+	$my_test_post = array(
         'post_title'    => $title ,
-        'post_content'  => " تم الاشتراك",
-        'post_status'   => 'publish',
+        'post_content'  => array_to_text($body) ,
+        'post_status'   => 'draft',
         'post_author'   => 1,
         );
-    return wp_insert_post( $my_post );
+    return wp_insert_post( $my_test_post );
+}
+function array_to_text($array,$title=''){
+	$return = $title == '' ? $title :  "<h3>$title</h3> ";
+	$return .= is_array($array) ?  json_encode($array) : $array ;
+	return  $return ;
 }
 function view($view,$data = array()){
 	foreach ($data as $var => $value) {

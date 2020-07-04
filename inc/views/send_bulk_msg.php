@@ -1,5 +1,9 @@
 <?php 
-    wp_enqueue_media();
+	if($_POST){
+		compose_messages_handler();
+	}
+	wp_enqueue_media();
+	// form action :: esc_url( admin_url('admin-post.php') ); 
     ?>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
 	integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
@@ -20,7 +24,7 @@
 	<?php 
 			unset($_SESSION['bulk_msg_error']);
 } ?>
-    <form action="<?= esc_url( admin_url('admin-post.php') ); ?>" method="post">
+    <form action="#" method="post">
     
     <input type="hidden" name="action" value="compose_messages">
     <input type="hidden" name="redirect" value="<?= current_sub_page_url('&process=send_msg'); ?>">
@@ -30,7 +34,7 @@
 				<input type='hidden' name='files' id='files' value=''>
 				<input id="current_wpnonce"  name= "current_wpnonce" type ="hidden" value="<?= robo_nonce() ?>">
 				<input id="sub" name="sub" type="hidden" value="<?=  get_page_sub_id() ?>" >
-				<textarea name="msg" id="input" placeholder="اكتب رسالة" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm send-bulk-msg-area auto-aligning"></textarea>
+				<textarea required name="msg" id="input" placeholder="اكتب رسالة" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm send-bulk-msg-area auto-aligning"></textarea>
 				<div class="nav-item dropdown ml-auto">
 					<div class="">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

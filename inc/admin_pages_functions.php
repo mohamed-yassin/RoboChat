@@ -21,7 +21,7 @@ function get_clients(){
     );
     $clients =  (array)get_posts($args);
     foreach ($clients as $key => $client) {
-        $clients[$key]->phone = get_field('phone',$client->ID);
+        $clients[$key]->phone = get_post_meta( $client->ID , 'phone', true ) ;
     }
     return $clients;
 }
@@ -88,3 +88,20 @@ function has_access_to_this_sub(){
     $subs = subs_option_field_array();
     return in_array($sub,$subs) ?  true :  false ; 
 }
+function robochat_settings_page_render(){ ?>
+    <form action="#" method="post">
+            <tr>
+				<th scope="row">Subscriptions #83</th>
+				<td>
+					<input type="text" name="roboChat_settings[sub_83_name]" value="sub 83">
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">Subscriptions #86</th>
+				<td>
+					<input type="text" name="roboChat_settings[sub_86_name]" value="rrwerwer">
+				</td>
+			</tr>
+	</tbody></table><p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes"></p>ss
+		</form>
+<?php }

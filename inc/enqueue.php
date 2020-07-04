@@ -9,7 +9,14 @@ function enqueue() {
 
 		$js_files[]	 = array('popper.min');
 		$js_files[]	 = array('bootstrap.min');
-		$js_files[]	 = array('whatsapp_simulation');
+		
+		if(is_sub_page()){
+			$js_files[]	 = array('whatsapp_simulation');
+		}
+		if(get_current_screen()->id ==  'client'){
+			$js_files[]	 = array('client_screen');
+		}
+		
 		$js_files[]	 = array('robochat');
 
 	foreach ((array)$css_files as $css) {
