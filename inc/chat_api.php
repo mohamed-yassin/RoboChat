@@ -165,7 +165,7 @@ function chat_api_set_webhock($api,$token,$hook)
     ]);
     // Send a request
     $result = array();
-    // return  file_get_contents($url, false, $options);
+    return  file_get_contents($url, false, $options);
 }
 function demo_chat_api_msg(){
     $msg = new \stdClass();

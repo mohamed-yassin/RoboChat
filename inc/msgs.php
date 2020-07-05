@@ -111,7 +111,7 @@ function compose_messages_handler() {
                 'createdAt' => date('Y-m-d h:i:s'),
                 'updatedAt' => date('Y-m-d h:i:s'),
             );
-            $_SESSION['bulk_msg_error'] = $wpdb->insert($table,$data);
+            $wpdb->insert($table,$data);
         };
     }else {
         $_SESSION['bulk_msg_error'] =  ' ------ لم يتم اضافه اي عملاء ------ ';
