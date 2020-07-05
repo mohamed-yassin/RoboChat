@@ -3,7 +3,7 @@
 
 <div class="container-fluid" id="main-container">
 	<div class="row h-100">
-		<div class="col-12 col-sm-5 col-md-3 d-flex flex-column h-100" id="chat-list-area" style="position:relative;">
+		<div class="col-12 col-sm-5 col-md-3 d-flex flex-column h-75" id="chat-list-area" style="position:relative;">
 			<!-- Navbar -->
 			<div class="row d-flex flex-row align-items-center p-2" id="navbar">
 				<div class="text-white font-weight-bold" id="username"><?= get_bloginfo('name');?></div>
@@ -80,7 +80,7 @@
 		</div>
 
 		<!-- Message Area -->
-		<div class="d-none d-sm-flex flex-column col-12 col-sm-7 col-md-7 p-0 h-100" id="message-area">
+		<div class="d-none d-sm-flex flex-column col-12 col-sm-7 col-md-7 p-0 h-75" id="message-area">
 			<div class="w-100 h-100 overlay d-none"></div>
 
 			<!-- Navbar -->

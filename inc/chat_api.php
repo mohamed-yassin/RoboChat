@@ -19,7 +19,7 @@ function whatsapp_messeges($api,$token,$filters= array())
 {
     if(! isset($filters['lastMessageNumber'])){
         $filters['last'] = 'true'; 
-        $filters['limit'] = '0';   
+        $filters['limit'] = '500';   
     }
 
     $filter_as_string = "";
@@ -31,7 +31,6 @@ function whatsapp_messeges($api,$token,$filters= array())
     $url = $api.'messages?token='.$token.$filter_as_string;
     $result = file_get_contents($url);
     $result = json_decode($result);
-    pre($result);
     return $result;
 }
 function whatsapp_send_messege($sub,$parametars, $type = 'chat')

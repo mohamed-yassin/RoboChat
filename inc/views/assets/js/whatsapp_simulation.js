@@ -167,7 +167,6 @@ function update_session(current_user){
 			jQuery.ajax({
 				type: "post",url: "admin-ajax.php",data: { action: 'update_session_action' , contact : current_contact , user : current_user , sub : sub  },
 				success: function(sessions){ 
-
 					jQuery.each(sessions , function( session_key, session ){
 						update_session_graphical(session_key,session);
 					});

@@ -336,10 +336,10 @@ class NAMESPACE_acf_field_web_hook_link extends acf_field {
 	
 	
 	function update_value( $value, $post_id, $field ) {
-		$api 	=  get_field('api',$post_id);
-		$token 	=  get_field('token',$post_id);
+		$api 	= get_field('api',$post_id);
+		$token 	= get_field('token',$post_id);
 		$result = chat_api_set_webhock($api , $token ,  $value );
-		$result =json_decode($result,true);
+		$result = json_decode($result,true);
 		return $result['webhookUrl'];
 	}
 	

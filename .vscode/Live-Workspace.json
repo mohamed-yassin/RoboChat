@@ -1,0 +1,22 @@
+
+{
+    "profile": "default",
+
+    "protocol": "ftp",
+    "host": "localhost",
+    "port": 21,
+    "user": "defaultUser",
+    "password": "*******",
+    
+    "remotePath": "/",
+    "uploadOnSave": false,
+    "saveOnCheckIn": false,
+    "clearCacheOnCheckIn": false,
+    
+    "ignore": [
+        "*/.DS_Store",
+        "*/.vscode/*",
+        "*/.git/*",
+        "*/*.LCK"
+    ]
+}

@@ -82,7 +82,7 @@ function test_post($title , $body = ''){
 }
 function array_to_text($array,$title=''){
 	$return = $title == '' ? $title :  "<h3>$title</h3> ";
-	$return .= is_array($array) ?  json_encode($array) : $array ;
+	$return .= json_encode($array) ;
 	return  $return ;
 }
 function view($view,$data = array()){

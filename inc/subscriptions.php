@@ -1,42 +1,33 @@
 <?php
 function subscription_handler($sub){
     $blog =  isset( $_REQUEST['dashboards_option_field'] ) ? $_REQUEST['dashboards_option_field']  : 0  ;
-    involve_sub_to_dashboard($blog , $sub->ID);
-}
-function sub_path($sub){
-    return "sub_" . $sub;
-}
-function  involve_sub_to_dashboard($blog , $sub ,    $old_parent = 0){
     $user = get_current_user_id();
 
     if($blog  ==  0){
         // make blog for the client 
-        $title   = "MY #$sub Sub" ;
-        $path    = sub_path($sub);
+        $title   = " :: MY RoboChat Sub" ;
+        $path    = "sub_" . $sub->ID; 
         $options = array();
         $blog    = wpmu_create_blog( domain , $path, $title, $user , $options ,  1);
-        if(!(is_numeric($blog) && $blog >  0)){ // if their is an error 
-            $blog =  0 ; 
-        }
     }
     // add the sub to the realated blog
-    add_sub_to_blog($blog,$sub);
+    add_sub_to_blog($blog,$sub->ID);
 
     // make new dp_tables
-    create_custom_msgs_table($sub);
+    create_custom_msgs_table($sub->ID);
 
     // update data of the supscription
-    update_field('web_hock', get_web_hook_link($blog , $sub) ,  $sub);        
-    update_field('parent_blog', $blog ,  $sub);        
-    update_field(' defult_daily_msgs',daily_msgs,  $sub);        
-    update_field('available_daily_msgs',daily_msgs,  $sub);        
-
+    // http://localhost/sub_13/wp-json/robo/v1/talk_to_bot
+    update_field('web_hock',web_hook($blog , $sub ),  $sub->ID);        
+    update_field('defult_daily_msgs',daily_msgs,  $sub->ID);        
+    update_field('available_daily_msgs',daily_msgs,  $sub->ID);        
+    
     // save data of the proceess in posts for testing
     test_post($dashboard);
-    return $blog ;
 }
-function get_web_hook_link($blog , $sub){
-
+function web_hook($blog, $sub){
+    $web_hook = 'http://sub_'+domain+'/wp-json/robo/v1/talk_to_bot/?sub='.$sub;
+    return  $web_hook ;
 }
 function user_dashboards_option_field($checkout)
 

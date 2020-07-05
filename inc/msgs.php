@@ -102,16 +102,16 @@ function compose_messages_handler() {
             $data = array(
                 'mobileNumber' => $phone,
                 'msg_body' => $msg_body,
-                'msg_type' => $table,
+                'msg_type' => $type,
                 'msg_caption' =>$caption, 
                 'isSent' => '0',
                 'note' => ' ',
                 'source' => '1',
                 'status' => '1',
-                'createdAt' => '0000-00-00 00:00:00',
-                'updatedAt' => '0000-00-00 00:00:00',
+                'createdAt' => date('Y-m-d h:i:s'),
+                'updatedAt' => date('Y-m-d h:i:s'),
             );
-            $wpdb->insert($table,$data);
+            $_SESSION['bulk_msg_error'] = $wpdb->insert($table,$data);
         };
     }else {
         $_SESSION['bulk_msg_error'] =  ' ------ لم يتم اضافه اي عملاء ------ ';

@@ -85,7 +85,6 @@ function whatsappapi_options_page() {
 			if(isset($chatapi_sub_status['accountStatus']) && $chatapi_sub_status['accountStatus'] == 'authenticated'){
 				whatsappapi_processes();
 				$process = isset($_GET['process']) ? $_GET['process'] :  "" ;
-
 				if($process != ''){
 					if($process== 'send_msg' && has_robo_permission('send_msg')){
 						$data['emojis'] = get_emojis();

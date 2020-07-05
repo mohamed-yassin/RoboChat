@@ -155,7 +155,7 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 		<div style="width: 75%; display :inline"> 
 				<?php 
 					foreach ($buttons as $button) { ?>
-						<button type="button" data-post= "<?= $post->ID ?>" class="button button-primary" data-toggle="modal" data-target="#<?= $button['id']; ?>Modal" ><?= $button['title']; ?></button>
+						<button type="button" class="button button-primary" data-toggle="modal" data-target="#<?= $button['id']; ?>Modal" ><?= $button['title']; ?></button>
 						<!-- Modal -->
 						<div class="modal fade" id="<?= $button['id']; ?>Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
@@ -168,7 +168,7 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary connection-button" id="<?= $button['id']; ?>"  data-dismiss="modal">Agree</button>
+								<button type="button" class="btn btn-primary connection-button" id="<?= $button['id']; ?>" data-post= "<?= $post->ID ?>" data-dismiss="modal">Agree</button>
 							</div>
 							</div>
 						</div>
