@@ -9,7 +9,7 @@ session_start();
 
 // Gloabal Functions
 function pre($array , $title= ''){
-	echo "<h3>$title</h3><pre>";
+	echo $title != '' ?  "<h3>$title</h3><pre>" :  '';
 	print_r ($array);
 	echo "</pre></br>";
 };
@@ -131,4 +131,13 @@ function render_custom_fields($fields){
 			}
 		}
 	}
+}
+
+function token($string){
+	$string =  slug."@".$string."@"."robochat";
+	return hash('md5', $string );
+}
+function token_time_based($string ,$unit = 'i' , $valid_for = 1, $hash =  'md5'){
+	//units y,m,d,h,i,s
+	//$time = time();
 }

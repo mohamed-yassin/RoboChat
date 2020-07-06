@@ -66,10 +66,10 @@ function compose_messages_handler() {
 
     if(strlen($files) >  0){ 
        $caption     = $msg_body ; 
-       $msg_body    = $files ; 
+       $files       = explode('&&&&&', $files) ;
+       $msg_body    =  wp_get_attachment_url($files[0]);
        $type        = "file";
     }
-
 
     $args =  array(
         'post_type' => 'client',
@@ -83,7 +83,6 @@ function compose_messages_handler() {
         )
     );
 
-
     $lists_clients=get_posts($args);
 
     foreach ($lists_clients as $client) {
@@ -92,18 +91,17 @@ function compose_messages_handler() {
 
     $clients = array_unique((array)$clients);
 
-
     if(is_array($clients)  &&  count($clients) >  0){
         foreach ($clients as $client) {
             $phone =  get_post_meta( $client , 'phone', true );
             $phone =  pure_phone($phone); 
-            $msg_body  =  translate_short_codes($msg_body ,$phone);
+            $msg_body  =  $type == 'chat'  ? translate_short_codes($msg_body ,$phone) : $msg_body ;
 
             $data = array(
                 'mobileNumber' => $phone,
                 'msg_body' => $msg_body,
                 'msg_type' => $type,
-                'msg_caption' =>$caption, 
+                'msg_caption' => translate_short_codes($caption,$phone)  ,
                 'isSent' => '0',
                 'note' => ' ',
                 'source' => '1',
@@ -111,13 +109,12 @@ function compose_messages_handler() {
                 'createdAt' => date('Y-m-d h:i:s'),
                 'updatedAt' => date('Y-m-d h:i:s'),
             );
-            $wpdb->insert($table,$data);
         };
     }else {
         $_SESSION['bulk_msg_error'] =  ' ------ لم يتم اضافه اي عملاء ------ ';
     }
     //wp_redirect( $_REQUEST['redirect'] );
-    //exit;
+    exit;
 };
 function get_emojis(){
     $emojis['smiles'] =  '😀 😃 😄 😁 😆 😅 😂 🤣 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾';
@@ -128,8 +125,7 @@ function send_unsent_queried_msgs($sub) {
 	global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
     $table_name = get_table_name($sub,'msgs');
-    
-    $unsent_msgs = $wpdb->get_results( "SELECT * FROM $table_name WHERE isSent = 0 " );
+    $unsent_msgs = $wpdb->get_results( "select * from  $table_name  where isSent= 0  limit 1 " );
     foreach ($unsent_msgs as $key => $msg) {
         $parametars['phone'] =  $msg->mobileNumber ; 
         if($msg->msg_type == 'file'){
@@ -142,6 +138,10 @@ function send_unsent_queried_msgs($sub) {
         $response =  whatsapp_send_messege($sub,$parametars, $msg->msg_type);
         if($response['status']  == 1 ){
             $data  = array('isSent' => '1');
+            $where = array('id' => $msg->id);
+            $wpdb->update( $table_name, $data, $where ); // Also works in this case.    
+        }else {
+            $data  = array('note' =>  array_to_text($response));
             $where = array('id' => $msg->id);
             $wpdb->update( $table_name, $data, $where ); // Also works in this case.    
         }

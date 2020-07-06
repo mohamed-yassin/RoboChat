@@ -1,6 +1,7 @@
 <?php 
 	if($_POST){
 		compose_messages_handler();
+		pre($_POST);
 	}
 	wp_enqueue_media();
 	// form action :: esc_url( admin_url('admin-post.php') ); 
@@ -8,12 +9,11 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
 	integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 
-
     <h5>انشاء رساله جديدة</h5>
 	<?php 
 	if(isset($_SESSION['bulk_msg_error'])){ ?>
 			<div class="notice is-dismissible">
-				<center><h5><?=  $_SESSION['bulk_msg_error'] ?></h5></center>
+				<center><h5><?= array_to_text( $_SESSION['bulk_msg_error'] ) ?></h5></center>
 				<button type="button" class="notice-dismiss">
 					<span class="screen-reader-text">
 						Dismiss this notice.
@@ -71,13 +71,9 @@
 					</div>
 				</div>
 			</div>
-
 			<center>
 				<input style ="margin : 30px" class="button button-primary"  value="اضف رساله جديده" type="submit" >
 			</center>
-
-
-
     <div class ="clients">
         <?php 
         // prepare data

@@ -19,7 +19,7 @@ function whatsapp_messeges($api,$token,$filters= array())
 {
     if(! isset($filters['lastMessageNumber'])){
         $filters['last'] = 'true'; 
-        $filters['limit'] = '500';   
+        $filters['limit'] = '1000';   
     }
 
     $filter_as_string = "";
@@ -33,9 +33,14 @@ function whatsapp_messeges($api,$token,$filters= array())
     $result = json_decode($result);
     return $result;
 }
-function whatsapp_send_messege($sub,$parametars, $type = 'chat')
+function whatsapp_send_messege($sub,$parametars, $type = 'chat' )
 {
     $sub_connection_data = sub_connection_data($sub);
+
+    if($sub_connection_data['api'] == '' || $sub_connection_data['token'] == ''){
+        return array('errors' => 'Please call admin to re-check your data' ); 
+    }
+
     if($sub_connection_data['msgs']  && $sub_connection_data['msgs'] >  0 ){
         if($type == 'file'){
             $url =  $sub_connection_data['api'].'sendFile?token='.$sub_connection_data['token'];
@@ -57,8 +62,9 @@ function whatsapp_send_messege($sub,$parametars, $type = 'chat')
             $response['status'] = 1;
             $response['balance'] = reduce_msgs_counter($sub);
         }else {
+            $response['status'] =  '3';
             sub_errors_log($sub,$response);
-            $response['status'] =  '3'; // for error from api-chat
+            $response['errors'] =  'Please call admin to re-check your data';
         }
     }else {
         $response =  array('status' => "2" , 'balance' => 0 );  // if daily msg balance is ranout

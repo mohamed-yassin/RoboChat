@@ -82,6 +82,7 @@ class NAMESPACE_acf_plugin_FIELD_NAME {
 		include_once('fields/connection_button.php');
 		include_once('fields/web_hook_link.php');
 		include_once('fields/parent_blog.php');
+		include_once('fields/pre_made_data.php');
 	}
 	
 }

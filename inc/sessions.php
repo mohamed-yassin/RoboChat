@@ -19,7 +19,11 @@ function session_file_path($sub){
 }
 function get_current_sessions($sub){
 	$path 		= session_file_path($sub);
-	$sessions 	= @file_get_contents($path);
+
+	if (!file_exists($path)) {
+		touch($path);
+	};
+	$sessions 	= file_get_contents($path);
 	return      json_decode($sessions,TRUE);
 }
 function sessions_for_current_user($sub){
