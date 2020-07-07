@@ -228,7 +228,7 @@ function roboChat_settings_chatbox_render(  ) {
 			</th>
 				<td>
 					<?php
-						$title=  'No Automated Ansering' ;
+						$title=  'No Automated Answering' ;
 						$val =  0 ; 
 						$id=  $val."_".$blog;
 						$checked =  $value == $val ? 'checked'  : '';

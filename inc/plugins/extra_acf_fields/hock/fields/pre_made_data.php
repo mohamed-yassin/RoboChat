@@ -139,8 +139,8 @@ class NAMESPACE_acf_field_pre_made_data extends acf_field {
 				max-width :  80%;
 			}
 		</style>
-			<button type="button" class="button button-primary margin-10" >RoboChat Token</button>
-			<input readonly type="text" class= "margin-10" value="<?= token(get_the_ID()); ?>">
+			<button onclick="copy_to_clipboard('robo_token_input')" type="button" class="button button-primary margin-10" >Copy RoboChat Token</button>
+			<input id="robo_token_input" readonly type="text" class= "margin-10" value="<?= token(get_the_ID()); ?>">
 		<?php
 	}
 	

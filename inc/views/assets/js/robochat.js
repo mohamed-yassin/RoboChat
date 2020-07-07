@@ -15,3 +15,9 @@ jQuery('.connection-button').on('click', function( event ){
 
 
 
+function copy_to_clipboard(id) {
+    var copyText = document.getElementById(id);
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+    document.execCommand("copy");
+} 
