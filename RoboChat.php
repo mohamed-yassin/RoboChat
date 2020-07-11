@@ -43,10 +43,13 @@ $understrap_includes = array(
 	'chat_api', 							// related chat api functions
 	'global_test',  						// just for testing
 	'meta_bxs',								// custom meta boxes
+	'crb',									// Caroon Fields : a plugin to unable create a custom fields
 	'users',								// Users
 	'chatbot',								// ChatBot
-	'api',									// RoboChat  Api End Points 
+	'api',									// RoboChat Api End Points 
+	'chatapi_based_api',					// RoboChat Api End Points Which depend on CHATAPI API
 	'do_actions',							// THE MAIN CONTROLLER USING WP HOCK
+	'do_actions_api_endpoints',							// THE MAIN CONTROLLER USING WP HOCK
 );
 
 foreach ( $understrap_includes as $file ) {

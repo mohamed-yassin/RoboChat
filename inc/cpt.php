@@ -193,7 +193,7 @@ function cptui_register_my_cpts_chatbox() {
 		"hierarchical" => false,
 		"rewrite" => [ "slug" => "chatbox", "with_front" => true ],
 		"query_var" => true,
-		"supports" => [ "title", "editor", "thumbnail" ],
+		"supports" => [ "title"  ],
 	];
 
 	register_post_type( "chatbox", $args );

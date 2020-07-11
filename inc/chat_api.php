@@ -191,3 +191,45 @@ function demo_chat_api_msg(){
 	$msg->chatName 		= '+966 59 995 0800';
 	return $msg ;
 }
+
+function do_chat_api_api($api,$token,$endpoint,$parameters){
+    $sub_connection_data = sub_connection_data($sub);
+
+    if($sub_connection_data['api'] == '' || $sub_connection_data['token'] == ''){
+        return array('errors' => 'Please call admin to re-check your data' ); 
+    }
+
+    if($sub_connection_data['msgs']  && $sub_connection_data['msgs'] >  0 ){
+        if($type == 'file'){
+            $url =  $sub_connection_data['api'].'sendFile?token='.$sub_connection_data['token'];
+        }else {
+            $url =  $sub_connection_data['api'].'sendMessage?token='.$sub_connection_data['token'];
+            $response['msg'] =  restore_new_line($parametars['body']) ; 
+        }
+        $json = json_encode($parametars); // Encode data to JSON
+        $options = stream_context_create(['http' => 
+            [
+                'method'  => 'POST',
+                'header'  => 'Content-type: application/json',
+                'content' => $json
+            ]
+        ]);
+        $response   = file_get_contents($url, false, $options);
+        $response   = json_decode($response, TRUE);
+        if(isset($response['sent']) && $response['sent'] ==  1 ){ // sent successfully 
+            $response['status'] = 1;
+            $response['balance'] = reduce_msgs_counter($sub);
+        }else {
+            $response['status'] =  '3';
+            sub_errors_log($sub,$response);
+            $response['errors'] =  'Please call admin to re-check your data';
+        }
+    }else {
+        $response =  array('status' => "2" , 'balance' => 0 );  // if daily msg balance is ranout
+        sub_errors_log($sub,$response);
+    }
+    return $response;
+}
+function can_i_do_api($sub){
+    //  
+}

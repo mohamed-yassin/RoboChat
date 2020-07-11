@@ -1,0 +1,18 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "FlightsAPI",
+        "version": "1.0"
+    },
+    "paths": {
+        ":8000/api/v1/flights": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Returns all flights"
+                    }
+                }
+            }
+        }
+    }
+}

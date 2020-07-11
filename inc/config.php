@@ -1,5 +1,5 @@
 <?php 
-define('production', true );
+define('production', false );
 
 if(production ==  true){
     define('domain', 'devbx.udh.sa' );
