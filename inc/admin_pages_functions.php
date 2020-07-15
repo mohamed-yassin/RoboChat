@@ -46,6 +46,43 @@ function is_group($chatId){
 
     return $type == 'g' ?  true :  false ;
 }
+function get_contact_by_phone($phone ,$new_contact_name =  false , $return =  'id'){
+    $phone =  pure_phone($phone);
+    $args = array(
+        'post_type'         => 'client',
+        'posts_per_page'    => 1,
+        'meta_query'        => array(
+            array(
+                'key'     => 'phone',
+                'value'   => $phone ,
+                'compare' => '=',
+            ),
+        ),
+    );
+    $contacts = get_posts($args);
+    if( isset($contacts[0]) ){
+        if($return == 'id'){
+            return $contacts[0]->ID;
+        }else {
+            return $contacts[0];
+        }
+        return  $contacts[0] ; 
+    }elseif($new_contact_name !=  false ){
+        $my_client = array(
+            'post_title'    => wp_strip_all_tags( $new_contact_name  ),
+            'post_type'     => 'client',
+            'post_status'   => 'publish',
+            'post_author'   => 1,
+          );
+        $id= wp_insert_post( $my_client );
+        update_post_meta( $id , 'phone', $phone );
+        if($return == 'id'){
+            return $id;
+        }else {
+            return get_post($id);
+        }
+    }
+}
 function contact_info($num){
     $num =  pure_phone($num);
     $args = array(

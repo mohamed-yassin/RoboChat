@@ -49,6 +49,12 @@ add_action( 'rest_api_init', function () {
   } );
 //---------------->  instance
 add_action( 'rest_api_init', function () {
+  register_rest_route( slug.'/v1', '/status', array(
+    'methods' => 'GET',
+    'callback' => 'external_api_status',
+  ) );
+} );
+add_action( 'rest_api_init', function () {
   register_rest_route( slug.'/v1', '/logout', array(
     'methods' => 'POST',
     'callback' => 'external_api_logout',
@@ -63,23 +69,16 @@ add_action( 'rest_api_init', function () {
 } );
 add_action( 'rest_api_init', function () {
   register_rest_route( slug.'/v1', '/settings', array(
-    'methods' => 'POST',
-    'callback' => 'external_api_settings',
+    'methods' => 'GET',
+    'callback' => 'external_api_settings_get',
   ) );
 } );
 add_action( 'rest_api_init', function () {
   register_rest_route( slug.'/v1', '/settings', array(
-    'methods' => 'GET',
-    'callback' => 'external_api_settings',
+    'methods' => 'POST',
+    'callback' => 'external_api_settings_post',
   ) );
 } );
-add_action( 'rest_api_init', function () {
-  register_rest_route( slug.'/v1', '/status', array(
-    'methods' => 'GET',
-    'callback' => 'external_api_status',
-  ) );
-} );
-
 /////////////// Messsages/
 add_action( 'rest_api_init', function () {
     register_rest_route( slug.'/v1', '/sendMessage', array(
