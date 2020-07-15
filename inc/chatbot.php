@@ -14,7 +14,7 @@ function internal_api_talk_to_bot( $data ) {
             if( $msg['fromMe'] != 1 && $msg['fromMe'] != 'true' ){
               $parametars['body']   = bot_answer($sub, $msg);
               $parametars['phone']  = pure_phone($msg['author']) ;
-              return $parametars['body'] ;
+              //return $parametars['body'] ;
               return whatsapp_send_messege($sub,$parametars,'chat');
             }
           }
@@ -67,21 +67,13 @@ function last_interact_code($sub,$phone,$client_name){
   }
   return $last_interact_code  ;
 }
-function bot_answer_msg($selected ,  $msg_error  = ''){
+function bot_answer_msg($selected ,  $msg_error  = '' ){
   $new_line =  "\n\n";
   $new_line = "<br>"; 
   foreach ((array)$selected['childs'] as $key => $child) {
     $childs .= ($key+1) ." " . $child['header'] . $new_line ;
   }
-
-  if($msg_error !=  ''){
-    $path =  $selected['header'].$new_line.$selected['body'].$new_line.$childs.$new_line.$selected['footer'];
-
-  }else {
-    $path =  $selected['header'].$new_line.$msg_error.$new_line.$childs.$new_line.$selected['footer'];
-    $path =  $msg_error ;
-  }
-  return   $path ;
+  return $selected['header'].$new_line.$selected['body'].$new_line.$childs.$new_line.$selected['footer'];
 }
 function update_last_interact_code($contact , $field_name ,$lang =  'df' , $path  = ''){
   $last_interact_code = time()."_".$lang; 
@@ -128,13 +120,12 @@ function bot_answer($sub,$msg){
 
   // Languages
   $langs =  array('ar','en','fr');
+  // their is a bug where the user use the same ar,en,fr 
   foreach ($langs as $language) {
     if( $selected[$language.'_checkbox'] ==  true && $body == $selected[$language.'_slug']  ){
       update_last_interact_code($contact , $field_name , $language );
-  
-      if($body != $language ){ // if deferant language : get the new language welcome message
-        $selected = active_chatbox_info($sub , $language )[0] ;
-      }
+
+      $selected = active_chatbox_info($sub , $language )[0] ;
       return bot_answer_msg( $selected ) ;
     }  
   }
@@ -150,17 +141,14 @@ function bot_answer($sub,$msg){
     $screen = array();
     $path =  '';
     foreach ($explode as $index => $key) {
-      $seperator =  $index > 2 ?  "_" : '';
-      $path = $path.$seperator.$key ;
-      $selected =  isset($selected['childs'][$key]) ? $selected['childs'][$key] :  false;
+      $seperator  =  $index > 2 ?  "_" : '';   // 0&1 were unset , 2 is the first item so we don't need the seperator before it 
+      $path       = $path.$seperator.$key ;
+      $selected       =  isset($selected['childs'][$key]) ? $selected['childs'][$key] :  false;
     }
     // check for avilability 
     if ($selected !=  false ){
-      return update_last_interact_code($contact , $field_name , $lang , $path);
+      update_last_interact_code($contact , $field_name , $lang , $path);
       return bot_answer_msg( $selected) ;  
-    }else {
-      // update_last_interact_code($contact , $field_name , $lang , $original_path);
-      return bot_answer_msg( $original_selected , $error_msg ) ;
     }
   }
 
@@ -188,6 +176,8 @@ function bot_answer($sub,$msg){
     return bot_answer_msg( $selected ) ;
   }
 
+  // if nothing :  it's error code
+  return $error_msg  ; 
 
 
 
