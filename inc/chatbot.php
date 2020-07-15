@@ -69,7 +69,6 @@ function last_interact_code($sub,$phone,$client_name){
 }
 function bot_answer_msg($selected ,  $msg_error  = '' ){
   $new_line =  "\n\n";
-  $new_line = "<br>"; 
   foreach ((array)$selected['childs'] as $key => $child) {
     $childs .= ($key+1) ." " . $child['header'] . $new_line ;
   }
