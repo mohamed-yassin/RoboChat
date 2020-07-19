@@ -43,14 +43,14 @@ class phone_Meta_Box {
 		// Set default values.
 
 		// Form fields.
+		echo "<div>";
+			echo '<h4 class="rob-custom-field-title">' . __( 'Phone', slug ) . ' </h4>';
+			echo '<input class="rob-custom-field" type="text" name="phone" value="' . esc_attr__( $phone ) . '">';
+		echo "</div>";
 		echo '<div class="">';
 			echo '<h4 class="rob-custom-field-title">' . __( 'First Name', slug ) . ' </h4>';
 			echo '<span> ' . __( 'the name of the client which will be used in messaging process', slug ) . '</span>';
 			echo '<input class="rob-custom-field" type="text" name="first_name" value="' . esc_attr__( $first_name ) . '">';
-		echo "</div>";
-		echo "<div>";
-			echo '<h4 class="rob-custom-field-title">' . __( 'Phone', slug ) . ' </h4>';
-			echo '<input class="rob-custom-field" type="text" name="phone" value="' . esc_attr__( $phone ) . '">';
 		echo "</div>";
 
 		echo "<div>";

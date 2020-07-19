@@ -20,9 +20,10 @@ add_action( 'init', 'cpt_templates' );
 add_action( 'init', 'cptui_register_my_taxes_template_category' );
 add_action( 'init', 'cptui_register_my_taxes_list' );
 
-
 // admin pages 
 add_action( 'admin_menu', 'robo_add_admin_menu' );
+add_action( 'admin_init', 'roboChat_settings_init' );
+add_action( 'admin_menu', 'roboChat_bulk_add_clients' );
 //add_action( 'admin_menu', 'whatsappapi_add_admin_menu' );
 
 add_action( 'admin_menu', 'client_dashboard' );
@@ -48,6 +49,3 @@ add_action( 'show_user_profile', 'customer_service_client_permissions' );
 add_action( 'edit_user_profile', 'customer_service_client_permissions' );
 add_action( 'personal_options_update', 'update_permissions' );
 add_action( 'edit_user_profile_update', 'update_permissions' );
-
-// Admin Pages
-add_action( 'admin_init', 'roboChat_settings_init' );

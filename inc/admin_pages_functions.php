@@ -46,7 +46,7 @@ function is_group($chatId){
 
     return $type == 'g' ?  true :  false ;
 }
-function get_contact_by_phone($phone ,$new_contact_name =  false , $return =  'id'){
+function get_contact_by_phone($phone ,$new_contact_name =  false , $return =  'id' ,$lists = array(), $fields = array() ){
     $phone =  pure_phone($phone);
     $args = array(
         'post_type'         => 'client',
@@ -76,6 +76,18 @@ function get_contact_by_phone($phone ,$new_contact_name =  false , $return =  'i
           );
         $id= wp_insert_post( $my_client );
         update_post_meta( $id , 'phone', $phone );
+        if(count($fields) >  0 ){
+            foreach ($fields as $key => $value) {
+                update_post_meta( $id , $key , $value  );
+            }
+        }
+        if(count($lists) >  0 ){
+            foreach ($lists as $list_id) {
+                if($list_id !=  '' ){
+                    wp_set_object_terms( $id , $list_id , 'list');
+                }
+            }
+        }
         if($return == 'id'){
             return $id;
         }else {

@@ -140,4 +140,15 @@ function token($string){
 function token_time_based($string ,$unit = 'i' , $valid_for = 1, $hash =  'md5'){
 	//units y,m,d,h,i,s
 	//$time = time();
+};
+function echo_notice($text , $class =  ''){
+	// $class :  error  , success 
+	echo  '
+		<div class="notice notice-'.$class.' is-dismissible">'.
+		$text
+		.'<button type="button" class="notice-dismiss">
+				<span class="screen-reader-text">Dismiss this notice.</span>
+			</button>
+		</div>
+		';
 }
