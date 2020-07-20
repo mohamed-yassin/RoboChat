@@ -17,6 +17,7 @@ define('name', 'RoboChat');
 define('slug', 'robo');
 define('inc',plugin_dir_path(__FILE__).'inc/');
 define('views',inc. 'views/');
+define('files',inc. 'files/');
 define('assets', plugin_dir_url( __FILE__ ).'inc/views/assets/');
 define('css',assets .'css/');
 define('js',assets .'js/');
@@ -44,12 +45,13 @@ $understrap_includes = array(
 	'global_test',  						// just for testing
 	'meta_bxs',								// custom meta boxes
 	'crb',									// Caroon Fields : a plugin to unable create a custom fields
-	'users',								// Users
+	'users',								// Users of the system
+	'clients',								// clients/contacts
 	'chatbot',								// ChatBot
 	'api',									// RoboChat Api End Points 
 	'chatapi_based_api',					// RoboChat Api End Points Which depend on CHATAPI API
 	'do_actions',							// THE MAIN CONTROLLER USING WP HOCK
-	'do_actions_api_endpoints',							// THE MAIN CONTROLLER USING WP HOCK
+	'do_actions_api_endpoints',				// THE MAIN CONTROLLER USING WP HOCK
 );
 
 foreach ( $understrap_includes as $file ) {
