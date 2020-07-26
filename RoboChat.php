@@ -36,7 +36,7 @@ $understrap_includes = array(
 	'dp', 									// dp related functions
 	'subscriptions',						// subscriptions related functions
 	'cpt', 									// regist custom post types 
-	'plugins/extra_acf_fields/hock/hock',	// regiest new acf components/fields
+	'plugins/extra_acf_fields/extra_fields',// regiest new acf components/fields
 	'acf', 									// ACF ( advanced custom fields plugin ) fields 
 	'enqueue', 								// enqueue  css & js files 
 	'general_views',						// generate common views elements

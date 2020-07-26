@@ -110,7 +110,10 @@ function send_message($data){
   {
     return do_chatapi_api('forwardMessage',  $data ,  true)  ;
   }
-
+  function external_api_messages($data)
+  {
+    return do_chatapi_api('messages',  $data ,  true)  ;
+  }
   //---------------->  Webhook
   function external_api_webhookUrl($data){
     return do_chatapi_api('webhookUrl',  $data ,  false)  ;

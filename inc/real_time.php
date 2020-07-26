@@ -14,10 +14,9 @@ function send_instant_msg() {
 			foreach($files as $key => $media_id){
 				$media_id =  $files[$key] ; 
 				if($media_id >  0){
-					$parametars['body']	  =  production !== true ? 'https://cdn.pixabay.com/user/2014/05/07/00-10-34-2_250x250.jpg'  :  wp_get_attachment_url($media_id);
-					//$parametars['body']	  =  'https://cdn.pixabay.com/user/2014/05/07/00-10-34-2_250x250.jpg';
-					$parametars['caption']  =  translate_short_codes($msg,$num);
-					$parametars['filename']  = get_the_title($media_id);
+					$parametars['body']	  	= file_url($media_id);
+					$parametars['caption']  = translate_short_codes($msg,$num);
+					$parametars['filename'] = get_the_title($media_id);
 					if($sign == 1){
 						$parametars['caption'] =  $parametars['caption'] . " \n\n   #{{current_user}}" ;
 						$sign = 2 ;	

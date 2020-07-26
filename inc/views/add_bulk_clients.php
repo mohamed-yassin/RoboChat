@@ -37,7 +37,7 @@
             </br>
             1- Only csv files accepted 
             </br>
-            2- To make it's safe : please don't upload more than 200 contact per time
+            2- To make it's safe : please don't upload more than 500 contact per time
             </td>
         </tr>
 

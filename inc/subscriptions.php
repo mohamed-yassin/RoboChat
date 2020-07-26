@@ -5,7 +5,7 @@ function subscription_handler($sub){
 
     if($blog  ==  0){
         // make blog for the client 
-        $title   = " :: MY RoboChat Sub" ;
+        $title   = "MY RoboChat Sub" ;
         $path    = "sub_" . $sub->ID; 
         $options = array();
         $blog    = wpmu_create_blog( domain , $path, $title, $user , $options ,  1);
@@ -17,7 +17,6 @@ function subscription_handler($sub){
     create_custom_msgs_table($sub->ID);
 
     // update data of the supscription
-    // http://localhost/sub_13/wp-json/robo/v1/talk_to_bot
     update_field('web_hock',web_hook($blog , $sub ),  $sub->ID);        
     update_field('defult_daily_msgs',daily_msgs,  $sub->ID);        
     update_field('available_daily_msgs',daily_msgs,  $sub->ID);        
