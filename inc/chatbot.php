@@ -12,10 +12,13 @@ function internal_api_talk_to_bot( $data ) {
         if($chat_box  >  0){
           foreach ($msgs as $key => $msg) {
             if( $msg['fromMe'] != 1 && $msg['fromMe'] != 'true' ){
-              $parametars['body']   = bot_answer($sub, $msg);
+              $bot_answer           = bot_answer($sub, $msg);
               $parametars['phone']  = pure_phone($msg['author']) ;
-              //return $parametars['body'] ;
-              return whatsapp_send_messege($sub,$parametars,'chat');
+              $parametars['body']   = $bot_answer['type'] == 'chat' ? $bot_answer['body'] : file_url($bot_answer['body']) ;
+              $parametars['caption']= $bot_answer['caption'];
+              $parametars['filename']='chat-image.jpg';
+              //return pre($parametars) ;
+              return whatsapp_send_messege($sub,$parametars,$bot_answer['type']);
             }
           }
         }
@@ -67,12 +70,37 @@ function last_interact_code($sub,$phone,$client_name){
   }
   return $last_interact_code  ;
 }
-function bot_answer_msg($selected ,  $msg_error  = '' ){
-  $new_line =  "\n\n";
-  foreach ((array)$selected['childs'] as $key => $child) {
-    $childs .= ($key+1) ." " . $child['header'] . $new_line ;
+function bot_answer_msg($selected ,  $msg_error = '' ){
+  $type     = 'chat';
+  $caption  = '';
+
+  if($msg_error !=  '' ){
+    $body =  $msg_error;
+  }else {
+    $new_line =  "\n\n";
+    $dash_line = '------------------------------------------------------';
+    $childs =  "";
+    if(is_array($selected) && isset($selected['childs'])){
+      foreach ($selected['childs'] as $key => $child) {
+        $childs .= "*".($key+1)."*" ." - " . $child['header'] . $new_line ;
+      }  
+    }
+    $content =  $selected['header'].$new_line.$selected['body'].$new_line.$childs.$new_line.$dash_line.$new_line.$selected['footer'];
+
+    if($selected['image'] !=  ''){
+      $type     = 'file';
+      $body     = $selected['image'];
+      $caption  = $content ;
+    }else {
+      $body  = $content;
+    }
   }
-  return $selected['header'].$new_line.$selected['body'].$new_line.$childs.$new_line.$selected['footer'];
+  
+  return array(
+    'type'    => $type,
+    'body'    => $body,
+    'caption' => $caption,
+  ); 
 }
 function update_last_interact_code($contact , $field_name ,$lang =  'df' , $path  = ''){
   $last_interact_code = time()."_".$lang; 
@@ -121,33 +149,34 @@ function bot_answer($sub,$msg){
   $langs =  array('ar','en','fr');
   // their is a bug where the user use the same ar,en,fr 
   foreach ($langs as $language) {
-    if( $selected[$language.'_checkbox'] ==  true && $body == $selected[$language.'_slug']  ){
+    if( $selected[$language.'_checkbox'] ==  true && strtolower($body) == strtolower($selected[$language.'_slug'])  ){
       update_last_interact_code($contact , $field_name , $language );
 
       $selected = active_chatbox_info($sub , $language )[0] ;
       return bot_answer_msg( $selected ) ;
     }  
   }
-
-  $error_msg  = $selected['error'] ; 
+  $error_msg  = $selected['error'] ;
   // Navigations
   if((int)$body >  0 ){ //  Have a real code to go forward one step
-    $original_selected =  $selected ;
+    $selected_2 =  $selected ;
     $body =  (int)$body -  1 ;
-    unset($explode[0]);
-    unset($explode[1]);
+    
+    unset($explode[0]); // time
+    unset($explode[1]); // language
+
     $explode[] = $body;
     $screen = array();
     $path =  '';
     foreach ($explode as $index => $key) {
       $seperator  =  $index > 2 ?  "_" : '';   // 0&1 were unset , 2 is the first item so we don't need the seperator before it 
       $path       = $path.$seperator.$key ;
-      $selected       =  isset($selected['childs'][$key]) ? $selected['childs'][$key] :  false;
+      $selected_2       =  isset($selected_2['childs'][$key]) ? $selected_2['childs'][$key] :  false;
     }
     // check for avilability 
-    if ($selected !=  false ){
+    if ($selected_2 !=  false ){
       update_last_interact_code($contact , $field_name , $lang , $path);
-      return bot_answer_msg( $selected) ;  
+      return bot_answer_msg( $selected_2) ;  
     }
   }
 
@@ -158,8 +187,9 @@ function bot_answer($sub,$msg){
 
   if($body == $selected['one_step_back'] )  { // back one step
 
-    unset($explode[0]);
-    unset($explode[1]);
+    unset($explode[0]); // time
+    unset($explode[1]); // language
+    
     $counter =  count($explode);
     $path =  '';
     foreach ($explode as $index => $key) {
@@ -176,86 +206,5 @@ function bot_answer($sub,$msg){
   }
 
   // if nothing :  it's error code
-  return $error_msg  ; 
-
-
-
-
-
-
-
+  return bot_answer_msg( $selected , $error_msg );
 }
-
-/*
-
-
-  
-  $contact            = get_contact_by_phone($phone , $client_name);
-  $last_interact_code = get_post_meta( $contact, last_interact_code_name($sub) , true );
-  $explode = explode('_',$last_interact_code);
-
-
-
-
-
-  $phone        = pure_phone($msg['author']);
-  $client_name  = $msg['senderName'] ; 
-  $last_code    = last_interact_code($sub,$phone,$client_name);
-  $exploded_code= explode('_' , $last_code );
-  $time         = $exploded_code[0];
-  $lang         = $exploded_code[1];
-  $chatbox      = active_chatbox($sub) ; 
-  $return       = carbon_get_post_meta($chatbox, $lang );
-
-  // Normal Codes
-
-  if($exploded_code[2] == '0' ){ // it's first time
-    
-    return  bot_answer_msg($return[0]);
-  }
-
-
-  if((int)$msg['body']  >  0 ){
-
-  }else{
-    
-  }
-
-
-
-
-
-
-
-
-  // Change Language
-  if($msg['body'] == $back_home  ){
-
-  }else{
-    $back_home = carbon_get_post_meta($chatbox, 'back_home' );  
-  }
-
-
-
-
-  // Navigation
-  if($msg['body'] == $back_home ){
-
-  }else{
-    $one_step_back  = carbon_get_post_meta($chatbox, 'one_step_back');
-  }
-
-  if($msg['body'] == $one_step_back ){
-
-  }else{
-    return $return[0]['error'] ;
-  }
-
-  if($msg['body'] == $one_step_back ){
-
-  }else{
-    return $return[0]['error'] ;
-  }
-
-
-  */

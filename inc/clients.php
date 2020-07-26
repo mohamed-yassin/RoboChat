@@ -7,7 +7,8 @@ function roboChat_bulk_add_clients(  ) {
 
 }
 
-function roboChat_bulk_add_clients_page(  ) { 
+function roboChat_bulk_add_clients_page(  ) {
+    $result =  ""; 
     if($_POST){
         $csv =  $_FILES['clients_csv'];
         if($csv['type'] != 'application/octet-stream'){
@@ -22,28 +23,34 @@ function roboChat_bulk_add_clients_page(  ) {
             $lists[] =  $_POST['list'];
             
             foreach ($csv as $key => $contact) {
+                $result .= $key == 1 ?  "<h3>Results</h3>" : "";
                 $new_contact_name       = $contact[0];
                 $phone                  = $contact[1];
                 $fields['first_name']   = $contact[2];
                 $fields['jop_title']    = $contact[3];
                 $fields['notes']        = $contact[4];
                 
-                //echo  ($key+1) . " " . $fields['notes'] .  "</br>";  
-                //echo  ($key+1) .  "  " .  $new_contact_name  .  "  " .  $phone  .  "  " .  $fields['first_name']  .  "  " .  $fields['jop_title'] . "  " . $fields['notes'] . "</br>";  
                 $created =  get_contact_by_phone($phone ,$new_contact_name , false , $lists , $fields  );
-                echo($created->post_title .  ':: done </br>');
+                $result .=  $created->post_title .  ' :: done </br>' ;
             }
+            $result .=  "_______________________________________________________________ ";
         }
-
     }
-
+    echo $result ; 
 
 
     ?>
     <form action='#' method='post' enctype="multipart/form-data" >
         <h2>Bulk Add Clients</h2>
-        
-        
+        <tr>
+            <th scope="row">
+                <label for="blogname">Download Sample</label>
+            </th>
+            <td>
+                <a href="<?= files_url.'bulk add clients file sample.csv' ?>">Click Here</a>
+            </td>
+        </tr>
+        </br> </br>
         <tr>
             <th scope="row">
                 <label for="blogname">Select the list</label>
@@ -63,12 +70,7 @@ function roboChat_bulk_add_clients_page(  ) {
                 </select>
             </td>
         </tr>
-
         </br> </br>
-
-
-
-        
         <tr>
             <th scope="row">
                 <label for="blogname">Upload CSV file</label>

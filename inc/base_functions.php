@@ -1,15 +1,11 @@
 <?php
-
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
-// define( 'WP_DEBUG', false );
-
 // Start session 
 session_start();
 
 // Gloabal Functions
 function pre($array , $title= ''){
-	echo $title != '' ?  "<h3>$title</h3><pre>" :  '';
+	echo $title != '' ?  "<h3>$title</h3>" :  '';
+	echo "<pre>" ;
 	print_r ($array);
 	echo "</pre></br>";
 };
@@ -99,16 +95,6 @@ function clear_value($value = ''){
 	return $value;
 }
 function render_custom_fields($fields){
-	/*
-		field => array(
-			'name',
-			'type,
-			'width'
-			'note'
-		)
-
-	*/
-	
 	foreach ((array)$fields as $field) {
 		$name 	= clear_value($field['name']);
 		$type 	= clear_value($field['type']);
@@ -116,15 +102,11 @@ function render_custom_fields($fields){
 		$note	= clear_value($field['note']);
 		$key	= $name;
 		$val	= get_post_meta( $post->ID, $key , true );
-
-
-
 		echo "<div class='rob-custom-field' ";
 			echo '<h4>' . __($name, slug ) . ' </h4>';
 			echo '<span> ' . __( $note , slug ) . '</span>';
 			echo '<input class="rob-custom-field" type="text" name="first_name" value="' . esc_attr__( $first_name ) . '">';
 		echo "</div>";
-
 		if(isset($field['name'])){
 			if ($field['type']) {
 				# code...
@@ -151,4 +133,13 @@ function echo_notice($text , $class =  ''){
 			</button>
 		</div>
 		';
+}
+function file_url($file){
+	if(production != true ) {
+	  return 'https://cdn.pixabay.com/user/2014/05/07/00-10-34-2_250x250.jpg' ; 
+	}elseif ((int)$file > 0) {
+	  return  wp_get_attachment_url($file) ;
+	}else {
+	  return $file ;
+	}
 }
