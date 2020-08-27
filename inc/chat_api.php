@@ -1,8 +1,4 @@
 <?php 
-function whatsappapi_authen ($qr){
-    echo '<h2>امسح الكود باستخدام برنامج الواتساب ثم حمل الصفحه مره اخري</h2>';
-    echo '<img src="'.$qr.'" alt="Base64 encoded image"/>';
-};
 function chatapi_sub_status($api,$token){
     $login =  whatsapp_login($api,$token);
     return  $login ;
@@ -232,4 +228,26 @@ function do_chat_api_api($api,$token,$endpoint,$parameters){
 }
 function can_i_do_api($sub){
     //  
+}
+function chat_api_check_connection_status(){
+    $working = 1; // 1 : it's ok ,  0 : something went wrong 
+    $sub 				 = $_POST['sub'];
+	$woocommerce_sub	 = get_post_data_from_the_main_blog($sub);
+    $woocommerce_status	 = $woocommerce_sub->post_status;
+
+	if($woocommerce_status == 'wc-active'){
+		$sub_connection_data = sub_connection_data($sub);
+		$api   				 = $sub_connection_data['api'];
+		$token 				 = $sub_connection_data['token'];
+        
+        $chatapi_sub_status =  chatapi_sub_status($api,$token);
+        if(! isset($chatapi_sub_status['accountStatus']) || $chatapi_sub_status['accountStatus'] != 'authenticated'){
+            $working = 0 ;
+        }
+    }else {
+        $working = 0 ;
+    }
+
+    echo $working ;
+    exit; 
 }

@@ -17,8 +17,8 @@ function send_instant_msg() {
 					$parametars['body']	  	= file_url($media_id);
 					$parametars['caption']  = translate_short_codes($msg,$num);
 					$parametars['filename'] = get_the_title($media_id);
-					if($sign == 1){
-						$parametars['caption'] =  $parametars['caption'] . " \n\n   #{{current_user}}" ;
+					if($sign == 0){
+						$parametars['caption'] =  translate_short_codes($parametars['caption'] . " \n\n   *{{current_user}}*", $num) ;
 						$sign = 2 ;	
 					}		
 					// in sending we use "file" as type according to chat api , but in recieving we use image
@@ -39,8 +39,8 @@ function send_instant_msg() {
 			$response['balance'] =  $chat_api_response['balance'];
 			//$response['msgs'] =  prepare_msgs($msgs);  // stop it because of 
 		}else {
-			if($sign == 1){
-				$msg =  $msg . " \n\n   #{{current_user}}" ;
+			if($sign == 0 ){
+				$msg =  $msg . " \n\n   *{{current_user}}* " ;
 			}		
 
 			$parametars['body'] 		= translate_short_codes($msg,$num);

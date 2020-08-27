@@ -15,6 +15,7 @@ add_action('woocommerce_after_order_notes', 'user_dashboards_option_field');
 // Custom Posts
 add_action( 'init', 'cpt_clients' );
 add_action( 'init', 'cpt_templates' );
+add_action( 'init', 'cpt_chatbox' ); // including the access control to it 
 
 // Custom Taxonomies
 add_action( 'init', 'cptui_register_my_taxes_template_category' );
@@ -34,11 +35,12 @@ add_action( 'admin_post_compose_messages', 'compose_messages_handler' );
 // filter the saved phone number
 //add_filter('acf/update_value', 'filter_phone_number', 10, 3);
 
-// send message with ajax
+// Ajax Requests
 add_action( 'wp_ajax_send_instant_msg_action', 'send_instant_msg' );
 add_action( 'wp_ajax_update_session_action', 'update_session' );
 add_action( 'wp_ajax_update_data_action', 'update_data' );
 add_action( 'wp_ajax_chat_api_main_processes_action', 'chat_api_main_processes' );
+add_action( 'wp_ajax_check_connection_status_action', 'chat_api_check_connection_status' );
 
 // Enqueue CSS & JS files
 add_action( 'admin_enqueue_scripts', 'enqueue' );
@@ -49,3 +51,6 @@ add_action( 'show_user_profile', 'customer_service_client_permissions' );
 add_action( 'edit_user_profile', 'customer_service_client_permissions' );
 add_action( 'personal_options_update', 'update_permissions' );
 add_action( 'edit_user_profile_update', 'update_permissions' );
+
+// general 
+add_filter('admin_footer_text', 'edit_wordpress_dashboard_footer');

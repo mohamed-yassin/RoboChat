@@ -5,7 +5,7 @@ function subscription_handler($sub){
 
     if($blog  ==  0){
         // make blog for the client 
-        $title   = "MY RoboChat Sub" ;
+        $title   = rand_sub_code();
         $path    = "sub_" . $sub->ID; 
         $options = array();
         $blog    = wpmu_create_blog( domain , $path, $title, $user , $options ,  1);
@@ -21,8 +21,18 @@ function subscription_handler($sub){
     update_field('defult_daily_msgs',daily_msgs,  $sub->ID);        
     update_field('available_daily_msgs',daily_msgs,  $sub->ID);        
     
+    // update data in the dashboard of the subscription
+    switch_to_blog($blog);
+        update_user_meta( $user, 'show_msgs', 'checked' );
+        update_user_meta( $user, 'send_msg', 'checked' );
+        update_user_meta( $user, 'chat_bot', 'checked' );
+    restore_current_blog();
+    
+    
+
+
     // save data of the proceess in posts for testing
-    test_post($dashboard);
+    // test_post($dashboard);
 }
 function web_hook($blog, $sub){
     $web_hook = 'http://sub_'+domain+'/wp-json/robo/v1/talk_to_bot/?sub='.$sub;
@@ -150,4 +160,25 @@ function is_client_screen(){
     }else {
         return  false ;
     }
+}
+function rand_sub_code() {
+    $randomString =  '';
+
+    $num_of_characters =  3; 
+    $num_of_numbers    =  2;
+    
+    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $numbers    = '0123456789';
+
+    $characters_length  = strlen($characters);
+    $numbers_length     = strlen($numbers);
+
+    for ($i = 0; $i < $num_of_characters; $i++) {
+        $randomString .= $characters[rand(0, $characters_length - 1)];
+    }
+    for ($i = 0; $i < $num_of_numbers; $i++) {
+        $randomString .= $numbers[rand(0, $numbers_length - 1)];
+    }
+
+    return $randomString;
 }

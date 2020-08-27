@@ -88,10 +88,12 @@ function whatsappapi_options_page() {
 				if($process != ''){
 					if($process== 'send_msg' && has_robo_permission('send_msg')){
 						$data['emojis'] = get_emojis();
-						$data['temps'] = get_templates();
-						$data['api'] = $api;
-						$data['token'] = $token;
-						$data['sub'] = $sub;
+						$data['temps'] 	= get_templates();
+						$data['api'] 	= $api;
+						$data['token'] 	= $token;
+						$data['sub'] 	= $sub;
+						$data['lists'] 	= get_terms([ 'taxonomy' => 'list', 'hide_empty' => false]);
+						$data['clients']= get_clients();
 						view('send_bulk_msg', $data);
 					}elseif ($process  == 'show_msgs' && has_robo_permission('show_msgs') ) {
 						$data['msgs_counter'] =  sub_connection_data($sub)['msgs'];
@@ -123,7 +125,8 @@ function whatsappapi_options_page() {
 				}elseif (! isset($chatapi_sub_status['accountStatus'])) {
 					echo  "هناك مشكله في معلومات الاتصال ,  , من فضلك راسل خدمه العملاء" ;
 				}else{
-					whatsappapi_authen($chatapi_sub_status['qrCode']);
+					$data['qr'] = $chatapi_sub_status['qrCode'] ;
+					view('qr_code', $data);
 				}	
 			}
 		}
@@ -146,72 +149,30 @@ function roboChat_settings_init(  ) {
 
 	add_settings_field( 
 		'roboChat_text_field_0', 
-		__( 'Rename Subscriptios', 'robo' ), 
+		__( '<h6 style="font-weight :   bold ">  </h6>', 'robo' ), 
 		'roboChat_text_field_0_render', 
 		'roboChat_settings', 
 		'roboChat_roboChat_settings_section' 
 	);
-	/*
-	add_settings_field( 
-		'roboChat_settings_webhock', 
-		__( 'Web Hock', 'robo' ), 
-		'roboChat_settings_webhock_render', 
-		'roboChat_settings', 
-		'roboChat_roboChat_settings_section' 
-	);
-	*/
-	add_settings_field( 
-		'roboChat_settings_chatbox', 
-		__( 'Select Chat Box', 'robo' ), 
-		'roboChat_settings_chatbox_render', 
-		'roboChat_settings', 
-		'roboChat_roboChat_settings_section' 
-	);
-
 }
 
 function roboChat_text_field_0_render(  ) { 
-	$user_blogs 	= subs_option_field_array();
-	$options = get_option( 'roboChat_settings' );
+	$user_blogs = subs_option_field_array();
+	$options 	= get_option( 'roboChat_settings' );
 
 	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
 		foreach ($user_blogs as $blog) { 
 			$name=  'sub_'.$blog.'_name';
 			?>
+			<tr><th scope="row"><h6 style="font-weight :   bold "> <?= "#" .$blog . " Subscription" ?> </h6></th><td></td></tr>
 			<tr>
-				<th scope="row">Subscription #<?= $blog ?></th>
+				<th scope="row">Name</th>
 				<td>
 					<input type="text" name="roboChat_settings[<?= $name ?>]" value='<?=  isset($options[$name]) ?  $options[$name] :  '' ; ?>'>
 				</td>
 			</tr>
 		<?php }
-	}
-
-	?>	
-	<?php
-}
-function roboChat_settings_webhock_render(  ) { 
-	$user_blogs 	= subs_option_field_array();
-	$options = get_option( 'roboChat_settings' );
-
-	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
-		foreach ($user_blogs as $blog) { 
-			$name=  'sub_'.$blog.'_webhock';
-			?>
-			<tr>
-				<th scope="row">Subscription #<?= $blog ?></th>
-				<td>
-					<input class="rob-custom-field" type="text" name="roboChat_settings[<?= $name ?>]" value='<?=  isset($options[$name]) ?  $options[$name] :  '' ; ?>'>
-				</td>
-			</tr>
-		<?php }
-	}
-
-	?>	
-
-<?php }
-
-function roboChat_settings_chatbox_render(  ) { 
+	
 	$user_blogs 	= subs_option_field_array();
 	$options = get_option( 'roboChat_settings' );
 	$chat_boxex =  get_posts(array(
@@ -224,8 +185,7 @@ function roboChat_settings_chatbox_render(  ) {
 			$value =  isset($options[$name]) && $options[$name] >  0 ? $options[$name] :  0 ;
 			?>
 			<tr>
-				<th scope="row">Subscription #<?= $blog ?>   
-			</th>
+				<th scope="row">ChatBot</th>
 				<td>
 					<?php
 						$title=  'No Automated Answering' ;
@@ -246,20 +206,34 @@ function roboChat_settings_chatbox_render(  ) {
 					?>
 				</td>
 			</tr>
+			
 		<?php }
 	}
 
-	?>	
-
-<?php }
-
-
-function roboChat_settings_section_callback(  ) { 
-
-	echo __( '', 'robo' );
-
 }
 
+}
+function roboChat_settings_webhock_render(  ) { 
+	$user_blogs 	= subs_option_field_array();
+	$options = get_option( 'roboChat_settings' );
+
+	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
+		foreach ($user_blogs as $blog) { 
+			$name=  'sub_'.$blog.'_webhock';
+			?>
+			<tr>
+				<th scope="row">Subscription #<?= $blog ?></th>
+				<td>
+					<input class="rob-custom-field" type="text" name="roboChat_settings[<?= $name ?>]" value='<?=  isset($options[$name]) ?  $options[$name] :  '' ; ?>'>
+				</td>
+			</tr>
+		<?php }
+	}
+}
+
+function roboChat_settings_section_callback(  ) { 
+	echo __( '', 'robo' );
+}
 
 function roboChat_options_page(  ) { 
 		?>
@@ -276,14 +250,3 @@ function roboChat_options_page(  ) {
 		</form>
 		<?php
 }
-
-
-
- function roboChat_settings_page_options_after_save( $old_value, $new_value ) {
-	$body =  array_to_text($old_value , 'old_value');
-	$body .= array_to_text($new_value , 'new_value');
-
-	//test_post("roboChat_settings  change" ,  $body );
-   }
-
-   add_action( 'update_option_roboChat_settings', 'roboChat_settings_page_options_after_save', 10, 2 );

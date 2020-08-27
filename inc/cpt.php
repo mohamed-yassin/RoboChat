@@ -45,8 +45,8 @@ function cpt_clients() {
 		"label" => __( "Clients", "twentytwenty" ),
 		"labels" => $labels,
 		"description" => "",
-		"public" => true,
-		"publicly_queryable" => true,
+		"public" => true ,
+		"publicly_queryable" => false,
 		"show_ui" => true,
 		"show_in_rest" => true,
 		"rest_base" => "",
@@ -112,7 +112,7 @@ function cpt_templates() {
 		"labels" => $labels,
 		"description" => "",
 		"public" => true,
-		"publicly_queryable" => true,
+		"publicly_queryable" => false,
 		"show_ui" => true,
 		"show_in_rest" => true,
 		"rest_base" => "",
@@ -127,12 +127,18 @@ function cpt_templates() {
 		"hierarchical" => false,
 		"rewrite" => [ "slug" => "Templates", "with_front" => true ],
 		"query_var" => true,
-		"supports" => [ "title", "editor"],
+		//"supports" => [ "title", "editor"],
+		"supports" => [ "title"],
 	];
 
 	register_post_type( "template", $args );
 }
-function cptui_register_my_cpts_chatbox() {
+function cpt_chatbox() {
+	if(! has_robo_permission('chat_bot')){
+		return ;
+	}
+
+
 
 	/**
 	 * Post Type: Chat Boxes.
@@ -178,7 +184,7 @@ function cptui_register_my_cpts_chatbox() {
 		"labels" => $labels,
 		"description" => "",
 		"public" => true,
-		"publicly_queryable" => true,
+		"publicly_queryable" => false,
 		"show_ui" => true,
 		"show_in_rest" => true,
 		"rest_base" => "",
@@ -199,7 +205,6 @@ function cptui_register_my_cpts_chatbox() {
 	register_post_type( "chatbox", $args );
 }
 
-add_action( 'init', 'cptui_register_my_cpts_chatbox' );
 /////////////////////////////////////////////////////////////  Taxonomies /////////////////////////////////////////////////////////////
 function cptui_register_my_taxes_list() {
 

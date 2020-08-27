@@ -148,3 +148,68 @@ function send_unsent_queried_msgs($sub) {
     }
     return $myrows ;
 }
+function robo_chat_text_area($value){ 
+    $emojis = get_emojis();
+    $codes  = get_available_codes();
+
+    
+    ?>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
+	integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
+    
+    <div class="justify-self-end align-items-center flex-row d-flex" id="input-area">
+		<input id="sub" name="sub" type="hidden" value="<?=  get_page_sub_id() ?>" >
+		<textarea required name="content" id="input" placeholder="اكتب رسالة" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm send-bulk-msg-area auto-aligning"><?= $value ?></textarea>
+		<div class="nav-item dropdown ml-auto">
+			<div class="">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+					<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"> اكواد جاهزه </i>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right">
+					<?php
+						foreach ($codes as $name => $code) {
+							echo '<a class="dropdown-item data-content" data-content="{{'.$code.'}}" >'.$name.'</a>';
+						}
+					?>
+				</div>
+			</div>
+			<div class="">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+					aria-haspopup="true" aria-expanded="false">
+					<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;">
+						وجود تعبيريه
+					</i>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right">
+					<?php
+						foreach ($emojis as $group_name => $group) {
+							$group =  explode(' ' , $group);
+							foreach ($group as $emoji) {
+								echo '<span class="data-content" data-content="'.$emoji.'" >'.$emoji.'</span>';
+							}
+						}
+					?>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+    <script>
+        jQuery(".data-content").click(function(e){
+            if(document.getElementById("input").disabled == false ){ // open
+                document.getElementById('input').value = document.getElementById('input').value + " " +  this.getAttribute('data-content') ;
+            }
+        });
+    </script>
+
+
+<?php }
+function get_available_codes(){
+    $codes =  array(
+        'المستخدم الحالي' =>  'current_user',
+        'رقم هاتف العميل' =>  'phone',
+        'اسم الاول للعميل' =>  'first_name',
+    );
+    return  $codes ;
+}

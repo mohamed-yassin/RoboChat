@@ -16,6 +16,8 @@ Container::make( 'post_meta', 'ChatBox Generall settings' )
             Field::make( 'select', 'defult_language', 'Defult Language' )
                 ->add_options( $languages ),
             Field::make( 'text', 'session_duration', __( 'Session Duration in seconds' ) )
+                ->set_required( true )
+                ->set_default_value( '100' )
                 ->set_attribute( 'placeholder', '1800' )
                 ->set_attribute( 'min', 1 )
                 ->set_attribute( 'step', 1 ),
@@ -75,7 +77,8 @@ Container::make( 'post_meta', 'Build Chat bot' )
                         ->set_rows($text_area_rows),
                     Field::make('textarea', 'footer', __( 'Footer' ) )
                         ->set_rows($text_area_rows),
-                    Field::make( 'separator', 'navigations_separator', __( 'Navigations' ) ),
+                    Field::make( 'separator', 'navigations_separator', __( 'Navigations' ) )
+                        ->set_help_text( '<h6>Hint</h6><p>You can use any format not  number greater than 0  like  0  , # , * , @ , any letter/s  </p>'),
                     Field::make( 'text', 'one_step_back', __( 'One Step Back' ) )
                         ->set_attribute( 'placeholder', '0' )
                         ->set_attribute( 'maxLength', 1 )

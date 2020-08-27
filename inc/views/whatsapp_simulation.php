@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
-	integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
 
 <div class="container-fluid" id="main-container">
 	<div class="row h-100">
@@ -161,9 +160,7 @@
 		</div>
 	</div>
 <?php
-	// let the wp edia uploader include all the required files
+	// let the wp media uploader include all the required files
 	wp_enqueue_media();
 ?>
-
-
 </div>

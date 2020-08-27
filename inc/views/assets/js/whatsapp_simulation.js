@@ -130,7 +130,7 @@ function sendMessage (){
 				document.getElementById("msgs_counter").innerHTML = rsp.balance;
 				var msgs =	rsp.msgs;
 				update_msgs_graphical(msgs);		
-				document.getElementById(num+'_signature').value =  2 ;
+				document.getElementById(num+'_signature').value =  1 ;
 			}
 		});	
 	}else{
@@ -406,3 +406,15 @@ function reset_msg_counters(){
 jQuery(".float").click(function(e){ // no changing
 	scroll_to_last_msg();
 });
+
+setInterval(function() {
+	var sub   = document.getElementById('sub').value ; 
+	jQuery.ajax({
+		type: "post",url: "admin-ajax.php",data: { action: 'check_connection_status_action' ,  sub :  sub  },
+		success: function(rsp){ 
+			if(rsp  !=  1){
+				location.reload(); 
+			}
+		}
+	});
+}, 1000 *  3 * 1 );
