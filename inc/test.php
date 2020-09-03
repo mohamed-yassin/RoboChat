@@ -1,4 +1,4 @@
 <?php 
 
-
-$content = get_post_meta( '45' , 'content', true );
+$options = subs_option_field_array();
+pre($options); 

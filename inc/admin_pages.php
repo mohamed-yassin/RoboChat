@@ -47,9 +47,10 @@ function client_dashboard(  ) {
 	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
 		add_menu_page( "RoboChat Settings", "RoboChat Settings", 'manage_options', "robochat_settings", 'roboChat_options_page' , '' , 3);
 		$options = get_option( 'roboChat_settings' );
-		foreach ($user_blogs as $blog) {
-			$blog_name =  isset($options['sub_'.$blog.'_name'])  &&  $options['sub_'.$blog.'_name'] != ''  ?  $options['sub_'.$blog.'_name'] :  "#$blog";
-			add_menu_page( "$blog_name", "$blog_name", 'manage_options', "sub_$blog", 'whatsappapi_options_page' , '' , 3);
+		foreach ($user_blogs as $key => $blog) {
+			$blog_id =  is_array($blog) ?  $blog['slug'] :  $blog;  
+			$blog_name =  isset($options['sub_'.$blog_id.'_name'])  &&  $options['sub_'.$blog_id.'_name'] != ''  ?  $options['sub_'.$blog_id.'_name'] :  "#$blog_id";
+			add_menu_page( "$blog_name", "$blog_name", 'manage_options', "sub_$blog_id", 'whatsappapi_options_page' , '' , 3);
 		}
 	}
 }
@@ -120,7 +121,9 @@ function whatsappapi_options_page() {
 					echo "هناك مشكله :: </br>
 						1-  تاكد ان هاتفك متصل بالانترنت </br>
 						2- وفتح برنامج الواتساب علي الموبايل </br>
-						3 - انهاء توصيل الواتساب الخاص بك مع اي خدمات اخري  </br>
+						3 - انهاء توصيل الواتساب الخاص بك مع اي خدمات اخري  </br></br>
+
+						او اعد عمل الاتصال
 					" ;
 				}elseif (! isset($chatapi_sub_status['accountStatus'])) {
 					echo  "هناك مشكله في معلومات الاتصال ,  , من فضلك راسل خدمه العملاء" ;
@@ -158,6 +161,11 @@ function roboChat_settings_init(  ) {
 
 function roboChat_text_field_0_render(  ) { 
 	$user_blogs = subs_option_field_array();
+	foreach ($user_blogs as $key => $blog) {
+		if(is_array($blog)){
+			$user_blogs[$key] =  $blog['slug'];
+		}
+	}
 	$options 	= get_option( 'roboChat_settings' );
 
 	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
@@ -173,8 +181,6 @@ function roboChat_text_field_0_render(  ) {
 			</tr>
 		<?php }
 	
-	$user_blogs 	= subs_option_field_array();
-	$options = get_option( 'roboChat_settings' );
 	$chat_boxex =  get_posts(array(
 		'numberposts' => -1,
 		'post_type'   => 'chatbox',
@@ -214,8 +220,8 @@ function roboChat_text_field_0_render(  ) {
 
 }
 function roboChat_settings_webhock_render(  ) { 
-	$user_blogs 	= subs_option_field_array();
-	$options = get_option( 'roboChat_settings' );
+	$user_blogs = subs_option_field_array();
+	$options 	= get_option( 'roboChat_settings' );
 
 	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
 		foreach ($user_blogs as $blog) { 

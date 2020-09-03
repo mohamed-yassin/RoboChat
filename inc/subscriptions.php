@@ -5,8 +5,8 @@ function subscription_handler($sub){
 
     if($blog  ==  0){
         // make blog for the client 
-        $title   = rand_sub_code();
-        $path    = "sub_" . $sub->ID; 
+        $title   = 'RoboChat Sub ';
+        $path    = "sub_" . rand_sub_code() ;
         $options = array();
         $blog    = wpmu_create_blog( domain , $path, $title, $user , $options ,  1);
     }
@@ -181,4 +181,27 @@ function rand_sub_code() {
     }
 
     return $randomString;
+}
+
+//add_filter('gettext', 'changes_in_thank_you', 100, 3 );
+function changes_in_thank_you( $translated_text, $text, $domain ) {
+    if( $text === 'Order details' ) {
+        $translated_text =  'Your replacement text <a href="#">Show</a> ';
+    }
+    return $translated_text;
+}
+
+add_filter( 'woocommerce_account_orders_columns', 'add_custom_account_orders_column', 10, 1 );
+function add_custom_account_orders_column( $columns ) {
+    $ordered_columns = array();
+
+    // Inserting a new column in a specific location
+    $ordered_columns['order-number'] = $columns['order-number'];
+    $ordered_columns['order-date'] = $columns['order-date'];
+    $ordered_columns['order-details'] =  __( 'Details', 'woocommerce' ); // <== New column
+    $ordered_columns['order-status'] = $columns['order-status'];
+    $ordered_columns['order-total'] = $columns['order-total'];
+    $ordered_columns['order-actions'] = $columns['order-actions'];
+
+    return $ordered_columns;
 }

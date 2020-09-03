@@ -68,15 +68,18 @@ function add_sub_to_blog($blog,$sub){
     $option_name   =  subs_option_field_name();
     $current_value =  get_option( $option_name );
 
+    $slug =  rand_sub_code($sub) ; 
+
     if ( $current_value !== false ) {
         $new_value   = json_decode($current_value,true);
-        $new_value[] = $sub;
-        $new_value   = json_encode($new_value);
+        $new_value[$slug] = array('id'=> $sub ,'slug' => $slug);
+        $new_value = json_encode($new_value);
         update_option($option_name,$new_value);
-    } else {     
+    }else {     
         $deprecated = null;
         $autoload   = 'no';
-        $new_value  = array($sub);
+        $slug =  
+        $new_value[$slug]  = array('id'=> $sub ,'slug' => $slug );
         $new_value  = json_encode($new_value);
         add_option($option_name,$new_value,$deprecated,$autoload);
     }    
@@ -85,4 +88,14 @@ function add_sub_to_blog($blog,$sub){
 function related_msgs_table(){
     $sub    =  get_page_sub_id();
     return get_msgs_table_name($sub);
+}
+function related_sub_id($slug)
+{
+    $subs =  subs_option_field_array();
+    foreach ($subs as $key => $sub) {
+        if(is_array($sub) &&  $sub['slug'] ==  $slug ){
+            return  $sub['id'];
+        }
+    }
+    return ;
 }
