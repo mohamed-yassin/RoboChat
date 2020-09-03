@@ -1,4 +1,3 @@
 <?php 
-
-$options = subs_option_field_array();
-pre($options); 
+//   'http', 'https', 'login', 'login_post', 'admin', or 'relative'. 
+echo  get_site_url(); 
