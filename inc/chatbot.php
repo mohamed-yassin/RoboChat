@@ -1,22 +1,24 @@
 <?php
 function internal_api_talk_to_bot( $data ) {
-  define('test' , true);
-  $sub =  $data['sub'];
+  $slug =  $data['sub'];
+  $sub = related_sub_id($slug);
   if($sub >  0){
-    if(isset($data['messages']) || test == true){
+    if(isset($data['messages']) || production == true){
       $msgs = $data['messages'];
-      
       if(is_array($msgs) &&  count($msgs) >  0){
         $options = get_option('roboChat_settings');
-        $chat_box =  $options['sub_'.$sub.'_chatbox'];
+        $chat_box =  $options['sub_'.$slug.'_chatbox'];
         if($chat_box  >  0){
           foreach ($msgs as $key => $msg) {
             if( $msg['fromMe'] != 1 && $msg['fromMe'] != 'true' ){
-              $bot_answer           = bot_answer($sub, $msg);
+              $bot_answer           = bot_answer($slug, $msg);
               $parametars['phone']  = pure_phone($msg['author']) ;
               $parametars['body']   = $bot_answer['type'] == 'chat' ? $bot_answer['body'] : file_url($bot_answer['body']) ;
               $parametars['caption']= $bot_answer['caption'];
               $parametars['filename']='chat-image.jpg';
+              
+            //return $sub ; 
+              
               //return pre($parametars) ;
               return whatsapp_send_messege($sub,$parametars,$bot_answer['type']);
             }
@@ -40,15 +42,15 @@ function last_interact_code_name($sub){
 }
 function zero_level_interact($lang='df'){
   // time().(lang slug , or df for defult).(numiric_path_for_the_current_suituation)
-  $chatbox = active_chatbox($sub) ; 
   return time()."_".$lang."_0"; 
 }
-function active_chatbox($sub){
+function active_chatbox($slug){
   $options = get_option('roboChat_settings');
-  return $options['sub_'.$sub.'_chatbox'] >  0  ? $options['sub_'.$sub.'_chatbox'] :  0 ;
+  $value = $options['sub_'.$slug.'_chatbox'] ;
+  return $value >  0  ? $value : 0 ;
 }
-function  active_chatbox_info($sub , $info ){
-  $chatbox =  active_chatbox($sub) ; 
+function  active_chatbox_info($slug , $info ){ // @@@
+  $chatbox =  active_chatbox($slug) ; 
   return  carbon_get_post_meta ( $chatbox , $info ) ; 
 }
 function last_interact_code($sub,$phone,$client_name){
@@ -109,20 +111,20 @@ function update_last_interact_code($contact , $field_name ,$lang =  'df' , $path
   return $last_interact_code ;
 }
 
-function bot_answer($sub,$msg){
+function bot_answer($slug,$msg){ // @@
   $phone        = pure_phone($msg['author']);
   $client_name  = $msg['senderName'] ; 
   $contact      = get_contact_by_phone($phone , $client_name);
-  $field_name   = last_interact_code_name($sub);
-  $chatbox      = active_chatbox($sub);
+  $field_name   = last_interact_code_name($slug);
+  $chatbox      = active_chatbox($slug); 
 
   $last_interact_code = get_post_meta( $contact, $field_name , true );
 
   if($last_interact_code ==  ''){ // if no session
-    $df_lang = active_chatbox_info($sub , 'defult_language');
+    $df_lang = active_chatbox_info($slug , 'defult_language');
     update_last_interact_code($contact , $field_name , $df_lang );
 
-    $selected = active_chatbox_info($sub , $df_lang )[0] ;
+    $selected = active_chatbox_info($slug , $df_lang )[0] ;
     return bot_answer_msg( $selected ) ;
   }
 
@@ -132,18 +134,18 @@ function bot_answer($sub,$msg){
   $lang       = $explode[1];
   $now        = time();
   $def        = $now - $time ;
-  $session    = active_chatbox_info($sub , 'session_duration' );
+  $session    = active_chatbox_info($slug , 'session_duration' );
 
   if($def >  $session){ // Expired Session 
     update_last_interact_code($contact , $field_name , $lang );
-    $selected = active_chatbox_info($sub , $lang )[0] ;
+    $selected = active_chatbox_info($slug , $lang )[0] ;
     return bot_answer_msg( $selected ) ;
   }
 
   // All comming is a real session which not ==  ''  or expired 
   // so depennd on it's msg['body'] we will take the suitable actions 
   $body = $msg['body'] ;
-  $selected = active_chatbox_info($sub , $lang )[0] ;
+  $selected = active_chatbox_info($slug , $lang )[0] ;
 
   // Languages
   $langs =  array('ar','en','fr');
@@ -152,7 +154,7 @@ function bot_answer($sub,$msg){
     if( $selected[$language.'_checkbox'] ==  true && strtolower($body) == strtolower($selected[$language.'_slug'])  ){
       update_last_interact_code($contact , $field_name , $language );
 
-      $selected = active_chatbox_info($sub , $language )[0] ;
+      $selected = active_chatbox_info($slug , $language )[0] ;
       return bot_answer_msg( $selected ) ;
     }  
   }

@@ -32,8 +32,8 @@ if(!defined('session_duration')){
 }
 $understrap_includes = array(
 	'config',								// Main Config Settings
-	'base_functions',						// common base used function 
-	'admin_pages', 							// crete the main admin pages and control their content
+	'base_functions',						// Common Base Used function 
+	'system_related_pages', 				// Create the ystem related pages
 	'admin_pages_functions',    			// admin pages related 
 	'dp', 									// dp related functions
 	'subscriptions',						// subscriptions related functions
@@ -55,9 +55,10 @@ $understrap_includes = array(
 	'api',									// RoboChat Api End Points 
 	'chatapi_based_api',					// RoboChat Api End Points Which depend on CHATAPI API
 	'do_actions',							// THE MAIN CONTROLLER USING WP HOCK
-	'do_actions_api_endpoints',				// THE MAIN CONTROLLER USING WP HOCK
-);
+	'do_actions_api_endpoints',				// THE MAIN CONTROLLER USIN
 
+);
+$error_counter = 0;
 foreach ( $understrap_includes as $file ) {
 	$path =  inc.$file.".php";
 	if(is_file($path)){
