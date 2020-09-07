@@ -2,7 +2,7 @@
 /*
 Plugin Name: RoboChat
 Plugin URI: http://businessexp.net/
-Description: Saas WhatsApp bulk messaging and bot builder
+Description: Saas WhatsApp custom web solution , bulk messaging and bot builder.
 Version: 1.1.1
 Author: Business Experts
 Author URI: http://businessexp.net/
@@ -27,9 +27,8 @@ define('imgs',assets .'imgs/');
 define('dflt_user_img',imgs .'dflt_user.png');
 define('autoloader_path' , plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' );
 define('daily_msgs' , 3*60*24 );  //3msg/min * 60 min/hr * 24 hr/day
-if(!defined('session_duration')){
-	define('session_duration', 300);
-}
+define('session_duration', 300);
+
 $understrap_includes = array(
 	'config',								// Main Config Settings
 	'base_functions',						// Common Base Used function 

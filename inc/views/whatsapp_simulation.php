@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
-
 <div class="container-fluid" id="main-container">
+
 	<div class="row h-100">
 		<div class="col-12 col-sm-5 col-md-3 d-flex flex-column h-75" id="chat-list-area" style="position:relative;">
 			<!-- Navbar -->
@@ -8,7 +8,7 @@
 				<div class="text-white font-weight-bold" id="username"><?= get_bloginfo('name');?></div>
 				<div class="nav-item dropdown ml-auto text-white font-weight-bold">
 					<p>
-						عدد الرسائل المتبقيه :
+						<?= __('عدد الرسائل المتبقيه') ?> :
 						<span id="msgs_counter">
 							<?= $msgs_counter; ?>
 							<span>
@@ -49,33 +49,6 @@
 				<?php }		
 		?>
 			</div>
-			<!-- Profile Settings -->
-			<div class="d-flex flex-column w-100 h-100" id="profile-settings">
-				<div class="row d-flex flex-row align-items-center p-2 m-0"
-					style="background:#009688; min-height:65px;">
-					<i class="fas fa-arrow-left p-2 mx-3 my-1 text-white" style="font-size: 1.5rem; cursor: pointer;"
-						onclick="hideProfileSettings()"></i>
-					<div class="text-white font-weight-bold">Profile</div>
-				</div>
-				<div class="d-flex flex-column" style="overflow:auto;">
-					<img alt="Profile Photo" class="img-fluid rounded-circle my-5 justify-self-center mx-auto"
-						id="profile-pic">
-					<input type="file" id="profile-pic-input" class="d-none">
-					<div class="bg-white px-3 py-2">
-						<div class="text-muted mb-2"><label for="input-name">Your Name</label></div>
-						<input type="text" name="name" id="input-name" class="w-100 border-0 py-2 profile-input">
-					</div>
-					<div class="text-muted p-3 small">
-						This is not your username or pin. This name will be visible to your WhatsApp contacts.
-					</div>
-					<div class="bg-white px-3 py-2">
-						<div class="text-muted mb-2"><label for="input-about">About</label></div>
-						<input type="text" name="name" id="input-about" value=""
-							class="w-100 border-0 py-2 profile-input">
-					</div>
-				</div>
-
-			</div>
 		</div>
 
 		<!-- Message Area -->
@@ -100,7 +73,7 @@
 				<div id="current_messages" class="d-flex flex-column">
 					<div id="" class="mx-auto my-2 bg-primary text-white small py-1 px-2 rounded">
 						<H2>
-							من فضلك ابقي علي هاتفك متصل بالانترنت
+							<?= __('من فضلك ابقي علي هاتفك متصل بالانترنت') ?>
 						</H2>
 					</div>
 				</div>
@@ -119,15 +92,14 @@
 				<input id="current_wpnonce"  name= "current_wpnonce" type ="hidden" value="<?= robo_nonce() ?>">
 				<input id="sub" name="sub" type="hidden" value="<?=  get_page_sub_id() ?>" >
 				<input id="last_message_number" name="last_message_number" type="hidden" value="<?=  $last_message_number ?>" >
-				<textarea name="input" id="input" placeholder="اكتب رسالة" disabled="disabled" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm"></textarea>
-				<i id="msg_sending_btn" class="fas fa-paper-plane text-muted px-3" style="cursor:pointer;" onclick="sendMessage()"></i>
-				<div class="nav-item dropdown ml-auto">
+				<textarea name="input" id="input" placeholder="<?= __('اكتب رسالة') ?>" disabled="disabled" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm"></textarea>
+				
+				<i id="msg_sending_btn" class="button fas fa-paper-plane text-muted px-3 send-btn" style="cursor:pointer;" onclick="sendMessage()"><?= __('ارسال'); ?></i>
+ 
+ 				<div class="nav-item dropdown ml-auto">
 					<div class="">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-							<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"> قوالب جاهزه </i>
-						</a>
-						<a class="nav-link">
-							<i id="upload_media_button" class=" fas fa-file-image text-muted px-3" style="cursor:pointer;"> ارسال ميديا </i>
+							<i class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"><?= __('قوالب جاهزه'); ?></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<?php
@@ -140,8 +112,8 @@
 					<div class="">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
 							aria-haspopup="true" aria-expanded="false">
-							<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;">
-								وجود تعبيريه
+							<i class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;">
+								<?= __('وجود تعبيريه'); ?>
 							</i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
@@ -153,6 +125,16 @@
 									}
 								}
 							?>
+						</div>
+					</div>
+					<div class="">
+						<a class="nav-link">
+							<i id="upload_media_button" class=" fas fa-file-image text-muted px-3" style="cursor:pointer;"><?= __('ارسال ميديا'); ?></i>
+						</a>
+						<div id="image_preview_class"  >
+							<center>
+								<img id="image_preview" style="max-width: 75px;margin-top: 1px;" src="">
+							</center>
 						</div>
 					</div>
 				</div>

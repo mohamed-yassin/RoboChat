@@ -140,11 +140,7 @@ class NAMESPACE_acf_field_pre_made_data extends acf_field {
 			}
 		</style>
 			<button onclick="copy_to_clipboard('robo_token_input')" type="button" class="button button-primary margin-10" >Copy RoboChat Token</button>
-			<input id="robo_token_input" readonly type="text" class= "margin-10" value="<?= token(get_the_ID()); ?>"> </br>
-
-			<button onclick="copy_to_clipboard('robo_slug_input')" type="button" class="button button-primary margin-10" >Copy Slug</button>
-			<input id="robo_slug_input" readonly type="text" class= "margin-10" value="<?= get_field('slug' ,  get_the_ID()); ?>"> </br>
-
+			<input id="robo_token_input" readonly type="text" class= "margin-10" value="<?= token(get_the_ID()); ?>">
 		<?php
 	}
 	

@@ -373,12 +373,13 @@ jQuery( document ).ready( function( $ ) {
 			var input =  "";
 			attachment.forEach(function(attach) {
 				input +=  attach['id']+"&&&&&";
+				jQuery( '#image_preview' ).attr( 'src', attach.url ).css( 'width', 'auto' );
 			});
 
 			//title //url
 			// Do something with attachment.id and/or attachment.url here
-			$( '#image-preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
-			$( '#files' ).val( input );
+			// jQuery("#my_image").attr("src","second.jpg");
+			jQuery( '#files' ).val( input );
 			// Restore the main post ID
 			wp.media.model.settings.post.id = wp_media_post_id;
 		});

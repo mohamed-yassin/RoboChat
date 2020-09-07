@@ -196,3 +196,9 @@ img.img-fit {
 	text-align:center;
 	display: none;
 }
+#msg_sending_btn{
+	margin-left :  32px ;
+}
+#image_preview_class{
+	max-width: 100px;
+}

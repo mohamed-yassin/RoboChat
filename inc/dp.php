@@ -78,12 +78,12 @@ function add_sub_to_blog($blog,$sub){
     }else {     
         $deprecated = null;
         $autoload   = 'no';
-        $slug =  
         $new_value[$slug]  = array('id'=> $sub ,'slug' => $slug );
         $new_value  = json_encode($new_value);
         add_option($option_name,$new_value,$deprecated,$autoload);
     }    
     restore_current_blog();
+    return $slug; 
 }
 function related_msgs_table(){
     $sub    =  get_page_sub_id();

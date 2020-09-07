@@ -11,13 +11,14 @@ function subscription_handler($sub){
         $blog    = wpmu_create_blog( domain , $path, $title, $user , $options ,  1);
     }
     // add the sub to the realated blog
-    add_sub_to_blog($blog,$sub->ID);
+    $slug  =  add_sub_to_blog($blog,$sub->ID);
 
     // make new dp_tables
     create_custom_msgs_table($sub->ID);
 
     // update data of the supscription
-    update_field('web_hock',web_hook($blog , $sub ),  $sub->ID);        
+    update_field('web_hock',sub_link($blog , $sub ),  $sub->ID);       
+    update_field('slug',$slug ,  $sub->ID);       
     update_field('defult_daily_msgs',daily_msgs,  $sub->ID);        
     update_field('available_daily_msgs',daily_msgs,  $sub->ID);        
     
@@ -28,15 +29,17 @@ function subscription_handler($sub){
         update_user_meta( $user, 'chat_bot', 'checked' );
     restore_current_blog();
     
-    
-
-
     // save data of the proceess in posts for testing
-    // test_post($dashboard);
+    if(production ==  false){
+        test_post($dashboard);
+    }
 }
-function web_hook($blog, $sub){
-    $web_hook = 'http://sub_'+domain+'/wp-json/robo/v1/talk_to_bot/?sub='.$sub;
-    return  $web_hook ;
+function sub_link($blog, $sub , $link = 'hook'){
+    if($link == 'hook'){
+        return 'https://'.domain.'/sub_'.$blog."/wp-json/".slug.'/v1/talk_to_bot?sub='.$sub;
+    }elseif ($link == 'dashboard') {
+        return 'https://'.domain.'/sub_'.$blog."/wp-admin/admin.php?page=sub_".$sub;
+    }
 }
 function user_dashboards_option_field($checkout)
 

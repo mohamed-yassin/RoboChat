@@ -29,16 +29,18 @@ function robo_orders_admin_page_render(){
 		$table_body[$sub->ID]['post_title'] 	=  "<a href='".get_edit_post_link($sub->ID)."'>$sub->post_title</a>";
 		//$table_body[$sub->ID]['post_author'] 	=  "<a href='".get_edit_user_link($sub->post_author)."'>".not_null_auther_name($sub->post_author)."</a>";
 		$table_body[$sub->ID]['post_status'] 	=  $conditions[$sub->post_status];
-		$table_body[$sub->ID]['gate_way'] 		=  get_field('gate_way',$sub->ID) != ''  ?  'Chat API'   : "Not Defined Yet";
-		$table_body[$sub->ID]['details'] 		=  "<a href='".get_edit_post_link($sub->ID)."'>details</a>";
+		$table_body[$sub->ID]['slug'] 			=  get_field('slug',$sub->ID);
+		$table_body[$sub->ID]['gate_way'] 		=  get_field('gate_way',$sub->ID) == '1'  ?  __("Chat API") : __("Not Defined Yet");
+		$table_body[$sub->ID]['details'] 		=  "<a href='".get_edit_post_link($sub->ID)."'>".__('details')."</a>";
 	}
 	$header = array(
-		'id'			=> 'ID',
-		'post_title' 	=> 'Name', 
+		'id'			=> __('ID'),
+		'post_title' 	=> __('Name'), 
 		//'post_author' 	=> 'Client',
-		'config' 	    => 'Status',
-		'gate_way'		=> 'Gate Way',
-		'details'		=> 'Subscription Details',
+		'config' 	    => __('Status'),
+		'slug' 	    	=> __('Slug'),
+		'gate_way'		=> __('Gate Way'),
+		'details'		=> __('Subscription Details'),
 	);
 	render_table($header,$table_body);
 }
@@ -55,9 +57,9 @@ function client_dashboard(  ) {
 	}
 }
 function robochat_settings(){ ?>
-	<h2>الاعدادات العامه</h2>
+	<h2><?=  __('الاعدادات العامه'); ?></h2>
 	<form action='options.php' method='post'>
-	<h3>اعاده تسميه الاشتراكات</h3>
+	<h3><?=  __('اعاده تسميه الاشتراكات') ; ?></h3>
 
 			<?php
 			settings_fields( 'roboChat_settings' );
@@ -80,7 +82,7 @@ function whatsappapi_options_page() {
 		$token 				 = $sub_connection_data['token'];
 
 		if($api == '' || $token == ''){
-			echo "<h2>" .  "من فضلك تواصل مع قسم المبيعات او الدعم الفني للتحقق من تفعيل حسابك" . "</h2>" ;
+			echo "<h2>" .  __('"من فضلك تواصل مع قسم المبيعات او الدعم الفني للتحقق من تفعيل حسابك"') . "</h2>" ;
 		}else {
 			$chatapi_sub_status =  chatapi_sub_status($api,$token);
 			if(isset($chatapi_sub_status['accountStatus']) && $chatapi_sub_status['accountStatus'] == 'authenticated'){
@@ -110,7 +112,7 @@ function whatsappapi_options_page() {
 					}elseif ($process  == 'show_msgs') {
 						
 					}else {
-						echo "عذرا رابط  غير صحيح او لا تملك الصلاحيات";
+						_e('عذرا رابط  غير صحيح او لا تملك الصلاحيات') ; 
 					}
 				}
 			}else {
@@ -118,15 +120,16 @@ function whatsappapi_options_page() {
 					pre($chatapi_sub_status);
 				}
 				if(isset($chatapi_sub_status['accountStatus']) &&  $chatapi_sub_status['accountStatus'] == 'loading') {
-					echo "هناك مشكله :: </br>
-						1-  تاكد ان هاتفك متصل بالانترنت </br>
-						2- وفتح برنامج الواتساب علي الموبايل </br>
-						3 - انهاء توصيل الواتساب الخاص بك مع اي خدمات اخري  </br></br>
+					_e("هناك مشكله :: </br>
+					1-  تاكد ان هاتفك متصل بالانترنت </br>
+					2- وفتح برنامج الواتساب علي الموبايل </br>
+					3 - انهاء توصيل الواتساب الخاص بك مع اي خدمات اخري  </br></br>
 
-						او اعد عمل الاتصال
-					" ;
+					او اعد عمل الاتصال
+				") ; 
 				}elseif (! isset($chatapi_sub_status['accountStatus'])) {
-					echo  "هناك مشكله في معلومات الاتصال ,  , من فضلك راسل خدمه العملاء" ;
+					_e('هناك مشكله في معلومات الاتصال ,  , من فضلك راسل خدمه العملاء') ; 
+
 				}else{
 					$data['qr'] = $chatapi_sub_status['qrCode'] ;
 					view('qr_code', $data);
@@ -134,7 +137,7 @@ function whatsappapi_options_page() {
 			}
 		}
 	}else {
-		echo " لا يمكن الدخول الي الحساب من فضلك راسل الاداره لتفعيل الحساب" ;
+		_e('لا يمكن الدخول الي الحساب من فضلك راسل الاداره لتفعيل الحساب') ; 
 	}
 }
 
@@ -160,64 +163,11 @@ function roboChat_settings_init(  ) {
 }
 
 function roboChat_text_field_0_render(  ) { 
-	$user_blogs = subs_option_field_array();
-	foreach ($user_blogs as $key => $blog) {
-		if(is_array($blog)){
-			$user_blogs[$key] =  $blog['slug'];
-		}
-	}
-	$options 	= get_option( 'roboChat_settings' );
+	$data['chat_boxex'] =  get_posts(array('numberposts' => -1,'post_type'   => 'chatbox'));            
+	$data['user_blogs'] = subs_option_field_array();
+	$data['options'] 	= get_option( 'roboChat_settings' );
 
-	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
-		foreach ($user_blogs as $blog) { 
-			$name=  'sub_'.$blog.'_name';
-			?>
-			<tr><th scope="row"><h6 style="font-weight :   bold "> <?= "#" .$blog . " Subscription" ?> </h6></th><td></td></tr>
-			<tr>
-				<th scope="row">Name</th>
-				<td>
-					<input type="text" name="roboChat_settings[<?= $name ?>]" value='<?=  isset($options[$name]) ?  $options[$name] :  '' ; ?>'>
-				</td>
-			</tr>
-		<?php }
-	
-	$chat_boxex =  get_posts(array(
-		'numberposts' => -1,
-		'post_type'   => 'chatbox',
-	));
-	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
-		foreach ($user_blogs as $blog) { 
-			$name=  'sub_'.$blog.'_chatbox';
-			$value =  isset($options[$name]) && $options[$name] >  0 ? $options[$name] :  0 ;
-			?>
-			<tr>
-				<th scope="row">ChatBot</th>
-				<td>
-					<?php
-						$title=  'No Automated Answering' ;
-						$val =  0 ; 
-						$id=  $val."_".$blog;
-						$checked =  $value == $val ? 'checked'  : '';
-						echo "<input id='$id'  type='radio' name='roboChat_settings[$name]' $checked value='$val'>";
-						echo "<label for='$id'>$title</label>";
-
-						foreach ($chat_boxex as $chat_box) {
-							$title=  $chat_box->post_title ;
-							$val =  $chat_box->ID ; 
-							$id=  $val."_".$blog;
-							$checked =  $value == $val ? 'checked'  : '';
-							echo "<input id='$id' type='radio' name='roboChat_settings[$name]' $checked value='$val'>";
-							echo "<label for='$id'>$title</label>";
-						}
-					?>
-				</td>
-			</tr>
-			
-		<?php }
-	}
-
-}
-
+	view('robochat_settings' , $data);
 }
 function roboChat_settings_webhock_render(  ) { 
 	$user_blogs = subs_option_field_array();
@@ -228,7 +178,7 @@ function roboChat_settings_webhock_render(  ) {
 			$name=  'sub_'.$blog.'_webhock';
 			?>
 			<tr>
-				<th scope="row">Subscription #<?= $blog ?></th>
+				<th scope="row"><?= __('Subscription');?> #<?= $blog ?></th>
 				<td>
 					<input class="rob-custom-field" type="text" name="roboChat_settings[<?= $name ?>]" value='<?=  isset($options[$name]) ?  $options[$name] :  '' ; ?>'>
 				</td>
@@ -245,7 +195,7 @@ function roboChat_options_page(  ) {
 		?>
 		<form action='options.php' method='post'>
 
-			<h2>RoboChat Settings</h2>
+			<h2><?= __('RoboChat Settings');?></h2>
 
 			<?php
 			settings_fields( 'roboChat_settings' );
