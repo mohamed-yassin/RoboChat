@@ -26,13 +26,6 @@
       'callback' => 'internal_api_reset_daily_msgs_counter',
     ) );
   } );
-  //---------------->  Testing
-  add_action( 'rest_api_init', function () {
-    register_rest_route( slug.'/v1', '/compose_messages_handler', array(
-      'methods' => 'POST',
-      'callback' => 'internal_api_compose_messages_handler',
-    ) );
-  } );
 //////////////////////////////// External APi ////////////////////////////////
 //---------------->  Testing
 add_action( 'rest_api_init', function () {

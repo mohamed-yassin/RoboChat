@@ -34,7 +34,7 @@ function whatsapp_send_messege($sub,$parametars, $type = 'chat' )
     $sub_connection_data = sub_connection_data($sub);
 
     if($sub_connection_data['api'] == '' || $sub_connection_data['token'] == ''){
-        return array('errors' => __('Please call admin to re-check your data') ); 
+        return array('errors' => 'Please call admin to re-check your data' ); 
     }
 
     if($sub_connection_data['msgs']  && $sub_connection_data['msgs'] >  0 ){
@@ -60,7 +60,7 @@ function whatsapp_send_messege($sub,$parametars, $type = 'chat' )
         }else {
             $response['status'] =  '3';
             sub_errors_log($sub,$response);
-            $response['errors'] =  __('Please call admin to re-check your data');
+            $response['errors'] =  'Please call admin to re-check your data';
         }
     }else {
         $response =  array('status' => "2" , 'balance' => 0 );  // if daily msg balance is ranout
@@ -86,7 +86,7 @@ function whatsapp_log_out($api,$token,$sub = 0)
     $result = array();
     $result = file_get_contents($url, false, $options);
     if($sub != 0){
-        echo '<a href="'.admin_url('admin.php?page='.$sub.'&process=log_out').'" class="button button-primary" >'.__('انهاء الجلسه').'</a>';
+        echo '<a href="'.admin_url('admin.php?page='.$sub.'&process=log_out').'" class="button button-primary" > انهاء الجلسه </a>';
     }else {
         return $result;
     }
@@ -117,13 +117,13 @@ function chat_api_main_processes(){
         $result = chat_api_whatsapp_connect($api,$token);
         $result_array =  json_decode($result ,true);
         if(isset($result_array['accountStatus']) && $result_array['accountStatus'] == 'got qr code'){
-            echo __('افحص الكود بالموبايل ثم اعد الضغط علي الزر');
+            echo 'افحص الكود بالموبايل ثم اعد الضغط علي الزر';
             echo '<img src="'.$result_array['qrCode'].'" alt="Base64 encoded image"/>';    
         }
     }elseif ($process == 'disconnect' ){
         $result = whatsapp_log_out($api,$token);
     }elseif($process == 'reboot') {
-        echo __('يناء علي chat api فانه لن يتم توصيل عمليات علي السيرفر لمده 5 دقايق من الان وستكون كل ردود الapi غير مكتمله </br>');
+        echo 'يناء علي chat api فانه لن يتم توصيل عمليات علي السيرفر لمده 5 دقايق من الان وستكون كل ردود الapi غير مكتمله </br>';
         $result = chat_api_whatsapp_reboot($api,$token);
     }elseif($process == 'reactive') {
         $my_sub = array(
@@ -218,7 +218,7 @@ function do_chat_api_api($api,$token,$endpoint,$parameters){
         }else {
             $response['status'] =  '3';
             sub_errors_log($sub,$response);
-            $response['errors'] =  __('Please call admin to re-check your data');
+            $response['errors'] =  'Please call admin to re-check your data';
         }
     }else {
         $response =  array('status' => "2" , 'balance' => 0 );  // if daily msg balance is ranout

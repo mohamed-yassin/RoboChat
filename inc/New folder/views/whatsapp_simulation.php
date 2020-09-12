@@ -11,7 +11,7 @@
 						<?= __('عدد الرسائل المتبقيه') ?> :
 						<span id="msgs_counter">
 							<?= $msgs_counter; ?>
-						<span>
+							<span>
 					</p>
 				</div>
 			</div>

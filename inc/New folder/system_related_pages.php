@@ -163,7 +163,7 @@ function roboChat_settings_init(  ) {
 }
 
 function roboChat_text_field_0_render(  ) { 
-	$data['chat_boxex'] = get_posts(array('numberposts' => -1,'post_type'   => 'chatbox'));            
+	$data['chat_boxex'] =  get_posts(array('numberposts' => -1,'post_type'   => 'chatbox'));            
 	$data['user_blogs'] = subs_option_field_array();
 	$data['options'] 	= get_option( 'roboChat_settings' );
 

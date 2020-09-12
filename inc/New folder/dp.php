@@ -7,16 +7,16 @@ function create_custom_msgs_table($sub) {
     
     $sql = "CREATE TABLE $table_name (
         id INT(11) NOT NULL AUTO_INCREMENT ,
-        mobile_number VARCHAR(20) NOT NULL ,
+        mobileNumber VARCHAR(20) NOT NULL ,
         msg_body VARCHAR(2000) NOT NULL ,
         msg_type VARCHAR(2000) NOT NULL ,
         msg_caption VARCHAR(2000) NOT NULL ,
-        is_sent TINYINT(1) NOT NULL ,
+        isSent TINYINT(1) NOT NULL ,
         note VARCHAR(255) NOT NULL ,
         source TINYINT(1) NOT NULL ,
         status TINYINT(1) NOT NULL ,
-        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+        updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
 	)"; $charset_collate;
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -98,55 +98,4 @@ function related_sub_id($slug)
         }
     }
     return ;
-}
-
-function do_insert($place_holders, $values) {
-
-    global $wpdb;
-
-    $query           = "INSERT INTO settings-table (`option_name`, `option_value`, `option_created`, `option_edit`, `option_user`) VALUES ";
-    $query           .= implode( ', ', $place_holders );
-    $sql             = $wpdb->prepare( "$query ", $values );
-
-    if ( $wpdb->query( $sql ) ) {
-        return true;
-    } else {
-        return false;
-    }
-
-}
-
-$data_to_be_inserted = array( 
-    array(
-        'option_name'   => 'name-1', 
-        'option_value'  => 'val-1', 
-        'option_created'=> current_time('mysql'),
-        'option_edit'   => current_time('mysql'),
-        'option_user'   => 'user-1' 
-    ),
-    array(
-        'option_name'   => 'name-2', 
-        'option_value'  => 'val-2', 
-        'option_created'=> current_time('mysql'),
-        'option_edit'   => current_time('mysql'),
-        'option_user'   => 'user-2' 
-    ),
-    array(
-        'option_name'   => 'name-1', 
-        'option_value'  => 'val-3', 
-        'option_created'=> current_time('mysql'),
-        'option_edit'   => current_time('mysql'),
-        'option_user'   => 'user-3'
-    )
-);
-
-$values = $place_holders = array();
-
-if(count($data_to_be_inserted) > 0) {
-    foreach($data_to_be_inserted as $data) {
-        array_push( $values, $data['option_name'], $data['option_value'], $data['option_created'], $data['option_edit'], $data['option_user']);
-        $place_holders[] = "( %s, %s, %s, %s, %s)";
-    }
-
-    do_insert( $place_holders, $values );
 }

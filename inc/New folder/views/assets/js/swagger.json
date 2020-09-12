@@ -1,0 +1,82 @@
+{
+    "openapi" : "3.0.0",
+    "servers" : [ {
+      "description" : "SwaggerHub API Auto Mocking",
+      "url" : "https://virtserver.swaggerhub.com/MohamedYassin/RoboChar/1.0.0"
+    }, {
+      "description" : "SwaggerHub API Auto Mocking",
+      "url" : "http://devbx.udh.sa/sub_{dashboard}/wp-json/robo/v1/send_message?sub={subscription}",
+      "variables" : {
+        "dashboard" : {
+          "default" : "1"
+        },
+        "subscription" : {
+          "default" : "1"
+        }
+      }
+    } ],
+    "info" : {
+      "version" : "1.0.0",
+      "title" : "RoboChat Documentation",
+      "description" : "RoboChat Documentaion and Some descriptions"
+    },
+    "security" : [ {
+      "application" : [ "read", "write" ]
+    } ],
+    "paths" : {
+      "/services/example" : {
+        "get" : {
+          "summary" : "Server example operation",
+          "description" : "This is an example operation to show how security is applied to the call.",
+          "responses" : {
+            "200" : {
+              "description" : "OK"
+            }
+          }
+        }
+      },
+      "/ping" : {
+        "get" : {
+          "summary" : "Server heartbeat operation",
+          "description" : "This operation shows how to override the global security defined above, as we want to open it up for all users.",
+          "security" : [ ],
+          "responses" : {
+            "200" : {
+              "description" : "OK"
+            }
+          }
+        }
+      }
+    },
+    "components" : {
+      "schemas" : {
+        "Schema" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          }
+        }
+      },
+      "securitySchemes" : {
+        "application" : {
+          "type" : "oauth2",
+          "flows" : {
+            "clientCredentials" : {
+              "tokenUrl" : "http://example.com/oauth/token",
+              "scopes" : {
+                "write" : "allows modifying resources",
+                "read" : "allows reading resources"
+              }
+            }
+          }
+        }
+      }
+    },
+    "tags" : [ {
+      "name" : "services",
+      "description" : "Send and receive messages"
+    } ]
+  }

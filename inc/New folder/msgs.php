@@ -53,25 +53,16 @@ function restore_new_line($msg){
     return str_replace("\n\n","</br>",$msg);   
 };
 function compose_messages_handler() {
-    if(!isset($_REQUEST['lists']) && !isset($_REQUEST['clients'])){
-        $_SESSION['bulk_msg_error'] =  __('No Clients Added');
-        return ;
-    }
-    if(!isset($_REQUEST['msg']) || isset($_REQUEST['msg']) == '' ){
-        $_SESSION['bulk_msg_error'] =  __('No Message Added');
-        return ;
-    }
-    
     global $wpdb;
     $msg_body        = $_REQUEST['msg'];
     $clients         = $_REQUEST['clients'];
-    $lists           = isset($_REQUEST['lists']) ?  $_REQUEST['lists'] :  array();
+    $lists           = $_REQUEST['lists'];
     $table           = $_REQUEST['table'];
     $files           = $_REQUEST['files'];
     $user            = get_current_user_id();
     $caption         = "";
     $type            = "chat";
-    // $current_wpnonce = $_REQUEST['current_wpnonce'];
+    $current_wpnonce = $_REQUEST['current_wpnonce'];
 
     if(strlen($files) >  0){ 
        $caption     = $msg_body ; 
@@ -107,18 +98,20 @@ function compose_messages_handler() {
             $msg_body  =  $type == 'chat'  ? translate_short_codes($msg_body ,$phone) : $msg_body ;
 
             $data = array(
-                'mobile_number' => $phone,
+                'mobileNumber' => $phone,
                 'msg_body' => $msg_body,
                 'msg_type' => $type,
                 'msg_caption' => translate_short_codes($caption,$phone)  ,
-                'is_sent' => '0',
+                'isSent' => '0',
                 'note' => ' ',
                 'source' => '1',
                 'status' => '1',
-                'created_at' => date('Y-m-d h:i:s'),
-                'updated_at' => date('Y-m-d h:i:s'),
+                'createdAt' => date('Y-m-d h:i:s'),
+                'updatedAt' => date('Y-m-d h:i:s'),
             );
         };
+    }else {
+        $_SESSION['bulk_msg_error'] =  ' ------ لم يتم اضافه اي عملاء ------ ';
     }
     //wp_redirect( $_REQUEST['redirect'] );
     exit;
@@ -129,14 +122,10 @@ function get_emojis(){
 }
 
 function send_unsent_queried_msgs($sub) {
-    // get the current max
-    $available_balance      =  sub_connection_data($sub)['msgs'];
-    $allowed_msgs_per_min   =  $available_balance >  allowed_msgs_per_min ? allowed_msgs_per_min :  $available_balance ;
-
 	global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
     $table_name = get_table_name($sub,'msgs');
-    $unsent_msgs = $wpdb->get_results( "select * from  $table_name  where isSent= 0 limit $allowed_msgs_per_min " );
+    $unsent_msgs = $wpdb->get_results( "select * from  $table_name  where isSent= 0  limit 1 " );
     foreach ($unsent_msgs as $key => $msg) {
         $parametars['phone'] =  $msg->mobileNumber ; 
         if($msg->msg_type == 'file'){
@@ -162,6 +151,7 @@ function send_unsent_queried_msgs($sub) {
 function robo_chat_text_area($value){ 
     $emojis = get_emojis();
     $codes  = get_available_codes();
+
     
     ?>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"

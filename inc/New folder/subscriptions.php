@@ -1,36 +1,12 @@
 <?php
-function subs_file_path(){
-    return  files.'all_subs.json';
-}
-function subs_list($src =  'file'){
-    if($src == 'file'){
-        return get_json(subs_file_path());
-    }elseif ($src == 'dp') {
-        $subs = get_posts( 
-            array(
-                'numberposts' => -1,
-                'post_type'   => 'shop_subscription',
-                'post_status' => 'wc-active'
-            )
-        );
-        return  $subs ;        
-    }
-}
-function add_sub_to_list($id , $sub =  array()){
-    $file_path =  subs_file_path();
-    $subs = get_json($file_path);
-    $subs[$id] =  $sub ;
-    mk_json($subs,$file_path); 
-}
 function subscription_handler($sub){
     $blog =  isset( $_REQUEST['dashboards_option_field'] ) ? $_REQUEST['dashboards_option_field']  : 0  ;
     $user = get_current_user_id();
 
     if($blog  ==  0){
         // make blog for the client 
-        $rand_dashboard_slug =  rand_sub_code();
-        $title   = $rand_dashboard_slug;
-        $path    = "sub_" . $rand_dashboard_slug ;
+        $title   = 'RoboChat Sub ';
+        $path    = "sub_" . rand_sub_code() ;
         $options = array();
         $blog    = wpmu_create_blog( domain , $path, $title, $user , $options ,  1);
     }
@@ -39,9 +15,6 @@ function subscription_handler($sub){
 
     // make new dp_tables
     create_custom_msgs_table($sub->ID);
-
-    // add the sub to the subs list to send the queried msgs
-    add_sub_to_list($sub->ID , $sub);
 
     // update data of the supscription
     update_field('web_hock',sub_link($blog , $sub ),  $sub->ID);       

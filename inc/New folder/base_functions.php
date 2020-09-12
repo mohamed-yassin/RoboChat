@@ -22,12 +22,12 @@ function is_local(){
 	}
 };
 function get_json($file){
-	$content = file_get_contents($file);
+	$content = file_get_contents(inc."jsons/$file.json");
 	return(json_decode($content, true));
 };
-function mk_json($data,$file){
-	$fp = fopen($file,'w');
-	fwrite($fp, json_encode($data));
+function mk_json($fields,$json_file){
+	$fp = fopen(inc."jsons/$json_file.json", 'w');
+	fwrite($fp, json_encode($fields));
 	fclose($fp);
 };
 
