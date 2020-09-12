@@ -1,9 +1,6 @@
-<?php 
-
-define('production', false  );
-
-if(production ==  true){
-    define('domain', 'devbx.udh.sa' );
+<?php
+if(DOMAIN_CURRENT_SITE !=  'robochat'){
+    define('production', true  );
 }else {
-    define('domain', 'robochat' );
+    define('production', false  );
 }
