@@ -32,7 +32,7 @@ function subscription_handler($sub){
         $title   = $rand_dashboard_slug;
         $path    = "sub_" . $rand_dashboard_slug ;
         $options = array();
-        $blog    = wpmu_create_blog( domain , $path, $title, $user , $options ,  1);
+        $blog    = wpmu_create_blog( DOMAIN_CURRENT_SITE , $path, $title, $user , $options ,  1);
     }
     // add the sub to the realated blog
     $slug  =  add_sub_to_blog($blog,$sub->ID);
@@ -63,9 +63,9 @@ function subscription_handler($sub){
 }
 function sub_link($blog, $sub , $link = 'hook'){
     if($link == 'hook'){
-        return 'https://'.domain.'/sub_'.$blog."/wp-json/".slug.'/v1/talk_to_bot?sub='.$sub;
+        return 'https://'.DOMAIN_CURRENT_SITE.'/sub_'.$blog."/wp-json/".slug.'/v1/talk_to_bot?sub='.$sub;
     }elseif ($link == 'dashboard') {
-        return 'https://'.domain.'/sub_'.$blog."/wp-admin/admin.php?page=sub_".$sub;
+        return 'https://'.DOMAIN_CURRENT_SITE.'/sub_'.$blog."/wp-admin/admin.php?page=sub_".$sub;
     }
 }
 function user_dashboards_option_field($checkout)
