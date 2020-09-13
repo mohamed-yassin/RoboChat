@@ -47,12 +47,12 @@ function robo_orders_admin_page_render(){
 function client_dashboard(  ) { 
 	$user_blogs 	= subs_option_field_array();
 	if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
-		add_menu_page( "RoboChat Settings", "RoboChat Settings", 'manage_options', "robochat_settings", 'roboChat_options_page' , '' , 3);
+		add_menu_page( "RoboChat Settings", "RoboChat Settings", 'read', "robochat_settings", 'roboChat_options_page' , '' , 3);
 		$options = get_option( 'roboChat_settings' );
 		foreach ($user_blogs as $key => $blog) {
 			$blog_id =  is_array($blog) ?  $blog['slug'] :  $blog;  
 			$blog_name =  isset($options['sub_'.$blog_id.'_name'])  &&  $options['sub_'.$blog_id.'_name'] != ''  ?  $options['sub_'.$blog_id.'_name'] :  "#$blog_id";
-			add_menu_page( "$blog_name", "$blog_name", 'manage_options', "sub_$blog_id", 'whatsappapi_options_page' , '' , 3);
+			add_menu_page( "$blog_name", "$blog_name", 'read', "sub_$blog_id", 'whatsappapi_options_page' , '' , 3);
 		}
 	}
 }
