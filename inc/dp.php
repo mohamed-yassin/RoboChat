@@ -99,54 +99,58 @@ function related_sub_id($slug)
     }
     return ;
 }
-
-function do_insert($place_holders, $values) {
-
+function dp_insert_multi_rows($row_arrays = array(), $wp_table_name) {
     global $wpdb;
+    $wp_table_name = esc_sql($wp_table_name);
+    // Setup arrays for Actual Values, and Placeholders
+    $values = array();
+    $place_holders = array();
+    $query = "";
+    $query_columns = "";
 
-    $query           = "INSERT INTO settings-table (`option_name`, `option_value`, `option_created`, `option_edit`, `option_user`) VALUES ";
-    $query           .= implode( ', ', $place_holders );
-    $sql             = $wpdb->prepare( "$query ", $values );
+    $query .= "INSERT INTO {$wp_table_name} (";
 
-    if ( $wpdb->query( $sql ) ) {
+            foreach($row_arrays as $count => $row_array)
+            {
+
+                foreach($row_array as $key => $value) {
+
+                    if($count == 0) {
+                        if($query_columns) {
+                        $query_columns .= ",".$key."";
+                        } else {
+                        $query_columns .= "".$key."";
+                        }
+                    }
+
+                    $values[] =  $value;
+
+                    if(is_numeric($value)) {
+                        if(isset($place_holders[$count])) {
+                        $place_holders[$count] .= ", '%d'";
+                        } else {
+                        $place_holders[$count] .= "( '%d'";
+                        }
+                    } else {
+                        if(isset($place_holders[$count])) {
+                        $place_holders[$count] .= ", '%s'";
+                        } else {
+                        $place_holders[$count] .= "( '%s'";
+                        }
+                    }
+                }
+                        // mind closing the GAP
+                        $place_holders[$count] .= ")";
+            }
+
+    $query .= " $query_columns ) VALUES ";
+
+    $query .= implode(', ', $place_holders);
+
+    if($wpdb->query($wpdb->prepare($query, $values))){
         return true;
     } else {
         return false;
     }
 
-}
-
-$data_to_be_inserted = array( 
-    array(
-        'option_name'   => 'name-1', 
-        'option_value'  => 'val-1', 
-        'option_created'=> current_time('mysql'),
-        'option_edit'   => current_time('mysql'),
-        'option_user'   => 'user-1' 
-    ),
-    array(
-        'option_name'   => 'name-2', 
-        'option_value'  => 'val-2', 
-        'option_created'=> current_time('mysql'),
-        'option_edit'   => current_time('mysql'),
-        'option_user'   => 'user-2' 
-    ),
-    array(
-        'option_name'   => 'name-1', 
-        'option_value'  => 'val-3', 
-        'option_created'=> current_time('mysql'),
-        'option_edit'   => current_time('mysql'),
-        'option_user'   => 'user-3'
-    )
-);
-
-$values = $place_holders = array();
-
-if(count($data_to_be_inserted) > 0) {
-    foreach($data_to_be_inserted as $data) {
-        array_push( $values, $data['option_name'], $data['option_value'], $data['option_created'], $data['option_edit'], $data['option_user']);
-        $place_holders[] = "( %s, %s, %s, %s, %s)";
-    }
-
-    do_insert( $place_holders, $values );
 }

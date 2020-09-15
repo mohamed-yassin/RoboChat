@@ -88,6 +88,7 @@
         echo "<h5  style='margon-top :  100px'>".__('اختر عملاء الرسالة')."</h5>";
         render_dynamic_table($header,$table_body);
 
+$table_body =  array();	
 foreach ($lists as $key => $list) {
     $table_body[$key]['term_id']=  '<input name="lists[]" value="'.$list->slug.'" type="checkbox" id="check_'.$list->slug.'" > '; 
     $table_body[$key]['name'] 	=  $list->name;

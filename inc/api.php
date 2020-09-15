@@ -1,9 +1,11 @@
 <?php 
 
 function internal_api_frequent_messaging($data){
-  $subs = subs_list();
+  $source  =  'dp' ; 
+  $subs = subs_list($source);
   foreach ($subs as $key => $sub_data) {
-      send_unsent_queried_msgs($key) ;
+      $id =  $source == 'dp' ?  $sub_data->ID  : $key ; 
+      return send_unsent_queried_msgs($id) ;
   }
 }
 

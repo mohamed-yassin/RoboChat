@@ -61,17 +61,17 @@ function compose_messages_handler() {
         $_SESSION['bulk_msg_error'] =  __('No Message Added');
         return ;
     }
-    
-    global $wpdb;
+    if(!isset($_REQUEST['table'])){
+        $_SESSION['bulk_msg_error'] =  __('Not Correct Request');
+    }
     $msg_body        = $_REQUEST['msg'];
-    $clients         = $_REQUEST['clients'];
+    $clients         = isset($_REQUEST['clients']) ?  $_REQUEST['clients'] : array() ;
     $lists           = isset($_REQUEST['lists']) ?  $_REQUEST['lists'] :  array();
     $table           = $_REQUEST['table'];
-    $files           = $_REQUEST['files'];
+    $files           = isset($_REQUEST['files'])? $_REQUEST['files'] :  '' ;
     $user            = get_current_user_id();
     $caption         = "";
     $type            = "chat";
-    // $current_wpnonce = $_REQUEST['current_wpnonce'];
 
     if(strlen($files) >  0){ 
        $caption     = $msg_body ; 
@@ -97,16 +97,15 @@ function compose_messages_handler() {
     foreach ($lists_clients as $client) {
         $clients[]  = $client->ID ;     ; 
     }
-
     $clients = array_unique((array)$clients);
-
     if(is_array($clients)  &&  count($clients) >  0){
+        global $wpdb;
         foreach ($clients as $client) {
             $phone =  get_post_meta( $client , 'phone', true );
             $phone =  pure_phone($phone); 
             $msg_body  =  $type == 'chat'  ? translate_short_codes($msg_body ,$phone) : $msg_body ;
 
-            $data = array(
+            $msg_row = array(
                 'mobile_number' => $phone,
                 'msg_body' => $msg_body,
                 'msg_type' => $type,
@@ -118,10 +117,12 @@ function compose_messages_handler() {
                 'created_at' => date('Y-m-d h:i:s'),
                 'updated_at' => date('Y-m-d h:i:s'),
             );
+            $format = array('%s','%d',);
+            $wpdb->insert($table,$msg_row);
         };
     }
-    //wp_redirect( $_REQUEST['redirect'] );
-    exit;
+    $_SESSION['bulk_msg_error'] =  __('Messages Enqueued');
+    return;
 };
 function get_emojis(){
     $emojis['smiles'] =  '😀 😃 😄 😁 😆 😅 😂 🤣 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾';
@@ -131,14 +132,18 @@ function get_emojis(){
 function send_unsent_queried_msgs($sub) {
     // get the current max
     $available_balance      =  sub_connection_data($sub)['msgs'];
+    if($available_balance  == 0){
+        return;
+    }
     $allowed_msgs_per_min   =  $available_balance >  allowed_msgs_per_min ? allowed_msgs_per_min :  $available_balance ;
 
-	global $wpdb;
+    global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
     $table_name = get_table_name($sub,'msgs');
-    $unsent_msgs = $wpdb->get_results( "select * from  $table_name  where isSent= 0 limit $allowed_msgs_per_min " );
+    $unsent_msgs = $wpdb->get_results( "select * FROM  $table_name  WHERE is_sent = 0  LIMIT $allowed_msgs_per_min" );
+    return $unsent_msgs ;
     foreach ($unsent_msgs as $key => $msg) {
-        $parametars['phone'] =  $msg->mobileNumber ; 
+        $parametars['phone'] =  $msg->mobile_number ; 
         if($msg->msg_type == 'file'){
             $parametars['body']     = production !== true ? 'https://cdn.pixabay.com/user/2014/05/07/00-10-34-2_250x250.jpg' : $msg->msg_body ;
             $parametars['caption']  = $msg->msg_caption;
@@ -147,17 +152,17 @@ function send_unsent_queried_msgs($sub) {
             $parametars['body']     = $msg->msg_body;
         }
         $response =  whatsapp_send_messege($sub,$parametars, $msg->msg_type);
-        if($response['status']  == 1 ){
-            $data  = array('isSent' => '1');
+        if(isset($response['status']) && $response['status']  == 1 ){
+            $data  = array('is_sent' => '0');
             $where = array('id' => $msg->id);
-            $wpdb->update( $table_name, $data, $where ); // Also works in this case.    
+            $wpdb->update( $table_name, $data, $where ); 
         }else {
             $data  = array('note' =>  array_to_text($response));
             $where = array('id' => $msg->id);
-            $wpdb->update( $table_name, $data, $where ); // Also works in this case.    
+            $wpdb->update( $table_name, $data, $where );
         }
     }
-    return $myrows ;
+    return;
 }
 function robo_chat_text_area($value){ 
     $emojis = get_emojis();

@@ -38,16 +38,20 @@ function json_response($response){
 }
 function not_null_auther_name($id){
 	$user = get_userdata($id);
-	if ($user->nickname   != '') {
-		$user_name = $user->nickname ;
-	}elseif ($user->display_name  != '') {
-		$user_name = $user->display_name  ;
-	}elseif ($user->first_name != '') {
-		$user_name = $user->first_name ;
+	if(is_object($user)){
+		if ($user->nickname   != '') {
+			$user_name = $user->nickname ;
+		}elseif ($user->display_name  != '') {
+			$user_name = $user->display_name  ;
+		}elseif ($user->first_name != '') {
+			$user_name = $user->first_name ;
+		}else {
+			$user_name = $user->user_login ;
+		}
+		return $user_name ;
 	}else {
-		$user_name = $user->user_login ;
+		return ;
 	}
-	return $user_name ; 
   }  
 function request($request){
 	// run request

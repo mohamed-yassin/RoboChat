@@ -112,6 +112,7 @@ new phone_Meta_Box;
 
 // User profiles
 function customer_service_client_permissions( $user ) {  
+	if(current_user_can('administrator') || is_super_admin()) {
  ?>
 
 	<h3><?php _e("Permission", "robo"); ?></h3>
@@ -140,7 +141,7 @@ function customer_service_client_permissions( $user ) {
 			</td>
 		</tr>
 	</table>
-	<?php }
+	<?php } }
 
 
 	function update_permissions( $user_id ) {
