@@ -54,3 +54,8 @@ add_action( 'edit_user_profile_update', 'update_permissions' );
 
 // general 
 add_filter('admin_footer_text', 'edit_wordpress_dashboard_footer');
+
+add_action( 'plugins_loaded', 'rad_plugin_load_text_domain' );
+function rad_plugin_load_text_domain() {
+    load_plugin_textdomain( 'robo', false, dirname( plugin_basename( __FILE__ ) ) . '/inc/languages/' );
+}

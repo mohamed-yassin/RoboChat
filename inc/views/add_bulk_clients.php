@@ -1,16 +1,16 @@
 <form action='#' method='post' enctype="multipart/form-data" >
-        <h2>Bulk Add Clients</h2>
+        <h2><?= __('Bulk Add Clients',slug); ?></h2>
         
         </br> </br>
 
         <tr>
             <th scope="row">
-                <label for="blogname">Select the list</label>
+                <label for="blogname"><?= __('Select the list',slug); ?></label>
             </th>
             <td>
                 <select name="list">
                     <?php 
-                        echo"<option value=''>No Spicific List</option>" ; 
+                        echo"<option value=''>".__('No Spicific List',slug)."</option>" ; 
                         $lists = get_terms([
                             'taxonomy' => 'list',
                             'hide_empty' => false,

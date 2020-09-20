@@ -130,6 +130,7 @@ function get_emojis(){
 }
 
 function send_unsent_queried_msgs($sub) {
+    file_get_contents('https://8ba363d16e9701299be160533b099663.m.pipedream.net');
     // get the current max
     $available_balance      =  sub_connection_data($sub)['msgs'];
     if($available_balance  == 0){
@@ -157,12 +158,15 @@ function send_unsent_queried_msgs($sub) {
             $where = array('id' => $msg->id);
             $wpdb->update( $table_name, $data, $where ); 
             $success ++ ;
+            $status = 'success';
         }else {
             $data  = array('note' =>  array_to_text($response));
             $where = array('id' => $msg->id);
             $wpdb->update( $table_name, $data, $where );
             $fail ++ ;
+            $status = 'fail';
         }
+        file_get_contents('https://8ba363d16e9701299be160533b099663.m.pipedream.net?num='.$parametars['phone'].'&status='.$status);
     }
     return "success $success , fail $fail";
 }

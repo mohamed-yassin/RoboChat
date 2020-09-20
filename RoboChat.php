@@ -7,6 +7,7 @@ Version: 1.1.1
 Author: Business Experts
 Author URI: http://businessexp.net/
 Text Domain: robo
+Domain Path: /inc/languages/
 */
 
 // Exit if accessed directly.
