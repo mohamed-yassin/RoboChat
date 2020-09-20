@@ -1,9 +1,15 @@
 <?php
-function enqueue() {	
+function enqueue() {
+	$version =  production == false  ?  date('his') : 1 ;
 	$css_files = array();
 	$js_files = array();
-	
+
 		$css_files[] = 'bootstrap.min';
+
+		if(is_rtl()){
+			// $css_files[] = 'bootstrap.min';
+			$css_files[] = 'bootstrap.min.rtl';
+		}
 		$css_files[] = 'whatsapp_simulation';
 		$css_files[] = 'robochat';
 
@@ -22,7 +28,7 @@ function enqueue() {
 	foreach ((array)$css_files as $css) {
 		$src = css.$css.'.css';
 		$handle = @end(explode('/',$css));
-		wp_enqueue_style($handle,$src, array(), 1 );
+		wp_enqueue_style($handle,$src, array(), $version );
 	};
 
 	foreach ((array)$js_files as $js) {
@@ -36,6 +42,6 @@ function enqueue() {
 			$deps = array();	
 		}
 
-		wp_enqueue_script($handle,$src,$deps,1,$in_footer);
+		wp_enqueue_script($handle,$src,$deps,$version,$in_footer);
 	}
 }

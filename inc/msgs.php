@@ -141,7 +141,7 @@ function send_unsent_queried_msgs($sub) {
 	$charset_collate = $wpdb->get_charset_collate();
     $table_name = get_table_name($sub,'msgs');
     $unsent_msgs = $wpdb->get_results( "select * FROM  $table_name  WHERE is_sent = 0  LIMIT $allowed_msgs_per_min" );
-    return $unsent_msgs ;
+    $success = $fail = 0 ;
     foreach ($unsent_msgs as $key => $msg) {
         $parametars['phone'] =  $msg->mobile_number ; 
         if($msg->msg_type == 'file'){
@@ -153,16 +153,18 @@ function send_unsent_queried_msgs($sub) {
         }
         $response =  whatsapp_send_messege($sub,$parametars, $msg->msg_type);
         if(isset($response['status']) && $response['status']  == 1 ){
-            $data  = array('is_sent' => '0');
+            $data  = array('is_sent' => '1');
             $where = array('id' => $msg->id);
             $wpdb->update( $table_name, $data, $where ); 
+            $success ++ ;
         }else {
             $data  = array('note' =>  array_to_text($response));
             $where = array('id' => $msg->id);
             $wpdb->update( $table_name, $data, $where );
+            $fail ++ ;
         }
     }
-    return;
+    return "success $success , fail $fail";
 }
 function robo_chat_text_area($value){ 
     $emojis = get_emojis();
