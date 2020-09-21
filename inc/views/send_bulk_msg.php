@@ -7,14 +7,14 @@
     ?>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 
-    <h5><?= __('انشاء رساله جديدة'); ?></h5>
+    <h5><?= __('Add New Message','robo'); ?></h5>
 	<?php 
 	if(isset($_SESSION['bulk_msg_error'])){ ?>
 			<div class="notice is-dismissible">
 				<center><h5><?= array_to_text( $_SESSION['bulk_msg_error'] ) ?></h5></center>
 				<button type="button" class="notice-dismiss">
 					<span class="screen-reader-text">
-						<?= __('Dismiss this notice.') ; ?>
+						<?= __('Dismiss this notice.','robo') ; ?>
 					</span>
 				</button>
 			</div>
@@ -32,14 +32,14 @@
 		<input type='hidden' name='files' id='files' value=''>
 		<input id="current_wpnonce"  name= "current_wpnonce" type ="hidden" value="<?= robo_nonce() ?>">
 		<input id="sub" name="sub" type="hidden" value="<?=  get_page_sub_id() ?>" >
-		<textarea required name="msg" id="input" placeholder="<?= __('اكتب رسالة'); ?>" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm send-bulk-msg-area auto-aligning"></textarea>
+		<textarea required name="msg" id="input" placeholder="<?= __('Write Your Message','robo'); ?>" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm send-bulk-msg-area auto-aligning"></textarea>
 		<div class="nav-item dropdown ml-auto">
 			<div class="">
 				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-					<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"><?= __('قوالب جاهزه');?></i>
+					<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"><?= __('Premade Templates','robo');?></i>
 				</a>
 				<a class="nav-link">
-					<i id="upload_media_button" class=" fas fa-file-image text-muted px-3" style="cursor:pointer;"><?= __('ارسال ميديا');?></i>
+					<i id="upload_media_button" class=" fas fa-file-image text-muted px-3" style="cursor:pointer;"><?= __('Send Media','robo');?></i>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<?php
@@ -53,7 +53,7 @@
 				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
 					aria-haspopup="true" aria-expanded="false">
 					<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;">
-						<?= __('وجود تعبيريه'); ?>
+						<?= __('Emojy','robo'); ?>
 					</i>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right">
@@ -70,7 +70,7 @@
 		</div>
 	</div>
 	<center>
-		<input style ="margin : 30px" class="button button-primary"  value="<?= __('اضف رساله جديده') ?>" type="submit" >
+		<input style ="margin : 30px" class="button button-primary"  value="<?= __('Add New Message','robo') ?>" type="submit" >
 	</center>
     <div class ="clients">
 		<?php 
@@ -82,10 +82,10 @@
         }
         $header = array(
             '#'			    => ' ',
-            'post_title' 	=> __('اسم العميل'), 
-            'phone'			=> __('رقم الهاتف'),
+            'post_title' 	=> __('Client Name','robo'), 
+            'phone'			=> __('Client Phone','robo'),
         );
-        echo "<h5  style='margon-top :  100px'>".__('اختر عملاء الرسالة')."</h5>";
+        echo "<h5  style='margon-top :  100px'>".__('Select Message Clients','robo')."</h5>";
         render_dynamic_table($header,$table_body);
 
 $table_body =  array();	
@@ -96,16 +96,16 @@ foreach ($lists as $key => $list) {
 }
 $header = array(
     'term_id'   => ' ',
-    'name'      => __('قائمه العملاء'), 
-    'count'     => __('عدد العملاء بداخلها'),
+    'name'      => __('List Name','robo'), 
+    'count'     => __('Number of Clients','robo'),
 );
-echo "<h5  style='margon-top :  100px'>".__('اختر قوائم العملاء')."</h5>";
+echo "<h5  style='margon-top :  100px'>".__('Select Clients Lists','robo')."</h5>";
 
 render_table($header,$table_body);
 
 ?>    
     <center>
-		<input style ="margin : 30px" class="button button-primary"  value="<?= __('اضف رساله جديده'); ?>" type="submit" >
+		<input style ="margin : 30px" class="button button-primary"  value="<?= __('Add New Message','robo'); ?>" type="submit" >
 	</center>
     </form>
     </div>

@@ -8,7 +8,7 @@ if( function_exists('acf_add_local_field_group') ):
         'fields' => array(
             array(
                 'key' => 'field_5ed0e2431a67d',
-                'label' => 'Phone',
+                'label' => __('Phone','robo'),
                 'name' => 'phone',
                 'type' => 'text',
                 'instructions' => '',
@@ -57,7 +57,7 @@ if( function_exists('acf_add_local_field_group') ):
 
         acf_add_local_field_group(array(
             'key' => 'group_5f097cb1989d9',
-            'title' => 'New Field Group',
+            'title' => __('New Field Group','robo'),
             'fields' => array(
                 array(
                     'key' => 'field_5f097cc979862',
@@ -126,7 +126,7 @@ if( function_exists('acf_add_local_field_group') ):
 
             acf_add_local_field_group(array(
                 'key' => 'group_5f0ce2984f61d',
-                'title' => 'chat box',
+                'title' => __('chat box','robo'),
                 'fields' => array(
                     array(
                         'key' => 'field_5f0ce33967d70',

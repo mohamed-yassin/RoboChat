@@ -10,7 +10,7 @@ if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
         ?>
         <tr><th scope="row"><h6 style="font-weight :   bold "> <?= "#" .$blog . " Subscription" ?> </h6></th><td></td></tr>
         <tr>
-            <th scope="row"><?= __('Name');?></th>
+            <th scope="row"><?= __('Name','robo');?></th>
             <td>
                 <input type="text" name="roboChat_settings[<?= $name ?>]" value='<?=  isset($options[$name]) ?  $options[$name] :  '' ; ?>'>
             </td>
@@ -24,7 +24,7 @@ if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
         <th scope="row"><?= __('ChatBot');?></th>
         <td>
             <?php
-                $title=  'No Automated Answering' ;
+                $title=  __('No Automated Answering','robo') ;
                 $val =  0 ; 
                 $id=  $val."_".$blog;
                 $checked =  $value == $val ? 'checked'  : '';

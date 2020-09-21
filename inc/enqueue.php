@@ -45,3 +45,7 @@ function enqueue() {
 		wp_enqueue_script($handle,$src,$deps,$version,$in_footer);
 	}
 }
+function front_end_enqueue()
+{
+  wp_enqueue_style( 'my-theme-purecss',assets.'front_end/css/bootstrapv4.1.3.min.css', array(), '1.0.0', 'all' );
+}

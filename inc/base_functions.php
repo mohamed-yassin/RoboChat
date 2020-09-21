@@ -59,12 +59,12 @@ function request($request){
 function test_windows()
 {
 	if(is_admin()){
-		function sample_admin_notice__success() { ?>
+		function sample_admin_notice_success() { ?>
 			<div class="notice notice-success is-dismissible">
 				<?php include(inc."test.php"); ?>
 			</div>
 		<?php }
-		add_action( 'admin_notices', 'sample_admin_notice__success' );
+		add_action( 'admin_notices', 'sample_admin_notice_success' );
 	}else {
 		include(inc."test.php");
 	}	
@@ -107,9 +107,9 @@ function render_custom_fields($fields){
 		$key	= $name;
 		$val	= get_post_meta( $post->ID, $key , true );
 		echo "<div class='rob-custom-field' ";
-			echo '<h4>' . __($name, slug ) . ' </h4>';
-			echo '<span> ' . __( $note , slug ) . '</span>';
-			echo '<input class="rob-custom-field" type="text" name="first_name" value="' . esc_attr__( $first_name ) . '">';
+			echo '<h4>' . __($name,'robo') . ' </h4>';
+			echo '<span> ' . __( $note,'robo') . '</span>';
+			echo '<input class="rob-custom-field" type="text" name="first_name" value="' . esc_attr__($first_name,'robo') . '">';
 		echo "</div>";
 		if(isset($field['name'])){
 			if ($field['type']) {

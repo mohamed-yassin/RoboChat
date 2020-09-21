@@ -22,7 +22,7 @@ class phone_Meta_Box {
 
 		add_meta_box(
 			'phone',
-			__( 'Client Info', slug ),
+			__( 'Client Info', 'Robo' ),
 			array( $this, 'render_metabox' ),
 			'client',
 			'advanced',
@@ -44,23 +44,23 @@ class phone_Meta_Box {
 
 		// Form fields.
 		echo "<div>";
-			echo '<h4 class="rob-custom-field-title">' . __( 'Phone', slug ) . ' </h4>';
+			echo '<h4 class="rob-custom-field-title">' . __( 'Phone', 'Robo' ) . ' </h4>';
 			echo '<input class="rob-custom-field" type="text" name="phone" value="' . esc_attr__( $phone ) . '">';
 		echo "</div>";
 		echo '<div class="">';
-			echo '<h4 class="rob-custom-field-title">' . __( 'First Name', slug ) . ' </h4>';
-			echo '<span> ' . __( 'the name of the client which will be used in messaging process', slug ) . '</span>';
+			echo '<h4 class="rob-custom-field-title">' . __( 'First Name', 'Robo' ) . ' </h4>';
+			echo '<span> ' . __( 'the name of the client which will be used in messaging process', 'Robo' ) . '</span>';
 			echo '<input class="rob-custom-field" type="text" name="first_name" value="' . esc_attr__( $first_name ) . '">';
 		echo "</div>";
 
 		echo "<div>";
-			echo '<h4 class="rob-custom-field-title">' . __( 'Jop Title', slug ) . ' </h4>';
+			echo '<h4 class="rob-custom-field-title">' . __( 'Jop Title', 'Robo' ) . ' </h4>';
 			echo '<input class="rob-custom-field" type="text" name="jop_title" value="' . esc_attr__( $jop_title ) . '">';
 		echo "</div>";
 
 
 		echo "<div>";
-			echo '<h4 class="rob-custom-field-title">' . __( 'Notes', slug ) . ' </h4>';
+			echo '<h4 class="rob-custom-field-title">' . __( 'Notes', 'Robo' ) . ' </h4>';
 			echo '<textarea class="rob-custom-field" name="notes">'. esc_attr__( $notes ) .'</textarea>';
 		echo "</div>";
 
@@ -159,72 +159,6 @@ function customer_service_client_permissions( $user ) {
 		update_user_meta( $user_id, 'chat_bot', $chat_bot_value );
 	}
 
-
-	class template_instructions {
-
-		public function __construct() {
-	
-			if ( is_admin() ) {
-				add_action( 'load-post.php',     array( $this, 'init_metabox' ) );
-				add_action( 'load-post-new.php', array( $this, 'init_metabox' ) );
-			}
-	
-		}
-	
-		public function init_metabox() {
-	
-			add_action( 'add_meta_boxes', array( $this, 'add_metabox'  )        );
-	
-		}
-	
-		public function add_metabox() {
-			add_meta_box(
-				'instructions',
-				__( 'الاكواد المتاحة', slug ),
-				array( $this, 'render_metabox' ),
-				'template',
-				'side',
-				'default'
-			);
-		}
-	
-		public function render_metabox( $post ) {
-		?>
-			<tr>
-				<td>
-				{{current_user}} 
-				</td>
-				<td>
-				المستخدم الحالي 
-				</td>
-				</br>
-			</tr>
-
-			<tr>
-				<td>
-				{{phone}}
-				</td>
-				<td>
-				رقم هاتف العميل 
-				</td>
-				</br>
-			</tr>
-
-			<tr>
-				<td>
-				{{first_name}}
-				</td>
-				<td>
-				اسم الاول للعميل  
-				</td>
-				</br>
-			</tr>
-			<?php 
-		}
-	}
-	new template_instructions;
-
-
 class template_meta_box {
 
 	public function __construct() {
@@ -242,7 +176,7 @@ class template_meta_box {
 	public function add_metabox() {
 		add_meta_box(
 			'template_composer',
-			__( 'Template Composer', slug ),
+			__( 'Template Composer', 'Robo' ),
 			array( $this, 'render_metabox' ),
 			'template',
 			'advanced',

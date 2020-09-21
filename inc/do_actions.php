@@ -45,6 +45,7 @@ add_action( 'wp_ajax_check_connection_status_action', 'chat_api_check_connection
 // Enqueue CSS & JS files
 add_action( 'admin_enqueue_scripts', 'enqueue' );
 add_action( 'wp_enqueue_scripts', function () { wp_enqueue_media ();}  );
+add_action( 'wp_enqueue_scripts', 'front_end_enqueue' );
 
 // Custom Meta Boxes
 add_action( 'show_user_profile', 'customer_service_client_permissions' );

@@ -1,4 +1,4 @@
-<h2>امسح الكود باستخدام برنامج الواتساب ثم حمل الصفحه مره اخري</h2>
+<h2><?= __('Scan the code using the WhatsApp app,then reload the page again','robo');?></h2>
 <img id='qr_img' src="<?= $qr ?> " alt="Base64 encoded image"/>
 
 <script>

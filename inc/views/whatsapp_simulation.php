@@ -8,7 +8,7 @@
 				<div class="text-white font-weight-bold" id="username"><?= get_bloginfo('name');?></div>
 				<div class="nav-item dropdown ml-auto text-white font-weight-bold">
 					<p>
-						<?= __('عدد الرسائل المتبقيه') ?> :
+						<?= __('Remaining Messages Counter','robo') ?> :
 						<span id="msgs_counter">
 							<?= $msgs_counter; ?>
 						<span>
@@ -73,7 +73,7 @@
 				<div id="current_messages" class="d-flex flex-column">
 					<div id="" class="mx-auto my-2 bg-primary text-white small py-1 px-2 rounded">
 						<H2>
-							<?= __('من فضلك ابقي علي هاتفك متصل بالانترنت') ?>
+							<?= __('Keep Your Phone Connected','robo') ?>
 						</H2>
 					</div>
 				</div>
@@ -92,14 +92,14 @@
 				<input id="current_wpnonce"  name= "current_wpnonce" type ="hidden" value="<?= robo_nonce() ?>">
 				<input id="sub" name="sub" type="hidden" value="<?=  get_page_sub_id() ?>" >
 				<input id="last_message_number" name="last_message_number" type="hidden" value="<?=  $last_message_number ?>" >
-				<textarea name="input" id="input" placeholder="<?= __('اكتب رسالة') ?>" disabled="disabled" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm"></textarea>
+				<textarea name="input" id="input" placeholder="<?= __('Write Your Message','robo') ?>" disabled="disabled" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm"></textarea>
 				
-				<i id="msg_sending_btn" class="button fas fa-paper-plane text-muted px-3 send-btn" style="cursor:pointer;" onclick="sendMessage()"><?= __('ارسال'); ?></i>
+				<i id="msg_sending_btn" class="button fas fa-paper-plane text-muted px-3 send-btn" style="cursor:pointer;" onclick="sendMessage()"><?= __('Send','robo'); ?></i>
  
  				<div class="nav-item dropdown ml-auto">
 					<div class="">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-							<i class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"><?= __('قوالب جاهزه'); ?></i>
+							<i class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"><?= __('Premade Templates'); ?></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<?php
@@ -113,7 +113,7 @@
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
 							aria-haspopup="true" aria-expanded="false">
 							<i class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;">
-								<?= __('وجود تعبيريه'); ?>
+								<?= __('Emojy','robo'); ?>
 							</i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
@@ -129,7 +129,7 @@
 					</div>
 					<div class="">
 						<a class="nav-link">
-							<i id="upload_media_button" class=" fas fa-file-image text-muted px-3" style="cursor:pointer;"><?= __('ارسال ميديا'); ?></i>
+							<i id="upload_media_button" class=" fas fa-file-image text-muted px-3" style="cursor:pointer;"><?= __('Send Media','robo'); ?></i>
 						</a>
 						<div id="image_preview_class"  >
 							<center>

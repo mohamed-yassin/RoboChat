@@ -42,12 +42,12 @@ function render_table($headers = array() ,$body,$footers  =  false){
 function whatsapp_messeges_table($api,$token)
 {
     $messeges =  whatsapp_messeges($api,$token) ;
-    echo '<br><h2> عرض الرسائل  </h2><table class="wp-list-table widefat fixed striped posts">
+    echo '<br><h2>'.__('Show Messages','robo').'</h2><table class="wp-list-table widefat fixed striped posts">
             <thead>
                 <tr>
-                    <th scope="col" id="author" class="manage-column column-author">نص الرساله</th>
-                    <th scope="col" id="categories" class="manage-column column-categories">المرسل</th>
-                    <th scope="col" id="tags" class="manage-column column-tags">اسم المحادثه</th>
+                    <th scope="col" id="author" class="manage-column column-author">'.__('Message Text','robo').'</th>
+                    <th scope="col" id="categories" class="manage-column column-categories">'.__('Sender','robo').'</th>
+                    <th scope="col" id="tags" class="manage-column column-tags">'.__('Chat Name','robo').'</th>
                 </tr>
             </thead>
             <tbody id="the-list">';
@@ -69,7 +69,7 @@ function whatsappapi_form (){ ?>
     <?php
     settings_fields( 'pluginPage' );
     do_settings_sections( 'pluginPage' );
-    submit_button('احفظ');
+    submit_button(__('Save','robo'));
     ?>
 
 </form>
@@ -77,14 +77,14 @@ function whatsappapi_form (){ ?>
 
 function whatsappapi_processes(){ ?>
     <div style="margin-bottom :10px; margin-top :10px">
-        <h2>عمليات</h2>
+        <h2><?= __('Processes','robo'); ?></h2>
         <?php 
             if(has_robo_permission('show_msgs')){ ?>
-                <a href="<?= current_sub_page_url('&process=show_msgs')."&_wpnonce=".robo_nonce(); ?>" class="button button-primary" > نافذه خدمه العملاء  </a>
+                <a href="<?= current_sub_page_url('&process=show_msgs')."&_wpnonce=".robo_nonce(); ?>" class="button button-primary" ><?= __('Customer Service','robo');?></a>
             <?php }   if(has_robo_permission('send_msg')){ ?> 
-        <a href="<?= current_sub_page_url('&process=send_msg'); ?>" class="button button-primary" > ارسال رسائل جماعية </a>
+        <a href="<?= current_sub_page_url('&process=send_msg'); ?>" class="button button-primary" ><?= __('Send Bulk Messages','robo');?></a>
             <?php } ?> 
-        <a href="<?= admin_url('post-new.php?post_type=client'); ?>" target="_blank" class="button button-primary">عميل جديد</a>
+        <a href="<?= admin_url('post-new.php?post_type=client'); ?>" target="_blank" class="button button-primary"><?= __('New Client','robo');?></a>
     </div>
 <?php };
 function render_dynamic_table($headers,$body){ 
@@ -131,8 +131,8 @@ function render_dynamic_table($headers,$body){
 			dateFormat: [[4,"mm-dd-yyyy"]],
 			debug: true,
 			vocabulary: {
-    voc_filter_by: 'البحث ب',
-    voc_type_here_filter: 'ابحث',
+    voc_filter_by: <?= __('Search By','robo');?>,
+    voc_type_here_filter: <?= __('Search','robo');?>,
     voc_show_rows: 'Rows Per Page'
   },
 			pagination: true,

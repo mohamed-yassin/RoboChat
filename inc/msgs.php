@@ -181,11 +181,11 @@ function robo_chat_text_area($value){
     
     <div class="justify-self-end align-items-center flex-row d-flex" id="input-area">
 		<input id="sub" name="sub" type="hidden" value="<?=  get_page_sub_id() ?>" >
-		<textarea required name="content" id="input" placeholder="اكتب رسالة" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm send-bulk-msg-area auto-aligning"><?= $value ?></textarea>
+		<textarea required name="content" id="input" placeholder="<?= __('Write the message','robo'); ?>" class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm send-bulk-msg-area auto-aligning"><?= $value ?></textarea>
 		<div class="nav-item dropdown ml-auto">
 			<div class="">
 				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-					<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"> اكواد جاهزه </i>
+					<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;"><?= __('Premade Codes','robo') ;?></i>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<?php
@@ -199,7 +199,7 @@ function robo_chat_text_area($value){
 				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
 					aria-haspopup="true" aria-expanded="false">
 					<i id="msg_sending_btn" class="fas fa-ellipsis-v text-muted px-3" style="cursor:pointer;">
-						وجود تعبيريه
+						<?= __('Emojy','robo'); ?>
 					</i>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right">
@@ -228,9 +228,9 @@ function robo_chat_text_area($value){
 <?php }
 function get_available_codes(){
     $codes =  array(
-        'المستخدم الحالي' =>  'current_user',
-        'رقم هاتف العميل' =>  'phone',
-        'اسم الاول للعميل' =>  'first_name',
+        __('Current User','robo') =>  'current_user',
+        __('Client Phone','robo') =>  'phone',
+        __('Client First Name') =>  'first_name',
     );
     return  $codes ;
 }
