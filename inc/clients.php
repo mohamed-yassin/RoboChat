@@ -14,11 +14,7 @@ function roboChat_bulk_add_clients_page(  ) {
         if($csv['type'] != 'application/octet-stream'){
             echo_notice ('please upload a CSV file' ,  'error');
         }else {
-            $csv['name'] =  time().'_'.$csv['name'];
-            $distination  =  files.'csv/'.$csv['name'] ;
-            move_uploaded_file($csv['tmp_name'] , $distination  );
-
-            $csv = array_map('str_getcsv', file($distination));
+            $csv = array_map('str_getcsv', file($csv['tmp_name']));
             unset($csv[0]);
             $lists[] =  $_POST['list'];
             
