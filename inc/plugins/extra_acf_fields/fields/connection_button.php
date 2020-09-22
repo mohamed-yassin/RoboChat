@@ -43,7 +43,7 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 		*  label (string) Multiple words, can include spaces, visible when selecting a field type
 		*/
 		
-		$this->label = __('Connection Button', 'TEXTDOMAIN');
+		$this->label = __('Connection Button', 'robo');
 		
 		
 		/*
@@ -65,7 +65,7 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 		*/
 		
 		$this->l10n = array(
-			'error'	=> __('Error! Please enter a higher value', 'TEXTDOMAIN'),
+			'error'	=> __('Error! Please enter a higher value', 'robo'),
 		);
 		
 		

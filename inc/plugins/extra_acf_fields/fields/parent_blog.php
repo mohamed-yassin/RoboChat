@@ -43,7 +43,7 @@ class NAMESPACE_acf_field_parent_blog extends acf_field {
 		*  label (string) Multiple words, can include spaces, visible when selecting a field type
 		*/
 		
-		$this->label = __('Parent Blog', 'TEXTDOMAIN');
+		$this->label = __('Parent Blog', 'robo');
 		
 		
 		/*

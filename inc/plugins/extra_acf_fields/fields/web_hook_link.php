@@ -37,7 +37,7 @@ class NAMESPACE_acf_field_web_hook_link extends acf_field {
 		*  label (string) Multiple words, can include spaces, visible when selecting a field type
 		*/
 		
-		$this->label = __('web hook link', 'TEXTDOMAIN');
+		$this->label = __('web hook link', 'robo');
 		
 		
 		/*
@@ -59,7 +59,7 @@ class NAMESPACE_acf_field_web_hook_link extends acf_field {
 		*/
 		
 		$this->l10n = array(
-			'error'	=> __('Error! Please enter a higher value', 'TEXTDOMAIN'),
+			'error'	=> __('Error! Please enter a higher value', 'robo'),
 		);
 		
 		
@@ -155,13 +155,13 @@ class NAMESPACE_acf_field_web_hook_link extends acf_field {
 		
 		
 		// register & include JS
-		wp_register_script('TEXTDOMAIN', "{$url}assets/js/input.js", array('acf-input'), $version);
-		wp_enqueue_script('TEXTDOMAIN');
+		wp_register_script('robo', "{$url}assets/js/input.js", array('acf-input'), $version);
+		wp_enqueue_script('robo');
 		
 		
 		// register & include CSS
-		wp_register_style('TEXTDOMAIN', "{$url}assets/css/input.css", array('acf-input'), $version);
-		wp_enqueue_style('TEXTDOMAIN');
+		wp_register_style('robo', "{$url}assets/css/input.css", array('acf-input'), $version);
+		wp_enqueue_style('robo');
 		
 	}
 	
@@ -422,7 +422,7 @@ class NAMESPACE_acf_field_web_hook_link extends acf_field {
 		// Advanced usage
 		if( $value < $field['custom_minimum_setting'] )
 		{
-			$valid = __('The value is too little!','TEXTDOMAIN'),
+			$valid = __('The value is too little!','robo'),
 		}
 		
 		

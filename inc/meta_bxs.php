@@ -22,7 +22,7 @@ class phone_Meta_Box {
 
 		add_meta_box(
 			'phone',
-			__( 'Client Info', 'Robo' ),
+			__( 'Client Info', 'robo' ),
 			array( $this, 'render_metabox' ),
 			'client',
 			'advanced',
@@ -44,23 +44,23 @@ class phone_Meta_Box {
 
 		// Form fields.
 		echo "<div>";
-			echo '<h4 class="rob-custom-field-title">' . __( 'Phone', 'Robo' ) . ' </h4>';
+			echo '<h4 class="rob-custom-field-title">' . __( 'Phone', 'robo' ) . ' </h4>';
 			echo '<input class="rob-custom-field" type="text" name="phone" value="' . esc_attr__( $phone ) . '">';
 		echo "</div>";
 		echo '<div class="">';
-			echo '<h4 class="rob-custom-field-title">' . __( 'First Name', 'Robo' ) . ' </h4>';
-			echo '<span> ' . __( 'the name of the client which will be used in messaging process', 'Robo' ) . '</span>';
+			echo '<h4 class="rob-custom-field-title">' . __( 'First Name', 'robo' ) . ' </h4>';
+			echo '<span> ' . __( 'the name of the client which will be used in messaging process', 'robo' ) . '</span>';
 			echo '<input class="rob-custom-field" type="text" name="first_name" value="' . esc_attr__( $first_name ) . '">';
 		echo "</div>";
 
 		echo "<div>";
-			echo '<h4 class="rob-custom-field-title">' . __( 'Jop Title', 'Robo' ) . ' </h4>';
+			echo '<h4 class="rob-custom-field-title">' . __( 'Jop Title', 'robo' ) . ' </h4>';
 			echo '<input class="rob-custom-field" type="text" name="jop_title" value="' . esc_attr__( $jop_title ) . '">';
 		echo "</div>";
 
 
 		echo "<div>";
-			echo '<h4 class="rob-custom-field-title">' . __( 'Notes', 'Robo' ) . ' </h4>';
+			echo '<h4 class="rob-custom-field-title">' . __( 'Notes', 'robo' ) . ' </h4>';
 			echo '<textarea class="rob-custom-field" name="notes">'. esc_attr__( $notes ) .'</textarea>';
 		echo "</div>";
 
@@ -176,7 +176,7 @@ class template_meta_box {
 	public function add_metabox() {
 		add_meta_box(
 			'template_composer',
-			__( 'Template Composer', 'Robo' ),
+			__( 'Template Composer', 'robo' ),
 			array( $this, 'render_metabox' ),
 			'template',
 			'advanced',
