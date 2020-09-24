@@ -230,7 +230,7 @@ function get_available_codes(){
     $codes =  array(
         __('Current User','robo') =>  'current_user',
         __('Client Phone','robo') =>  'phone',
-        __('Client First Name') =>  'first_name',
+        __('Client First Name','robo') =>  'first_name',
     );
     return  $codes ;
 }
