@@ -97,7 +97,7 @@ function whatsappapi_options_page() {
 						view('send_bulk_msg', $data);
 					}elseif ($process  == 'show_msgs' && has_robo_permission('show_msgs') ) {
 						$data['msgs_counter'] =  sub_connection_data($sub)['msgs'];
-						$data['msgs_counter'] =  $data['msgs_counter'] >  0 ? $data['msgs_counter'] : 'لقد نفذ الرصيد اليومي' ;	
+						$data['msgs_counter'] =  $data['msgs_counter'] >  0 ? $data['msgs_counter'] : __('The daily balance has run out','robo') ;	
 						$whatsapp_messeges =  whatsapp_messeges($api,$token);
 						$prepare_msgs =  $whatsapp_messeges->messages;
 						$prepare_msgs =  prepare_msgs($prepare_msgs);
@@ -117,17 +117,16 @@ function whatsappapi_options_page() {
 					pre($chatapi_sub_status);
 				}
 				if(isset($chatapi_sub_status['accountStatus']) &&  $chatapi_sub_status['accountStatus'] == 'loading') {
-					_e("there is a problem :: if you reload the page and still exist , </br>",'robo');
-					_e("1- Make sure that your phone is connected to the Internet</br>",'robo');
-					_e("2- And opening the WhatsApp program on the mobile</br>",'robo');
-					_e("3 - Terminate your WhatsApp connection with any other services</br>",'robo');
-
+					_e("There is a problem :: if you reload the page and still exist,",'robo'); echo ('</br>');
+					_e("1- Make sure that your phone is connected to the Internet",'robo'); echo ('</br>');
+					_e("2- And opening the WhatsApp program on the mobile",'robo'); echo ('</br>');
+					_e("3- Terminate your WhatsApp connection with any other services",'robo'); echo ('</br>');
 				}elseif (! isset($chatapi_sub_status['accountStatus'])) {
-					_e('There is a problem with the contact information, please contact customer service') ; 
+					_e('There is a problem with the contact information, please contact customer service','robo') ; 
 				}else{
 					$data['qr'] = $chatapi_sub_status['qrCode'] ;
 					view('qr_code', $data);
-				}	
+				}
 			}
 		}
 	}else {
@@ -149,7 +148,7 @@ function roboChat_settings_init(  ) {
 
 	add_settings_field( 
 		'roboChat_text_field_0', 
-		__( '<h6 style="font-weight :   bold ">  </h6>', 'robo' ), 
+		'', 
 		'roboChat_text_field_0_render', 
 		'roboChat_settings', 
 		'roboChat_roboChat_settings_section' 

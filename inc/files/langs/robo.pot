@@ -1,0 +1,973 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: RoboChat\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-26 02:28+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.4.3; wp-5.4.2"
+
+#: inc/acf.php:11 inc/meta_bxs.php:47
+msgid "Phone"
+msgstr ""
+
+#: inc/acf.php:60
+msgid "New Field Group"
+msgstr ""
+
+#: inc/acf.php:129
+msgid "chat box"
+msgstr ""
+
+#: inc/chat_api.php:37 inc/chat_api.php:63 inc/chat_api.php:221
+msgid "Please call admin to re-check your data"
+msgstr ""
+
+#: inc/chat_api.php:89
+msgid "Close the Session"
+msgstr ""
+
+#: inc/chat_api.php:120
+msgid "Scan the code, then press the button again"
+msgstr ""
+
+#: inc/chat_api.php:126
+msgid "Based on the chat API, operations will not be communicated on the server for 5 minutes from now and all API responses will be incomplete </br>"
+msgstr ""
+
+#: inc/chat_api.php:133
+msgid "There is a problem with the update"
+msgstr ""
+
+#: inc/chat_api.php:133
+msgid "Subscription has been renewed"
+msgstr ""
+
+#: inc/clients.php:6 inc/clients.php:40 inc/views/add_bulk_clients.php:2
+msgid "Bulk Add Clients"
+msgstr ""
+
+#: inc/clients.php:30
+msgid "done"
+msgstr ""
+
+#: inc/clients.php:43
+msgid "Download Sample"
+msgstr ""
+
+#: inc/clients.php:46
+msgid "Click Here"
+msgstr ""
+
+#: inc/clients.php:52 inc/views/add_bulk_clients.php:8
+msgid "Select the list"
+msgstr ""
+
+#: inc/clients.php:57 inc/views/add_bulk_clients.php:13
+msgid "No Spicific List"
+msgstr ""
+
+#: inc/clients.php:72
+msgid "Upload CSV file"
+msgstr ""
+
+#: inc/clients.php:77
+msgid "1- Only csv files accepted"
+msgstr ""
+
+#: inc/clients.php:79
+msgid "2- To make it safe : please don't upload more than 500 contact per time"
+msgstr ""
+
+#: inc/clients.php:82 inc/views/add_bulk_clients.php:48
+msgid "upload cvs"
+msgstr ""
+
+#: inc/cpt.php:10 inc/cpt.php:12 inc/cpt.php:45
+msgid "Clients"
+msgstr ""
+
+#: inc/cpt.php:11 inc/cpt.php:35
+msgid "Client"
+msgstr ""
+
+#: inc/cpt.php:13
+msgid "All Clients"
+msgstr ""
+
+#: inc/cpt.php:14 inc/cpt.php:80 inc/cpt.php:152
+msgid "Add new"
+msgstr ""
+
+#: inc/cpt.php:15
+msgid "Add new Client"
+msgstr ""
+
+#: inc/cpt.php:16
+msgid "Edit Client"
+msgstr ""
+
+#: inc/cpt.php:17 inc/general_views.php:87
+msgid "New Client"
+msgstr ""
+
+#: inc/cpt.php:18
+msgid "View Client"
+msgstr ""
+
+#: inc/cpt.php:19
+msgid "View Clients"
+msgstr ""
+
+#: inc/cpt.php:20
+msgid "Search Clients"
+msgstr ""
+
+#: inc/cpt.php:21
+msgid "No Clients found"
+msgstr ""
+
+#: inc/cpt.php:22
+msgid "No Clients found in trash"
+msgstr ""
+
+#: inc/cpt.php:23 inc/cpt.php:41
+msgid "Parent Client:"
+msgstr ""
+
+#: inc/cpt.php:24
+msgid "Featured image for this Client"
+msgstr ""
+
+#: inc/cpt.php:25
+msgid "Set featured image for this Client"
+msgstr ""
+
+#: inc/cpt.php:26
+msgid "Remove featured image for this Client"
+msgstr ""
+
+#: inc/cpt.php:27
+msgid "Use as featured image for this Client"
+msgstr ""
+
+#: inc/cpt.php:28
+msgid "Client archives"
+msgstr ""
+
+#: inc/cpt.php:29
+msgid "Insert into Client"
+msgstr ""
+
+#: inc/cpt.php:30
+msgid "Upload to this Client"
+msgstr ""
+
+#: inc/cpt.php:31
+msgid "Filter Clients list"
+msgstr ""
+
+#: inc/cpt.php:32
+msgid "Clients list navigation"
+msgstr ""
+
+#: inc/cpt.php:33
+msgid "Clients list"
+msgstr ""
+
+#: inc/cpt.php:34
+msgid "Clients attributes"
+msgstr ""
+
+#: inc/cpt.php:36
+msgid "Client published"
+msgstr ""
+
+#: inc/cpt.php:37
+msgid "Client published privately."
+msgstr ""
+
+#: inc/cpt.php:38
+msgid "Client reverted to draft."
+msgstr ""
+
+#: inc/cpt.php:39
+msgid "Client scheduled"
+msgstr ""
+
+#: inc/cpt.php:40
+msgid "Client updated."
+msgstr ""
+
+#: inc/cpt.php:76 inc/cpt.php:78 inc/cpt.php:111
+msgid "Templates"
+msgstr ""
+
+#: inc/cpt.php:77 inc/cpt.php:101
+msgid "Template"
+msgstr ""
+
+#: inc/cpt.php:79
+msgid "All Templates"
+msgstr ""
+
+#: inc/cpt.php:81
+msgid "Add new Template"
+msgstr ""
+
+#: inc/cpt.php:82
+msgid "Edit Template"
+msgstr ""
+
+#: inc/cpt.php:83
+msgid "New Template"
+msgstr ""
+
+#: inc/cpt.php:84
+msgid "View Template"
+msgstr ""
+
+#: inc/cpt.php:85
+msgid "View Templates"
+msgstr ""
+
+#: inc/cpt.php:86
+msgid "Search Templates"
+msgstr ""
+
+#: inc/cpt.php:87
+msgid "No Templates found"
+msgstr ""
+
+#: inc/cpt.php:88
+msgid "No Templates found in trash"
+msgstr ""
+
+#: inc/cpt.php:89 inc/cpt.php:107
+msgid "Parent Template:"
+msgstr ""
+
+#: inc/cpt.php:90
+msgid "Featured image for this Template"
+msgstr ""
+
+#: inc/cpt.php:91
+msgid "Set featured image for this Template"
+msgstr ""
+
+#: inc/cpt.php:92
+msgid "Remove featured image for this Template"
+msgstr ""
+
+#: inc/cpt.php:93
+msgid "Use as featured image for this Template"
+msgstr ""
+
+#: inc/cpt.php:94
+msgid "Template archives"
+msgstr ""
+
+#: inc/cpt.php:95
+msgid "Insert into Template"
+msgstr ""
+
+#: inc/cpt.php:96
+msgid "Upload to this Template"
+msgstr ""
+
+#: inc/cpt.php:97
+msgid "Filter Templates list"
+msgstr ""
+
+#: inc/cpt.php:98
+msgid "Templates list navigation"
+msgstr ""
+
+#: inc/cpt.php:99
+msgid "Templates list"
+msgstr ""
+
+#: inc/cpt.php:100
+msgid "Templates attributes"
+msgstr ""
+
+#: inc/cpt.php:102
+msgid "Template published"
+msgstr ""
+
+#: inc/cpt.php:103
+msgid "Template published privately."
+msgstr ""
+
+#: inc/cpt.php:104
+msgid "Template reverted to draft."
+msgstr ""
+
+#: inc/cpt.php:105
+msgid "Template scheduled"
+msgstr ""
+
+#: inc/cpt.php:106
+msgid "Template updated."
+msgstr ""
+
+#: inc/cpt.php:148 inc/cpt.php:150 inc/cpt.php:183
+msgid "Chat Boxes"
+msgstr ""
+
+#: inc/cpt.php:149 inc/cpt.php:173
+msgid "Chat Box"
+msgstr ""
+
+#: inc/cpt.php:151
+msgid "All Chat Boxes"
+msgstr ""
+
+#: inc/cpt.php:153
+msgid "Add new Chat Box"
+msgstr ""
+
+#: inc/cpt.php:154
+msgid "Edit Chat Box"
+msgstr ""
+
+#: inc/cpt.php:155
+msgid "New Chat Box"
+msgstr ""
+
+#: inc/cpt.php:156
+msgid "View Chat Box"
+msgstr ""
+
+#: inc/cpt.php:157
+msgid "View Chat Boxes"
+msgstr ""
+
+#: inc/cpt.php:158
+msgid "Search Chat Boxes"
+msgstr ""
+
+#: inc/cpt.php:159
+msgid "No Chat Boxes found"
+msgstr ""
+
+#: inc/cpt.php:160
+msgid "No Chat Boxes found in trash"
+msgstr ""
+
+#: inc/cpt.php:161 inc/cpt.php:179
+msgid "Parent Chat Box:"
+msgstr ""
+
+#: inc/cpt.php:162
+msgid "Featured image for this Chat Box"
+msgstr ""
+
+#: inc/cpt.php:163
+msgid "Set featured image for this Chat Box"
+msgstr ""
+
+#: inc/cpt.php:164
+msgid "Remove featured image for this Chat Box"
+msgstr ""
+
+#: inc/cpt.php:165
+msgid "Use as featured image for this Chat Box"
+msgstr ""
+
+#: inc/cpt.php:166
+msgid "Chat Box archives"
+msgstr ""
+
+#: inc/cpt.php:167
+msgid "Insert into Chat Box"
+msgstr ""
+
+#: inc/cpt.php:168
+msgid "Upload to this Chat Box"
+msgstr ""
+
+#: inc/cpt.php:169
+msgid "Filter Chat Boxes list"
+msgstr ""
+
+#: inc/cpt.php:170
+msgid "Chat Boxes list navigation"
+msgstr ""
+
+#: inc/cpt.php:171
+msgid "Chat Boxes list"
+msgstr ""
+
+#: inc/cpt.php:172
+msgid "Chat Boxes attributes"
+msgstr ""
+
+#: inc/cpt.php:174
+msgid "Chat Box published"
+msgstr ""
+
+#: inc/cpt.php:175
+msgid "Chat Box published privately."
+msgstr ""
+
+#: inc/cpt.php:176
+msgid "Chat Box reverted to draft."
+msgstr ""
+
+#: inc/cpt.php:177
+msgid "Chat Box scheduled"
+msgstr ""
+
+#: inc/cpt.php:178
+msgid "Chat Box updated."
+msgstr ""
+
+#: inc/cpt.php:216 inc/cpt.php:239
+msgid "Clients Lists"
+msgstr ""
+
+#: inc/cpt.php:217
+msgid "Client List"
+msgstr ""
+
+#: inc/cpt.php:218
+msgid "Lists"
+msgstr ""
+
+#: inc/cpt.php:219
+msgid "All Lists"
+msgstr ""
+
+#: inc/cpt.php:220
+msgid "Edit List"
+msgstr ""
+
+#: inc/cpt.php:221
+msgid "View List"
+msgstr ""
+
+#: inc/cpt.php:222
+msgid "Update List name"
+msgstr ""
+
+#: inc/cpt.php:223
+msgid "Add new List"
+msgstr ""
+
+#: inc/cpt.php:224
+msgid "New List name"
+msgstr ""
+
+#: inc/cpt.php:225
+msgid "Parent List"
+msgstr ""
+
+#: inc/cpt.php:226
+msgid "Parent List:"
+msgstr ""
+
+#: inc/cpt.php:227
+msgid "Search Lists"
+msgstr ""
+
+#: inc/cpt.php:228
+msgid "Popular Lists"
+msgstr ""
+
+#: inc/cpt.php:229
+msgid "Separate Lists with commas"
+msgstr ""
+
+#: inc/cpt.php:230
+msgid "Add or remove Lists"
+msgstr ""
+
+#: inc/cpt.php:231
+msgid "Choose from the most used Lists"
+msgstr ""
+
+#: inc/cpt.php:232
+msgid "No Lists found"
+msgstr ""
+
+#: inc/cpt.php:233
+msgid "No Lists"
+msgstr ""
+
+#: inc/cpt.php:234
+msgid "Lists list navigation"
+msgstr ""
+
+#: inc/cpt.php:235
+msgid "Lists list"
+msgstr ""
+
+#: inc/cpt.php:264 inc/cpt.php:265 inc/cpt.php:266
+msgid "Template Categories"
+msgstr ""
+
+#: inc/cpt.php:267
+msgid "All Template Categories"
+msgstr ""
+
+#: inc/cpt.php:268
+msgid "Edit Template Categories"
+msgstr ""
+
+#: inc/cpt.php:269
+msgid "View Template Categories"
+msgstr ""
+
+#: inc/cpt.php:270
+msgid "Update Template Categories name"
+msgstr ""
+
+#: inc/cpt.php:271
+msgid "Add new Template Categories"
+msgstr ""
+
+#: inc/cpt.php:272
+msgid "New Template Categories name"
+msgstr ""
+
+#: inc/cpt.php:273
+msgid "Parent Template Categories"
+msgstr ""
+
+#: inc/cpt.php:274
+msgid "Parent Template Categories:"
+msgstr ""
+
+#: inc/cpt.php:275
+msgid "Search Template Categories"
+msgstr ""
+
+#: inc/cpt.php:276
+msgid "Popular Template Categories"
+msgstr ""
+
+#: inc/cpt.php:277
+msgid "Separate Template Categories with commas"
+msgstr ""
+
+#: inc/cpt.php:278
+msgid "Add or remove Template Categories"
+msgstr ""
+
+#: inc/cpt.php:279
+msgid "Choose from the most used Template Categories"
+msgstr ""
+
+#: inc/cpt.php:280
+msgid "No Template Categories found"
+msgstr ""
+
+#: inc/cpt.php:281
+msgid "No Template Categories"
+msgstr ""
+
+#: inc/cpt.php:282
+msgid "Template Categories list navigation"
+msgstr ""
+
+#: inc/cpt.php:283
+msgid "Template Categories list"
+msgstr ""
+
+#: inc/crb.php:8 inc/crb.php:30 inc/crb.php:91
+msgid "Arabic"
+msgstr ""
+
+#: inc/crb.php:9 inc/crb.php:31 inc/crb.php:95
+msgid "English"
+msgstr ""
+
+#: inc/crb.php:10 inc/crb.php:32 inc/crb.php:99
+msgid "French"
+msgstr ""
+
+#: inc/crb.php:16
+msgid "Defult Language"
+msgstr ""
+
+#: inc/crb.php:18
+msgid "Session Duration in seconds"
+msgstr ""
+
+#: inc/crb.php:28
+msgid "Build Chat bot"
+msgstr ""
+
+#: inc/crb.php:36 inc/crb.php:37
+msgid "Welcome Level"
+msgstr ""
+
+#: inc/crb.php:41 inc/crb.php:42
+msgid "level 2"
+msgstr ""
+
+#: inc/crb.php:46 inc/crb.php:47
+msgid "level 3"
+msgstr ""
+
+#: inc/crb.php:51 inc/crb.php:52
+msgid "level 4"
+msgstr ""
+
+#: inc/crb.php:70
+msgid " Header"
+msgstr ""
+
+#: inc/crb.php:72 inc/crb.php:141 inc/crb.php:171 inc/crb.php:201
+msgid "Body"
+msgstr ""
+
+#: inc/crb.php:74 inc/crb.php:143 inc/crb.php:173 inc/crb.php:203
+msgid "Image"
+msgstr ""
+
+#: inc/crb.php:76
+msgid "Error Message"
+msgstr ""
+
+#: inc/crb.php:78 inc/crb.php:153 inc/crb.php:183 inc/crb.php:205
+msgid "Footer"
+msgstr ""
+
+#: inc/crb.php:80
+msgid "Navigations"
+msgstr ""
+
+#: inc/crb.php:82
+msgid "One Step Back"
+msgstr ""
+
+#: inc/crb.php:86
+msgid "Back Home"
+msgstr ""
+
+#: inc/crb.php:103
+msgid "Arabic Slug"
+msgstr ""
+
+#: inc/crb.php:113
+msgid "English Slug"
+msgstr ""
+
+#: inc/crb.php:123
+msgid "French Slug"
+msgstr ""
+
+#: inc/crb.php:137 inc/crb.php:167 inc/crb.php:199
+msgid "Header"
+msgstr ""
+
+#: inc/crb.php:139
+msgid "Type"
+msgstr ""
+
+#: inc/crb.php:140 inc/crb.php:170
+msgid "Menu"
+msgstr ""
+
+#: inc/crb.php:140 inc/crb.php:170
+msgid "Information"
+msgstr ""
+
+#: inc/general_views.php:45
+msgid "Show Messages"
+msgstr ""
+
+#: inc/general_views.php:48
+msgid "Message Text"
+msgstr ""
+
+#: inc/general_views.php:49
+msgid "Sender"
+msgstr ""
+
+#: inc/general_views.php:50
+msgid "Chat Name"
+msgstr ""
+
+#: inc/general_views.php:72
+msgid "Save"
+msgstr ""
+
+#: inc/general_views.php:80
+msgid "Processes"
+msgstr ""
+
+#: inc/general_views.php:83
+msgid "Customer Service"
+msgstr ""
+
+#: inc/general_views.php:85
+msgid "Send Bulk Messages"
+msgstr ""
+
+#: inc/general_views.php:134
+msgid "Search By"
+msgstr ""
+
+#: inc/general_views.php:135
+msgid "Search"
+msgstr ""
+
+#: inc/meta_bxs.php:25
+msgid "Client Info"
+msgstr ""
+
+#: inc/meta_bxs.php:51
+msgid "First Name"
+msgstr ""
+
+#: inc/meta_bxs.php:52
+msgid "the name of the client which will be used in messaging process"
+msgstr ""
+
+#: inc/meta_bxs.php:57
+msgid "Jop Title"
+msgstr ""
+
+#: inc/meta_bxs.php:63
+msgid "Notes"
+msgstr ""
+
+#: inc/meta_bxs.php:118
+msgid "Permission"
+msgstr ""
+
+#: inc/meta_bxs.php:179
+msgid "Template Composer"
+msgstr ""
+
+#: inc/msgs.php:184
+msgid "Write the message"
+msgstr ""
+
+#: inc/msgs.php:188
+msgid "Premade Codes"
+msgstr ""
+
+#: inc/msgs.php:202 inc/views/send_bulk_msg.php:56 inc/views/whatsapp_simulation.php:116
+msgid "Emojy"
+msgstr ""
+
+#: inc/msgs.php:231
+msgid "Current User"
+msgstr ""
+
+#: inc/msgs.php:232 inc/views/send_bulk_msg.php:86
+msgid "Client Phone"
+msgstr ""
+
+#: inc/msgs.php:233
+msgid "Client First Name"
+msgstr ""
+
+#: inc/system_related_pages.php:11
+msgid "Subscriptions Orders"
+msgstr ""
+
+#: inc/system_related_pages.php:22
+msgid "Active"
+msgstr ""
+
+#: inc/system_related_pages.php:23
+msgid "On Hold"
+msgstr ""
+
+#: inc/system_related_pages.php:24
+msgid "Cancelled"
+msgstr ""
+
+#: inc/system_related_pages.php:25
+msgid "Pending"
+msgstr ""
+
+#: inc/system_related_pages.php:33
+msgid "Chat API"
+msgstr ""
+
+#: inc/system_related_pages.php:33
+msgid "Not Defined Yet"
+msgstr ""
+
+#: inc/system_related_pages.php:34
+msgid "details"
+msgstr ""
+
+#: inc/system_related_pages.php:37
+msgid "ID"
+msgstr ""
+
+#: inc/system_related_pages.php:38 inc/views/robochat_settings.php:13
+msgid "Name"
+msgstr ""
+
+#: inc/system_related_pages.php:40
+msgid "Status"
+msgstr ""
+
+#: inc/system_related_pages.php:41
+msgid "Slug"
+msgstr ""
+
+#: inc/system_related_pages.php:42
+msgid "Gate Way"
+msgstr ""
+
+#: inc/system_related_pages.php:43
+msgid "Subscription Details"
+msgstr ""
+
+#: inc/system_related_pages.php:60
+msgid "General Settings"
+msgstr ""
+
+#: inc/system_related_pages.php:62
+msgid "Rename Subscriptions"
+msgstr ""
+
+#: inc/system_related_pages.php:82
+msgid "PLease contact Sales Department to check your account activation"
+msgstr ""
+
+#: inc/system_related_pages.php:100
+msgid "The daily balance has run out"
+msgstr ""
+
+#: inc/system_related_pages.php:112
+msgid "Sorry, the link is incorrect or you do not have the permissions"
+msgstr ""
+
+#: inc/system_related_pages.php:120
+msgid "There is a problem :: if you reload the page and still exist,"
+msgstr ""
+
+#: inc/system_related_pages.php:121
+msgid "1- Make sure that your phone is connected to the Internet"
+msgstr ""
+
+#: inc/system_related_pages.php:122
+msgid "2- And opening the WhatsApp program on the mobile"
+msgstr ""
+
+#: inc/system_related_pages.php:123
+msgid "3- Terminate your WhatsApp connection with any other services"
+msgstr ""
+
+#: inc/system_related_pages.php:125
+msgid "There is a problem with the contact information, please contact customer service"
+msgstr ""
+
+#: inc/views/qr_code.php:1
+msgid "Scan the code using the WhatsApp app,then reload the page again"
+msgstr ""
+
+#: inc/views/robochat_settings.php:11
+msgid "Subscription"
+msgstr ""
+
+#: inc/views/robochat_settings.php:27
+msgid "No Automated Answering"
+msgstr ""
+
+#: inc/views/send_bulk_msg.php:10 inc/views/send_bulk_msg.php:73 inc/views/send_bulk_msg.php:108
+msgid "Add New Message"
+msgstr ""
+
+#: inc/views/send_bulk_msg.php:17
+msgid "Dismiss this notice."
+msgstr ""
+
+#: inc/views/send_bulk_msg.php:35 inc/views/whatsapp_simulation.php:95
+msgid "Write Your Message"
+msgstr ""
+
+#: inc/views/send_bulk_msg.php:39
+msgid "Premade Templates"
+msgstr ""
+
+#: inc/views/send_bulk_msg.php:42 inc/views/whatsapp_simulation.php:132
+msgid "Send Media"
+msgstr ""
+
+#: inc/views/send_bulk_msg.php:85
+msgid "Client Name"
+msgstr ""
+
+#: inc/views/send_bulk_msg.php:88
+msgid "Select Message Clients"
+msgstr ""
+
+#: inc/views/send_bulk_msg.php:99
+msgid "List Name"
+msgstr ""
+
+#: inc/views/send_bulk_msg.php:100
+msgid "Number of Clients"
+msgstr ""
+
+#: inc/views/send_bulk_msg.php:102
+msgid "Select Clients Lists"
+msgstr ""
+
+#: inc/views/whatsapp_simulation.php:11
+msgid "Remaining Messages Counter"
+msgstr ""
+
+#: inc/views/whatsapp_simulation.php:76
+msgid "Keep Your Phone Connected"
+msgstr ""
+
+#: inc/views/whatsapp_simulation.php:97
+msgid "Send"
+msgstr ""
+
+#: inc/plugins/extra_acf_fields/fields/connection_button.php:46
+msgid "Connection Button"
+msgstr ""
+
+#: inc/plugins/extra_acf_fields/fields/connection_button.php:68 inc/plugins/extra_acf_fields/fields/open_port.php:68 inc/plugins/extra_acf_fields/fields/web_hook_link.php:62
+msgid "Error! Please enter a higher value"
+msgstr ""
+
+#: inc/plugins/extra_acf_fields/fields/open_port.php:46
+msgid "Open Port"
+msgstr ""
+
+#: inc/plugins/extra_acf_fields/fields/parent_blog.php:46
+msgid "Parent Blog"
+msgstr ""
+
+#: inc/plugins/extra_acf_fields/fields/web_hook_link.php:40
+msgid "web hook link"
+msgstr ""
+
+#. Name of the plugin
+msgid "RoboChat"
+msgstr ""
+
+#. Description of the plugin
+msgid "Saas WhatsApp custom web solution , bulk messaging and bot builder."
+msgstr ""
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "http://businessexp.net/"
+msgstr ""
+
+#. Author of the plugin
+msgid "Business Experts"
+msgstr ""

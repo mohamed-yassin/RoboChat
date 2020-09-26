@@ -53,10 +53,8 @@ add_action( 'edit_user_profile', 'customer_service_client_permissions' );
 add_action( 'personal_options_update', 'update_permissions' );
 add_action( 'edit_user_profile_update', 'update_permissions' );
 
-// general 
+// Views && Screens 
 add_filter('admin_footer_text', 'edit_wordpress_dashboard_footer');
 
-add_action( 'plugins_loaded', 'rad_plugin_load_text_domain' );
-function rad_plugin_load_text_domain() {
-    load_plugin_textdomain( 'robo', false, dirname( plugin_basename( __FILE__ ) ) . '/inc/languages/' );
-}
+// Languages
+add_action( 'plugins_loaded', 'robo_load_text_domain' );

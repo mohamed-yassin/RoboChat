@@ -8,7 +8,7 @@ if(get_current_blog_id() != 1  &&  is_array($user_blogs)){
     foreach ($user_blogs as $blog) { 
         $name=  'sub_'.$blog.'_name';
         ?>
-        <tr><th scope="row"><h6 style="font-weight :   bold "> <?= "#" .$blog . " Subscription" ?> </h6></th><td></td></tr>
+        <tr><th scope="row"><h6 style="font-weight:bold"><?= "#".$blog.' '. __('Subscription','robo'); ?></h6></th><td></td></tr>
         <tr>
             <th scope="row"><?= __('Name','robo');?></th>
             <td>

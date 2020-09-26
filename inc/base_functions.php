@@ -147,3 +147,8 @@ function file_url($file){
 	  return $file ;
 	}
 }
+function robo_load_text_domain() {
+	$relative_path =  dirname( plugin_basename( __FILE__ ) )."/files/langs/";
+	//echo  "ssssssssssssssssssssssssssssssssssssssss  " . WP_PLUGIN_DIR . "  ttttttttttt  " .$relative_path ; 
+    load_plugin_textdomain( 'robo',false,$relative_path);
+}
