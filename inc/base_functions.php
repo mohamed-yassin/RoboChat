@@ -149,6 +149,78 @@ function file_url($file){
 }
 function robo_load_text_domain() {
 	$relative_path =  dirname( plugin_basename( __FILE__ ) )."/files/langs/";
-	//echo  "ssssssssssssssssssssssssssssssssssssssss  " . WP_PLUGIN_DIR . "  ttttttttttt  " .$relative_path ; 
     load_plugin_textdomain( 'robo',false,$relative_path);
+}
+function filter_fileds($fields){
+	if(!is_array($fields) ||  count($fields) == 0){
+		return __('No fields added');
+	}
+	$html =  '<h5>'.__('Search Messages').'</h5>';
+	$html .= '<table>';
+	foreach ($fields as $key => $field) {
+		$label 	=  isset($field['label']) ? $field['label'] : '';
+		$name 	=  isset($field['name']) ?  $field['name'] : '';
+		$type 	=  isset($field['type']) ?  $field['type'] : '';
+		$value 	=  isset($field['value']) ? $field['value'] : (isset($_REQUEST[$name]) ?  $_REQUEST[$name]:'');
+
+		$html .= '<tr>';
+		$html .= "<td><label>$label</label><td>";
+		if($type == 'text'){
+			$html .= "<td><input type='$type' name='$name' value='$value'><td>";
+		}elseif ($type == 'date') {
+			//
+		}
+		$html .= filter_fileds_operators($name,$type);
+		$html .= '</tr>';
+	}
+	$html .= '</table>';
+	echo $html ;
+}
+function filter_fileds_operators($name,$type){
+	$html = '';
+	if($type == 'date'){
+		$filters =  array('from','to');
+		foreach ($filters as $filter) {
+			$key =  $name."_".$filter;
+			$value =  isset($_REQUEST[$key])? $_REQUEST[$key] : '';
+			$html .= "<td><label>$filter</label><input type='$type' name='$key' value='$value'><td>";
+		}
+		return $html ;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	$name= $name.'_filter';
+	$f1_value =  isset($_REQUEST[$name])? $_REQUEST[$name] : ''; 
+
+	if($type ==  'text'){
+		$ops=  array('like','=',);
+	}elseif ($type ==  'number') {
+		$ops=  array('like','=','>','<');
+	}
+	$html = "<select name='$name'>";
+	$html .= "<option value='0'></option>";
+
+	foreach ($ops as $op) {
+		$selected =  $op == $f1_value ? ' selected ' : '';
+		if($op == 'like'){
+			$html .= "<option value='like'$selected>".__('Like')."</like>";
+		}elseif ($op == '=') {
+			$html .= "<option value='='$selected>".__('Equal')."</like>";
+		}elseif ($op == '>') {
+			$html .= "<option value='>'$selected>".__('Greater than')."</like>";
+		}elseif ($op == '<') {
+			$html .= "<option value='<'$selected>".__('Less than')."</like>";
+		}
+	}
+	$html .= "</select>";
+	return  $html; 
 }

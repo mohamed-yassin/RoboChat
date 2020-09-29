@@ -70,18 +70,21 @@ function sub_url_slug($sub =  1){
 
     return $sub ;  
 }
-function current_sub_page_url($extention = NULL)
+function current_sub_page_url($extention = NULL,$gets=array())
 {
+    foreach ($gets as $key) {
+        $extention =  isset($_GET[$key]) && $_GET[$key] != '' ? $extention."&$key=".$_GET[$key] :  $extention;
+    }
     return admin_url('admin.php?page='.$_GET['page'].$extention);
 }
-function get_page_sub_id()
+function get_page_sub_id($name = 'page')
 {
-    
-    if(isset($_GET['page'])){
-        $slug = $_GET['page'];
-        $slug = explode('_', $slug);
-        $slug = $slug[1];  
-        $sub =  related_sub_id($slug); 
+    if(isset($_GET[$name])){
+        $slug   = $_GET[$name];
+        $slug   = explode('_', $slug);
+        $index  = count($slug) -1 ; 
+        $slug   = $slug[$index];  
+        $sub    = related_sub_id($slug); 
     }else {
         $sub =  0;
     }

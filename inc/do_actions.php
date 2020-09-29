@@ -22,7 +22,7 @@ add_action( 'init', 'cptui_register_my_taxes_template_category' );
 add_action( 'init', 'cptui_register_my_taxes_list' );
 
 // admin pages 
-add_action( 'admin_menu', 'robo_add_admin_menu' );
+add_action( 'admin_menu', 'robo_admin_menu_pages' );
 add_action( 'admin_init', 'roboChat_settings_init' );
 add_action( 'admin_menu', 'roboChat_bulk_add_clients' );
 //add_action( 'admin_menu', 'whatsappapi_add_admin_menu' );

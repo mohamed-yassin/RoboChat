@@ -47,5 +47,5 @@ function enqueue() {
 }
 function front_end_enqueue()
 {
-  wp_enqueue_style( 'my-theme-purecss',assets.'front_end/css/bootstrapv4.1.3.min.css', array(), '1.0.0', 'all' );
+  //wp_enqueue_style( 'my-theme-purecss',assets.'front_end/css/bootstrapv4.1.3.min.css', array(), '1.0.0', 'all' );
 }

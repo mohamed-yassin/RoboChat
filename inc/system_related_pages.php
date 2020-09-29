@@ -1,10 +1,13 @@
 <?php
-function robo_add_admin_menu() { 
+function robo_admin_menu_pages() { 
 	if(get_current_blog_id() == 1 ){
 		add_menu_page( 'RoboChat', 'RoboChat', 'manage_options', 'robochat', 'robo_orders_admin_page_render', 'dashicons-buddicons-buddypress-logo' , 2 );
+	}else {
+		add_menu_page(__('Reports','rob'),__('Reports','rob'), 'read', 'robo_reports', 'robo_reports_render', 'dashicons-buddicons-buddypress-logo' , 2 );
+		//add_submenu_page('robo_reports',__('General Reports','rob'), __('General Reports','rob'), 'read','robo_general_reports','robo_general_report_render' );
 	}
 }
-
+include inc.'report_page.php';
 function robo_orders_admin_page_render(){
 
 	// Page Header
@@ -27,7 +30,6 @@ function robo_orders_admin_page_render(){
 	foreach ($customer_subscriptions as $key => $sub) {
 		$table_body[$sub->ID]['ID'] 			=  $sub->ID;
 		$table_body[$sub->ID]['post_title'] 	=  "<a href='".get_edit_post_link($sub->ID)."'>$sub->post_title</a>";
-		//$table_body[$sub->ID]['post_author'] 	=  "<a href='".get_edit_user_link($sub->post_author)."'>".not_null_auther_name($sub->post_author)."</a>";
 		$table_body[$sub->ID]['post_status'] 	=  $conditions[$sub->post_status];
 		$table_body[$sub->ID]['slug'] 			=  get_field('slug',$sub->ID);
 		$table_body[$sub->ID]['gate_way'] 		=  get_field('gate_way',$sub->ID) == '1'  ?  __("Chat API",'robo') : __("Not Defined Yet",'robo');
@@ -198,4 +200,11 @@ function roboChat_options_page(  ) {
 
 		</form>
 		<?php
+}
+function robo_general_report_render(){
+	$data= array();
+	view('general_report', $data);
+}
+function robo_reports_render(){
+	view('reports');
 }

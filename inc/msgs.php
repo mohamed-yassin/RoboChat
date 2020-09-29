@@ -54,15 +54,15 @@ function restore_new_line($msg){
 };
 function compose_messages_handler() {
     if(!isset($_REQUEST['lists']) && !isset($_REQUEST['clients'])){
-        $_SESSION['bulk_msg_error'] =  __('No Clients Added');
+        $_SESSION['bulk_msg_error'] =  __('No Clients Added','robo');
         return ;
     }
     if(!isset($_REQUEST['msg']) || isset($_REQUEST['msg']) == '' ){
-        $_SESSION['bulk_msg_error'] =  __('No Message Added');
+        $_SESSION['bulk_msg_error'] =  __('No Message Added','robo');
         return ;
     }
     if(!isset($_REQUEST['table'])){
-        $_SESSION['bulk_msg_error'] =  __('Not Correct Request');
+        $_SESSION['bulk_msg_error'] =  __('Not Correct Request','robo');
     }
     $msg_body        = $_REQUEST['msg'];
     $clients         = isset($_REQUEST['clients']) ?  $_REQUEST['clients'] : array() ;
@@ -121,7 +121,7 @@ function compose_messages_handler() {
             $wpdb->insert($table,$msg_row);
         };
     }
-    $_SESSION['bulk_msg_error'] =  __('Messages Enqueued');
+    $_SESSION['bulk_msg_error'] =  __('Messages Enqueued','robo');
     return;
 };
 function get_emojis(){

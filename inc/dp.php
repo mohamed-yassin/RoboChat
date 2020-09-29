@@ -15,6 +15,7 @@ function create_custom_msgs_table($sub) {
         note VARCHAR(255) NOT NULL ,
         source TINYINT(1) NOT NULL ,
         status TINYINT(1) NOT NULL ,
+        user INT(11) NOT NULL DEFAULT 0,
         created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
