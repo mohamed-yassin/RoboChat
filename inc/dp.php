@@ -1,6 +1,5 @@
 <?php
-
-function create_custom_msgs_table($sub) {
+function create_queried_msgs_table($sub) {
 	global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
     $table_name = get_msgs_table_name($sub);
@@ -23,30 +22,36 @@ function create_custom_msgs_table($sub) {
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta( $sql );
 }
-function create_sessions_table($sub) {
-    /*
+function create_msgs_archive_table($sub) {
 	global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
-    $table_name = get_sessions_name($sub);
+    $table_name = get_msgs_table_name($sub,'archive');
     
     $sql = "CREATE TABLE $table_name (
-        id INT(11) NOT NULL AUTO_INCREMENT ,
-        mobileNumber VARCHAR(20) NOT NULL ,
-        textMessage VARCHAR(2000) NOT NULL ,
-        isSent TINYINT(1) NOT NULL ,
-        note VARCHAR(255) NOT NULL ,
-        source TINYINT(1) NOT NULL ,
-        status TINYINT(1) NOT NULL ,
-        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-        updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (id)
+        robo_id INT(11) NOT NULL AUTO_INCREMENT ,
+        id              VARCHAR(100)    NOT NULL ,
+        body            TEXT   NOT NULL ,
+        fromMe          VARCHAR(10),
+        self            VARCHAR(10),
+        isForwarded     VARCHAR(10),
+        author          VARCHAR(20)   NOT NULL ,
+        time            VARCHAR(20)   NOT NULL ,
+        chatId          VARCHAR(100)   NOT NULL ,
+        messageNumber   VARCHAR(100)   NOT NULL ,        
+        type            VARCHAR(10)    NOT NULL ,
+        senderName      VARCHAR(100)   NOT NULL ,
+        quotedMsgBody   TEXT,
+        quotedMsgId     VARCHAR(100)   NOT NULL ,
+        chatName        VARCHAR(100)   NOT NULL ,
+        caption         TEXT,
+        UNIQUE(id),
+        PRIMARY KEY (robo_id)
 	)"; $charset_collate;
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-    dbDelta( $sql );
-    */
+	dbDelta( $sql );
 }
-function get_msgs_table_name($sub){
-    return slug."_msgs_".$sub;
+function get_msgs_table_name($sub,$table='queried'){
+    return $table == 'queried' ?  slug."_msgs_".$sub : slug."_msgs_archive_".$sub;
 }
 function get_table_name($sub,$table){
     return slug."_".$table."_".$sub;
@@ -86,9 +91,9 @@ function add_sub_to_blog($blog,$sub){
     restore_current_blog();
     return $slug; 
 }
-function related_msgs_table(){
+function related_msgs_table($table){
     $sub    =  get_page_sub_id();
-    return get_msgs_table_name($sub);
+    return get_msgs_table_name($sub,$table);
 }
 function related_sub_id($slug)
 {
@@ -153,5 +158,28 @@ function dp_insert_multi_rows($row_arrays = array(), $wp_table_name) {
     } else {
         return false;
     }
-
 }
+function update_msgs_archive($msgs=array())
+{
+    $table      = related_msgs_table('archieve');
+    $msgs   = get_json(files.'messages.json');
+    pre($msgs);
+    global $wpdb;
+    $keys =  array(
+        'id', 'body', 'fromMe', 'self', 'isForwarded', 'author', 'time', 'chatId', 'messageNumber', 'type', 'senderName', 'quotedMsgBody', 'quotedMsgId', 'chatName', 'caption'
+    );
+    $last_index =  count($keys) - 1;
+
+    foreach ($msgs as $msg) {
+        $values = '';
+        foreach ($keys as $index => $key) {
+            $seperator     = $index != $last_index ? ' , ' :  ' ' ;
+            $current_value = isset($msg[$key]) ? $msg[$key] : '';
+            $current_value = "'".$current_value."'".$seperator;
+            $values .= $current_value;
+        }
+        $sql = "INSERT INTO $table (id, body, fromMe, self, isForwarded, author, time, chatId, messageNumber, type, senderName, quotedMsgBody, quotedMsgId, chatName, caption) VALUES ($values);";
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
+    }
+} 

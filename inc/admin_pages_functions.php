@@ -91,22 +91,6 @@ function get_page_sub_id($name = 'page')
     
     return  $sub;
 }
-function get_clients(){
-    $args =  array(
-        'post_type' =>'client',
-    );
-    $clients =  (array)get_posts($args);
-    foreach ($clients as $key => $client) {
-        $clients[$key]->phone = get_post_meta( $client->ID , 'phone', true ) ;
-    }
-    return $clients;
-}
-function get_templates(){
-    $args =  array(
-        'post_type' =>'template',
-    ); 
-    return (array)get_posts($args);
-}
 function message_time($time){
     return  $time ;
 }

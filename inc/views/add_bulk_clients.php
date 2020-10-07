@@ -1,8 +1,6 @@
 <form action='#' method='post' enctype="multipart/form-data" >
         <h2><?= __('Bulk Add Clients','robo'); ?></h2>
-        
         </br> </br>
-
         <tr>
             <th scope="row">
                 <label for="blogname"><?= __('Select the list','robo'); ?></label>
@@ -22,28 +20,18 @@
                 </select>
             </td>
         </tr>
-
         </br> </br>
-
-
-
-        
         <tr>
             <th scope="row">
-                <label for="blogname">Upload CSV file</label>
+                <label for="blogname"><?= __('Upload CSV file','robo') ?></label>
             </th>
             <td>
             <input type='file' name='clients_csv' required >
             </br>
-            1- Only csv files accepted 
+            <?= __('1- Only csv files accepted','robo')?>
             </br>
-            2- To make it's safe : please don't upload more than 500 contact per time
+            <?= __('2- To make it is safe : please do not upload more than 500 contact per time','robo')?>
             </td>
         </tr>
-
-
-
-
-        
-        <?php submit_button(__('upload cvs','robo'));?>
+        <?php submit_button(__('upload CSV','robo'));?>
     </form>

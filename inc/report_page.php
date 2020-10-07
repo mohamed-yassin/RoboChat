@@ -353,7 +353,7 @@ class SP_Plugin {
 	}
 
 	public function plugin_menu() {
-        $hook = add_submenu_page('robo_reports',__('General Reportscc','rob'), __('General Reportscc','rob'), 'read','robo_general_reports',[ $this, 'plugin_settings_page' ]);
+        $hook = add_submenu_page('robo_reports',__('General Reportscc','robo'), __('General Reportscc','robo'), 'read','robo_general_reports',[ $this, 'plugin_settings_page' ]);
 		add_action( "load-$hook", [ $this, 'screen_option' ] );
 
 	}

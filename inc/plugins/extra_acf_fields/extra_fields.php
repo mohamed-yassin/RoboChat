@@ -47,7 +47,6 @@ class NAMESPACE_acf_plugin_FIELD_NAME {
 			'path'		=> plugin_dir_path( __FILE__ )
 		);
 		
-		
 		// include field
 		add_action('acf/include_field_types', 	array($this, 'include_field')); // v5
 		add_action('acf/register_fields', 		array($this, 'include_field')); // v4
@@ -73,9 +72,9 @@ class NAMESPACE_acf_plugin_FIELD_NAME {
 		if( !$version ) $version = 4;
 		
 		
-		// load textdomain
-		load_plugin_textdomain( 'TEXTDOMAIN', false, plugin_basename( dirname( __FILE__ ) ) . '/lang' ); 
-		
+		// load robo
+		//load_plugin_robo( 'robo', false, plugin_basename( dirname( __FILE__ ) ) . '/lang' ); 
+		//load_plugin_textdomain( 'TEXTDOMAIN', false, plugin_basename( dirname( __FILE__ ) ) . '/lang' ); 
 		
 		// include
 		include_once('fields/open_port.php'); 

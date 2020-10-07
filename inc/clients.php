@@ -1,10 +1,6 @@
 <?php
-
-
 function roboChat_bulk_add_clients(  ) { 
-
 	add_submenu_page( 'edit.php?post_type=client', __('Bulk Add Clients','robo'), __('Bulk Add Clients','robo'), 'manage_options', 'bulk_add_clients', 'roboChat_bulk_add_clients_page' );
-
 }
 
 function roboChat_bulk_add_clients_page(  ) {
@@ -74,12 +70,25 @@ function roboChat_bulk_add_clients_page(  ) {
             <td>
             <input type='file' name='clients_csv' required >
             </br>
-            <?= __('1- Only csv files accepted','robo'); ?> 
+            <?= __('1- Only CSV files accepted','robo'); ?> 
             </br>
             <?= __('2- To make it safe : please don\'t upload more than 500 contact per time','robo') ?>
             </td>
         </tr>
-        <?php submit_button(__('upload cvs','robo'));?>
+        <?php submit_button(__('upload CSV','robo'));?>
     </form>
     <?php
+}
+function get_clients(){
+    $args =  array(
+        'post_type' =>'client',
+        'status'    =>'pubssss'
+    );
+    $clients =  (array)get_posts($args);
+    foreach ($clients as $key => $client) {
+        $phone =  get_post_meta( $client->ID , 'phone', true );
+        $client->phone =  $phone;
+        $new_clients[$phone] =  $client;
+    }
+    return $new_clients;
 }

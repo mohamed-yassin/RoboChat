@@ -3,16 +3,14 @@ function robo_admin_menu_pages() {
 	if(get_current_blog_id() == 1 ){
 		add_menu_page( 'RoboChat', 'RoboChat', 'manage_options', 'robochat', 'robo_orders_admin_page_render', 'dashicons-buddicons-buddypress-logo' , 2 );
 	}else {
-		add_menu_page(__('Reports','rob'),__('Reports','rob'), 'read', 'robo_reports', 'robo_reports_render', 'dashicons-buddicons-buddypress-logo' , 2 );
-		//add_submenu_page('robo_reports',__('General Reports','rob'), __('General Reports','rob'), 'read','robo_general_reports','robo_general_report_render' );
+		add_menu_page(__('Reports','robo'),__('Reports','robo'), 'read', 'robo_reports', 'robo_reports_render', 'dashicons-buddicons-buddypress-logo' , 2 );
+		//add_submenu_page('robo_reports',__('General Reports','robo'), __('General Reports','robo'), 'read','robo_general_reports','robo_general_report_render' );
 	}
 }
 include inc.'report_page.php';
 function robo_orders_admin_page_render(){
-
 	// Page Header
 	echo "<h2>".__('Subscriptions Orders','robo')."</h2>";
-
 	// prepare data
 	$customer_subscriptions = get_posts( 
 		array(
@@ -38,7 +36,6 @@ function robo_orders_admin_page_render(){
 	$header = array(
 		'id'			=> __('ID','robo'),
 		'post_title' 	=> __('Name','robo'), 
-		//'post_author' 	=> 'Client',
 		'config' 	    => __('Status','robo'),
 		'slug' 	    	=> __('Slug','robo'),
 		'gate_way'		=> __('Gate Way','robo'),
@@ -101,15 +98,15 @@ function whatsappapi_options_page() {
 						$data['msgs_counter'] =  sub_connection_data($sub)['msgs'];
 						$data['msgs_counter'] =  $data['msgs_counter'] >  0 ? $data['msgs_counter'] : __('The daily balance has run out','robo') ;	
 						$whatsapp_messeges =  whatsapp_messeges($api,$token);
-						$prepare_msgs =  $whatsapp_messeges->messages;
+						$prepare_msgs = $whatsapp_messeges->messages;
+						$msg_2 = $whatsapp_messeges->messages;
 						$prepare_msgs =  prepare_msgs($prepare_msgs);
 						$data['main_msgs_array'] = $prepare_msgs ;
 						$data['last_message_number'] = $whatsapp_messeges->lastMessageNumber ;
 						$data['temps'] = get_templates();
 						$data['emojis'] = get_emojis();
 						view('whatsapp_simulation', $data);
-					}elseif ($process  == 'show_msgs') {
-						
+						update_msgs_archive($msg_2);
 					}else {
 						_e('Sorry, the link is incorrect or you do not have the permissions','robo') ; 
 					}
@@ -132,7 +129,7 @@ function whatsappapi_options_page() {
 			}
 		}
 	}else {
-		_e('The account cannot be accessed. Please contact the customer service to activate the account') ; 
+		_e('The account cannot be accessed. Please contact the customer service to activate the account','robo') ; 
 	}
 }
 
@@ -173,7 +170,7 @@ function roboChat_settings_webhock_render(  ) {
 			$name=  'sub_'.$blog.'_webhock';
 			?>
 			<tr>
-				<th scope="row"><?= __('Subscription');?> #<?= $blog ?></th>
+				<th scope="row"><?= __('Subscription','robo');?> #<?= $blog ?></th>
 				<td>
 					<input class="rob-custom-field" type="text" name="roboChat_settings[<?= $name ?>]" value='<?=  isset($options[$name]) ?  $options[$name] :  '' ; ?>'>
 				</td>
@@ -190,7 +187,7 @@ function roboChat_options_page(  ) {
 		?>
 		<form action='options.php' method='post'>
 
-			<h2><?= __('RoboChat Settings');?></h2>
+			<h2><?= __('RoboChat Settings','robo');?></h2>
 
 			<?php
 			settings_fields( 'roboChat_settings' );

@@ -32,13 +32,15 @@ function subscription_handler($sub){
         $title   = $rand_dashboard_slug;
         $path    = "sub_" . $rand_dashboard_slug ;
         $options = array();
-        $blog    = wpmu_create_blog( DOMAIN_CURRENT_SITE , $path, $title, $user , $options ,  1);
+        $domain  = substr(DOMAIN_CURRENT_SITE.PATH_CURRENT_SITE,0,-1);  ;
+        $blog    = wpmu_create_blog( $domain , $path, $title, $user , $options ,  1);
     }
     // add the sub to the realated blog
     $slug  =  add_sub_to_blog($blog,$sub->ID);
 
-    // make new dp_tables
-    create_custom_msgs_table($sub->ID);
+    // make new dp tables
+    create_queried_msgs_table($sub->ID);
+    create_msgs_archive_table($sub->ID);
 
     // add the sub to the subs list to send the queried msgs
     add_sub_to_list($sub->ID , $sub);
@@ -48,9 +50,10 @@ function subscription_handler($sub){
     update_field('slug',$slug ,  $sub->ID);       
     update_field('defult_daily_msgs',daily_msgs,  $sub->ID);        
     update_field('available_daily_msgs',daily_msgs,  $sub->ID);        
+    update_field('parent_id',daily_msgs,$blog);        
     
     // update data in the dashboard of the subscription
-    switch_to_blog($blog);
+    switch_to_blog($blog); 
         update_user_meta( $user, 'show_msgs', 'checked' );
         update_user_meta( $user, 'send_msg', 'checked' );
         update_user_meta( $user, 'chat_bot', 'checked' );

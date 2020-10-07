@@ -1,9 +1,12 @@
 <?php 
 function prepare_msgs($msgs){
-    $sessions =  available_sessions(get_page_sub_id());
+    pre($msgs);
+    $clients    = get_clients();
+    $sessions   = available_sessions(get_page_sub_id());
+    $unset_clients =  array();
     foreach ($msgs as $key => $msg) {
         if(!is_group($msg->chatId)){
-            $chat_id = pure_phone($msg->chatId);  
+            $chat_id = pure_phone($msg->chatId);
             $msg->real_time = date("H:i",$msg->time);
 
             $contact_info = contact_info(message_reciever_number($msg->chatId)) ;
@@ -24,9 +27,28 @@ function prepare_msgs($msgs){
             $prepared_msgs[$chat_id]['last_msg_time'] = msg_time($msg->time);
             $prepared_msgs[$chat_id]['last_msg_direction'] =  $msg->fromMe == 1 ?  1 : 0 ; // out==1 && in == 0
             $prepared_msgs[$chat_id]['msgs'][$msg->id] =  $msg ;
+
+            // clear the clients list 
+            if(isset($clients[$chat_id])){
+                $unset_clients[$chat_id]['name']        = isset($contact_info['name']) ? $contact_info['name'] :  $msg->chatName ;
+                $unset_clients[$chat_id]['last_msg']  = $msg->body;
+                $unset_clients[$chat_id]['msgs'][]      = $msg;
+                unset($clients[$chat_id]);
+            }
         }
     }
-    
+    foreach ($clients as $key => $client) {
+        $phone =  
+        $prepared_msgs[$key]['name']      = $client->post_title;
+        $prepared_msgs[$key]['img']       = dflt_user_img ;
+        $prepared_msgs[$key]['available'] = 1;
+        $prepared_msgs[$key]['available_icon'] = 1;
+        $prepared_msgs[$key]['last_msg'] = __('No Messages Yet' , 'robo') ;
+        $prepared_msgs[$key]['original_last_msg_time'] = '1' ;
+        $prepared_msgs[$key]['last_msg_time'] = '00:00 01/01' ;
+        $prepared_msgs[$key]['last_msg_direction'] = 1 ;        
+        $prepared_msgs[$key]['msgs'] = array() ;
+    }
     array_multisort(array_column($prepared_msgs, 'original_last_msg_time'), SORT_DESC, $prepared_msgs);
     return $prepared_msgs  ;
 }
@@ -54,15 +76,15 @@ function restore_new_line($msg){
 };
 function compose_messages_handler() {
     if(!isset($_REQUEST['lists']) && !isset($_REQUEST['clients'])){
-        $_SESSION['bulk_msg_error'] =  __('No Clients Added','robo');
+        $_SESSION['bulk_msg_error'] =  __('No Clients Added');
         return ;
     }
     if(!isset($_REQUEST['msg']) || isset($_REQUEST['msg']) == '' ){
-        $_SESSION['bulk_msg_error'] =  __('No Message Added','robo');
+        $_SESSION['bulk_msg_error'] =  __('No Message Added');
         return ;
     }
     if(!isset($_REQUEST['table'])){
-        $_SESSION['bulk_msg_error'] =  __('Not Correct Request','robo');
+        $_SESSION['bulk_msg_error'] =  __('Not Correct Request');
     }
     $msg_body        = $_REQUEST['msg'];
     $clients         = isset($_REQUEST['clients']) ?  $_REQUEST['clients'] : array() ;
@@ -95,7 +117,7 @@ function compose_messages_handler() {
     $lists_clients=get_posts($args);
 
     foreach ($lists_clients as $client) {
-        $clients[]  = $client->ID ;     ; 
+        $clients[]  = $client->ID ;   ZZYYZZZ  ; 
     }
     $clients = array_unique((array)$clients);
     if(is_array($clients)  &&  count($clients) >  0){
@@ -121,7 +143,7 @@ function compose_messages_handler() {
             $wpdb->insert($table,$msg_row);
         };
     }
-    $_SESSION['bulk_msg_error'] =  __('Messages Enqueued','robo');
+    $_SESSION['bulk_msg_error'] =  __('Messages Enqueued');
     return;
 };
 function get_emojis(){
@@ -230,7 +252,7 @@ function get_available_codes(){
     $codes =  array(
         __('Current User','robo') =>  'current_user',
         __('Client Phone','robo') =>  'phone',
-        __('Client First Name','robo') =>  'first_name',
+        __('Client First Name') =>  'first_name',
     );
     return  $codes ;
 }

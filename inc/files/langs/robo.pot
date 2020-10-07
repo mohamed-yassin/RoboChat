@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RoboChat\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-26 02:28+0000\n"
+"POT-Creation-Date: 2020-10-07 07:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -40,7 +40,9 @@ msgid "Scan the code, then press the button again"
 msgstr ""
 
 #: inc/chat_api.php:126
-msgid "Based on the chat API, operations will not be communicated on the server for 5 minutes from now and all API responses will be incomplete </br>"
+msgid ""
+"Based on the chat API, operations will not be communicated on the server for "
+"5 minutes from now and all API responses will be incomplete </br>"
 msgstr ""
 
 #: inc/chat_api.php:133
@@ -51,44 +53,44 @@ msgstr ""
 msgid "Subscription has been renewed"
 msgstr ""
 
-#: inc/clients.php:6 inc/clients.php:40 inc/views/add_bulk_clients.php:2
+#: inc/clients.php:3 inc/clients.php:36 inc/views/add_bulk_clients.php:2
 msgid "Bulk Add Clients"
 msgstr ""
 
-#: inc/clients.php:30
+#: inc/clients.php:26
 msgid "done"
 msgstr ""
 
-#: inc/clients.php:43
+#: inc/clients.php:39
 msgid "Download Sample"
 msgstr ""
 
-#: inc/clients.php:46
+#: inc/clients.php:42
 msgid "Click Here"
 msgstr ""
 
-#: inc/clients.php:52 inc/views/add_bulk_clients.php:8
+#: inc/clients.php:48 inc/views/add_bulk_clients.php:6
 msgid "Select the list"
 msgstr ""
 
-#: inc/clients.php:57 inc/views/add_bulk_clients.php:13
+#: inc/clients.php:53 inc/views/add_bulk_clients.php:11
 msgid "No Spicific List"
 msgstr ""
 
-#: inc/clients.php:72
+#: inc/clients.php:68 inc/views/add_bulk_clients.php:26
 msgid "Upload CSV file"
 msgstr ""
 
-#: inc/clients.php:77
-msgid "1- Only csv files accepted"
+#: inc/clients.php:73
+msgid "1- Only CSV files accepted"
 msgstr ""
 
-#: inc/clients.php:79
+#: inc/clients.php:75
 msgid "2- To make it safe : please don't upload more than 500 contact per time"
 msgstr ""
 
-#: inc/clients.php:82 inc/views/add_bulk_clients.php:48
-msgid "upload cvs"
+#: inc/clients.php:78 inc/views/add_bulk_clients.php:36
+msgid "upload CSV"
 msgstr ""
 
 #: inc/cpt.php:10 inc/cpt.php:12 inc/cpt.php:45
@@ -628,6 +630,7 @@ msgid " Header"
 msgstr ""
 
 #: inc/crb.php:72 inc/crb.php:141 inc/crb.php:171 inc/crb.php:201
+#: inc/report_page.php:58 inc/report_page.php:216
 msgid "Body"
 msgstr ""
 
@@ -671,7 +674,7 @@ msgstr ""
 msgid "Header"
 msgstr ""
 
-#: inc/crb.php:139
+#: inc/crb.php:139 inc/report_page.php:217
 msgid "Type"
 msgstr ""
 
@@ -719,7 +722,7 @@ msgstr ""
 msgid "Search By"
 msgstr ""
 
-#: inc/general_views.php:135
+#: inc/general_views.php:135 inc/report_page.php:395
 msgid "Search"
 msgstr ""
 
@@ -751,47 +754,128 @@ msgstr ""
 msgid "Template Composer"
 msgstr ""
 
-#: inc/msgs.php:184
+#: inc/msgs.php:46
+msgid "No Messages Yet"
+msgstr ""
+
+#: inc/msgs.php:206
 msgid "Write the message"
 msgstr ""
 
-#: inc/msgs.php:188
+#: inc/msgs.php:210
 msgid "Premade Codes"
 msgstr ""
 
-#: inc/msgs.php:202 inc/views/send_bulk_msg.php:56 inc/views/whatsapp_simulation.php:116
+#: inc/msgs.php:224 inc/views/send_bulk_msg.php:56
+#: inc/views/whatsapp_simulation.php:116
 msgid "Emojy"
 msgstr ""
 
-#: inc/msgs.php:231
+#: inc/msgs.php:253
 msgid "Current User"
 msgstr ""
 
-#: inc/msgs.php:232 inc/views/send_bulk_msg.php:86
+#: inc/msgs.php:254 inc/views/send_bulk_msg.php:86
 msgid "Client Phone"
 msgstr ""
 
-#: inc/msgs.php:233
-msgid "Client First Name"
+#: inc/report_page.php:52 inc/report_page.php:215
+msgid "Number"
 msgstr ""
 
-#: inc/system_related_pages.php:11
+#: inc/report_page.php:64 inc/report_page.php:223
+msgid "Created at"
+msgstr ""
+
+#: inc/report_page.php:70 inc/report_page.php:224
+msgid "Updated at"
+msgstr ""
+
+#: inc/report_page.php:96
+msgid "Customer"
+msgstr ""
+
+#: inc/report_page.php:97
+msgid "Customers"
+msgstr ""
+
+#: inc/report_page.php:158
+msgid "No Messages."
+msgstr ""
+
+#: inc/report_page.php:184
+msgid "Bulk Message"
+msgstr ""
+
+#: inc/report_page.php:186
+msgid "Chat Bot"
+msgstr ""
+
+#: inc/report_page.php:188
+msgid "Customer Services"
+msgstr ""
+
+#: inc/report_page.php:192
+msgid "&#x2714;"
+msgstr ""
+
+#: inc/report_page.php:194
+msgid "X"
+msgstr ""
+
+#: inc/report_page.php:200
+msgid "Undefined User"
+msgstr ""
+
+#: inc/report_page.php:218
+msgid "Caption"
+msgstr ""
+
+#: inc/report_page.php:219
+msgid "Is Sent"
+msgstr ""
+
+#: inc/report_page.php:220
+msgid "Source"
+msgstr ""
+
+#: inc/report_page.php:221 inc/system_related_pages.php:39
+msgid "Status"
+msgstr ""
+
+#: inc/report_page.php:222
+msgid "User"
+msgstr ""
+
+#: inc/report_page.php:356
+msgid "General Reportscc"
+msgstr ""
+
+#: inc/report_page.php:380
+msgid "No Subscriptions added yet"
+msgstr ""
+
+#: inc/system_related_pages.php:6
+msgid "Reports"
+msgstr ""
+
+#: inc/system_related_pages.php:13
 msgid "Subscriptions Orders"
 msgstr ""
 
-#: inc/system_related_pages.php:22
+#: inc/system_related_pages.php:23
 msgid "Active"
 msgstr ""
 
-#: inc/system_related_pages.php:23
+#: inc/system_related_pages.php:24
 msgid "On Hold"
 msgstr ""
 
-#: inc/system_related_pages.php:24
+#: inc/system_related_pages.php:25
 msgid "Cancelled"
 msgstr ""
 
-#: inc/system_related_pages.php:25
+#: inc/system_related_pages.php:26
 msgid "Pending"
 msgstr ""
 
@@ -816,74 +900,92 @@ msgid "Name"
 msgstr ""
 
 #: inc/system_related_pages.php:40
-msgid "Status"
-msgstr ""
-
-#: inc/system_related_pages.php:41
 msgid "Slug"
 msgstr ""
 
-#: inc/system_related_pages.php:42
+#: inc/system_related_pages.php:41
 msgid "Gate Way"
 msgstr ""
 
-#: inc/system_related_pages.php:43
+#: inc/system_related_pages.php:42
 msgid "Subscription Details"
 msgstr ""
 
-#: inc/system_related_pages.php:60
+#: inc/system_related_pages.php:59
 msgid "General Settings"
 msgstr ""
 
-#: inc/system_related_pages.php:62
+#: inc/system_related_pages.php:61
 msgid "Rename Subscriptions"
 msgstr ""
 
-#: inc/system_related_pages.php:82
+#: inc/system_related_pages.php:81
 msgid "PLease contact Sales Department to check your account activation"
 msgstr ""
 
-#: inc/system_related_pages.php:100
+#: inc/system_related_pages.php:99
 msgid "The daily balance has run out"
 msgstr ""
 
-#: inc/system_related_pages.php:112
+#: inc/system_related_pages.php:111
 msgid "Sorry, the link is incorrect or you do not have the permissions"
 msgstr ""
 
-#: inc/system_related_pages.php:120
+#: inc/system_related_pages.php:119
 msgid "There is a problem :: if you reload the page and still exist,"
 msgstr ""
 
-#: inc/system_related_pages.php:121
+#: inc/system_related_pages.php:120
 msgid "1- Make sure that your phone is connected to the Internet"
 msgstr ""
 
-#: inc/system_related_pages.php:122
+#: inc/system_related_pages.php:121
 msgid "2- And opening the WhatsApp program on the mobile"
 msgstr ""
 
-#: inc/system_related_pages.php:123
+#: inc/system_related_pages.php:122
 msgid "3- Terminate your WhatsApp connection with any other services"
 msgstr ""
 
-#: inc/system_related_pages.php:125
-msgid "There is a problem with the contact information, please contact customer service"
+#: inc/system_related_pages.php:124
+msgid ""
+"There is a problem with the contact information, please contact customer "
+"service"
+msgstr ""
+
+#: inc/system_related_pages.php:132
+msgid ""
+"The account cannot be accessed. Please contact the customer service to "
+"activate the account"
+msgstr ""
+
+#: inc/system_related_pages.php:173 inc/views/robochat_settings.php:11
+msgid "Subscription"
+msgstr ""
+
+#: inc/system_related_pages.php:190
+msgid "RoboChat Settings"
+msgstr ""
+
+#: inc/views/add_bulk_clients.php:31
+msgid "1- Only csv files accepted"
+msgstr ""
+
+#: inc/views/add_bulk_clients.php:33
+msgid ""
+"2- To make it is safe : please do not upload more than 500 contact per time"
 msgstr ""
 
 #: inc/views/qr_code.php:1
 msgid "Scan the code using the WhatsApp app,then reload the page again"
 msgstr ""
 
-#: inc/views/robochat_settings.php:11
-msgid "Subscription"
-msgstr ""
-
 #: inc/views/robochat_settings.php:27
 msgid "No Automated Answering"
 msgstr ""
 
-#: inc/views/send_bulk_msg.php:10 inc/views/send_bulk_msg.php:73 inc/views/send_bulk_msg.php:108
+#: inc/views/send_bulk_msg.php:10 inc/views/send_bulk_msg.php:73
+#: inc/views/send_bulk_msg.php:108
 msgid "Add New Message"
 msgstr ""
 
@@ -939,7 +1041,11 @@ msgstr ""
 msgid "Connection Button"
 msgstr ""
 
-#: inc/plugins/extra_acf_fields/fields/connection_button.php:68 inc/plugins/extra_acf_fields/fields/open_port.php:68 inc/plugins/extra_acf_fields/fields/web_hook_link.php:62
+#: inc/plugins/extra_acf_fields/fields/connection_button.php:68
+#: inc/plugins/extra_acf_fields/fields/open_port.php:68
+#: inc/plugins/extra_acf_fields/fields/pre_made_data - Copy.php:68
+#: inc/plugins/extra_acf_fields/fields/pre_made_data.php:68
+#: inc/plugins/extra_acf_fields/fields/web_hook_link.php:62
 msgid "Error! Please enter a higher value"
 msgstr ""
 
@@ -949,6 +1055,11 @@ msgstr ""
 
 #: inc/plugins/extra_acf_fields/fields/parent_blog.php:46
 msgid "Parent Blog"
+msgstr ""
+
+#: inc/plugins/extra_acf_fields/fields/pre_made_data - Copy.php:46
+#: inc/plugins/extra_acf_fields/fields/pre_made_data.php:46
+msgid "Pre Made Data"
 msgstr ""
 
 #: inc/plugins/extra_acf_fields/fields/web_hook_link.php:40

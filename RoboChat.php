@@ -7,7 +7,7 @@ Version: 1.1.1
 Author: Business Experts
 Author URI: http://businessexp.net/
 Text Domain: robo
-Domain Path: /inc/languages/
+Domain Path: /inc/files/langs/
 */
 
 // Exit if accessed directly.
@@ -52,6 +52,7 @@ $understrap_includes = array(
 	'crb',									// Caroon Fields : a plugin to unable create a custom fields
 	'users',								// Users of the system
 	'clients',								// clients/contacts
+	'templates',							// Templates
 	'chatbot',								// ChatBot
 	'api',									// RoboChat Api End Points 
 	'chatapi_based_api',					// RoboChat Api End Points Which depend on CHATAPI API

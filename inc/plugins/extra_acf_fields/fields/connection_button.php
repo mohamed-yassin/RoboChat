@@ -217,13 +217,13 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 		
 		
 		// register & include JS
-		wp_register_script('TEXTDOMAIN', "{$url}assets/js/input.js", array('acf-input'), $version);
-		wp_enqueue_script('TEXTDOMAIN');
+		wp_register_script('robo', "{$url}assets/js/input.js", array('acf-input'), $version);
+		wp_enqueue_script('robo');
 		
 		
 		// register & include CSS
-		wp_register_style('TEXTDOMAIN', "{$url}assets/css/input.css", array('acf-input'), $version);
-		wp_enqueue_style('TEXTDOMAIN');
+		wp_register_style('robo', "{$url}assets/css/input.css", array('acf-input'), $version);
+		wp_enqueue_style('robo');
 		
 	}
 	
@@ -482,7 +482,7 @@ class NAMESPACE_acf_field_connection_button extends acf_field {
 		// Advanced usage
 		if( $value < $field['custom_minimum_setting'] )
 		{
-			$valid = __('The value is too little!','TEXTDOMAIN'),
+			$valid = __('The value is too little!','robo'),
 		}
 		
 		
