@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RoboChat\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-07 07:27+0000\n"
+"POT-Creation-Date: 2020-10-07 08:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -722,7 +722,7 @@ msgstr ""
 msgid "Search By"
 msgstr ""
 
-#: inc/general_views.php:135 inc/report_page.php:395
+#: inc/general_views.php:135 inc/report_page.php:394
 msgid "Search"
 msgstr ""
 
@@ -848,10 +848,10 @@ msgid "User"
 msgstr ""
 
 #: inc/report_page.php:356
-msgid "General Reportscc"
+msgid "General Reports"
 msgstr ""
 
-#: inc/report_page.php:380
+#: inc/report_page.php:379
 msgid "No Subscriptions added yet"
 msgstr ""
 

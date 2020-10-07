@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RoboChat\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-07 07:27+0000\n"
-"PO-Revision-Date: 2020-10-07 07:31+0000\n"
+"POT-Creation-Date: 2020-10-07 08:08+0000\n"
+"PO-Revision-Date: 2020-10-07 08:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar\n"
@@ -85,7 +85,7 @@ msgstr "افرع ملف ال CSV"
 
 #: inc/clients.php:73
 msgid "1- Only CSV files accepted"
-msgstr ""
+msgstr "1- تقبل ملفات CSV فقط"
 
 #: inc/clients.php:75
 msgid "2- To make it safe : please don't upload more than 500 contact per time"
@@ -93,15 +93,15 @@ msgstr "2- لجعل العملية آمنة: يرجى عدم تحميل أكثر
 
 #: inc/clients.php:78 inc/views/add_bulk_clients.php:36
 msgid "upload CSV"
-msgstr ""
+msgstr "ارفع ملف ال CSV"
 
 #: inc/cpt.php:10 inc/cpt.php:12 inc/cpt.php:45
 msgid "Clients"
-msgstr ""
+msgstr "العملاء"
 
 #: inc/cpt.php:11 inc/cpt.php:35
 msgid "Client"
-msgstr ""
+msgstr "العميل"
 
 #: inc/cpt.php:13
 msgid "All Clients"
@@ -117,23 +117,23 @@ msgstr "أضف عميل جديد"
 
 #: inc/cpt.php:16
 msgid "Edit Client"
-msgstr ""
+msgstr "تعديل العميل"
 
 #: inc/cpt.php:17 inc/general_views.php:87
 msgid "New Client"
-msgstr ""
+msgstr "اضافة عميل "
 
 #: inc/cpt.php:18
 msgid "View Client"
-msgstr ""
+msgstr "عرض العميل"
 
 #: inc/cpt.php:19
 msgid "View Clients"
-msgstr ""
+msgstr "عرض العملاء "
 
 #: inc/cpt.php:20
 msgid "Search Clients"
-msgstr ""
+msgstr "بحص العملاء"
 
 #: inc/cpt.php:21
 msgid "No Clients found"
@@ -149,11 +149,11 @@ msgstr ""
 
 #: inc/cpt.php:24
 msgid "Featured image for this Client"
-msgstr ""
+msgstr "صورة العميل"
 
 #: inc/cpt.php:25
 msgid "Set featured image for this Client"
-msgstr ""
+msgstr "حدد ضوره العميل"
 
 #: inc/cpt.php:26
 msgid "Remove featured image for this Client"
@@ -724,7 +724,7 @@ msgstr ""
 msgid "Search By"
 msgstr ""
 
-#: inc/general_views.php:135 inc/report_page.php:395
+#: inc/general_views.php:135 inc/report_page.php:394
 msgid "Search"
 msgstr ""
 
@@ -850,10 +850,10 @@ msgid "User"
 msgstr ""
 
 #: inc/report_page.php:356
-msgid "General Reportscc"
+msgid "General Reports"
 msgstr ""
 
-#: inc/report_page.php:380
+#: inc/report_page.php:379
 msgid "No Subscriptions added yet"
 msgstr ""
 
@@ -911,27 +911,27 @@ msgstr ""
 
 #: inc/system_related_pages.php:42
 msgid "Subscription Details"
-msgstr ""
+msgstr "تفاصيل الاشتراك"
 
 #: inc/system_related_pages.php:59
 msgid "General Settings"
-msgstr ""
+msgstr "الاعدادات العامة"
 
 #: inc/system_related_pages.php:61
 msgid "Rename Subscriptions"
-msgstr ""
+msgstr "إعادة تسمية الاشتراكات"
 
 #: inc/system_related_pages.php:81
 msgid "PLease contact Sales Department to check your account activation"
-msgstr ""
+msgstr "الرجاء الاتصال بقسم المبيعات للتحقق من تنشيط حسابك"
 
 #: inc/system_related_pages.php:99
 msgid "The daily balance has run out"
-msgstr ""
+msgstr "لقد نفد الرصيد اليومي"
 
 #: inc/system_related_pages.php:111
 msgid "Sorry, the link is incorrect or you do not have the permissions"
-msgstr ""
+msgstr "عذرا ، الرابط غير صحيح أو ليس لديك الأذونات"
 
 #: inc/system_related_pages.php:119
 msgid "There is a problem :: if you reload the page and still exist,"
@@ -959,15 +959,15 @@ msgstr "هناك مشكلة في معلومات الاتصال , من فضلك �
 msgid ""
 "The account cannot be accessed. Please contact the customer service to "
 "activate the account"
-msgstr ""
+msgstr "لا يمكن الوصول إلى الحساب. يرجى الاتصال بخدمة العملاء لتفعيل الحساب"
 
 #: inc/system_related_pages.php:173 inc/views/robochat_settings.php:11
 msgid "Subscription"
-msgstr ""
+msgstr "الاشتراك"
 
 #: inc/system_related_pages.php:190
 msgid "RoboChat Settings"
-msgstr ""
+msgstr "إعدادات RoboChat"
 
 #: inc/views/add_bulk_clients.php:31
 msgid "1- Only csv files accepted"
@@ -976,15 +976,15 @@ msgstr "1- تقبل ملفات csv فقط"
 #: inc/views/add_bulk_clients.php:33
 msgid ""
 "2- To make it is safe : please do not upload more than 500 contact per time"
-msgstr ""
+msgstr "لعملية امنة: يرجي عدم رفع اكثر من 500 عميل في المرة الواحدة"
 
 #: inc/views/qr_code.php:1
 msgid "Scan the code using the WhatsApp app,then reload the page again"
-msgstr ""
+msgstr "امسح الرمز باستخدام تطبيق WhatsApp ، ثم أعد تحميل الصفحة مرة أخرى"
 
 #: inc/views/robochat_settings.php:27
 msgid "No Automated Answering"
-msgstr ""
+msgstr "تعطيل الرد الالي"
 
 #: inc/views/send_bulk_msg.php:10 inc/views/send_bulk_msg.php:73
 #: inc/views/send_bulk_msg.php:108
@@ -993,51 +993,51 @@ msgstr "أضف رسالة جديدة"
 
 #: inc/views/send_bulk_msg.php:17
 msgid "Dismiss this notice."
-msgstr ""
+msgstr "اخفي هذه الملاحظة"
 
 #: inc/views/send_bulk_msg.php:35 inc/views/whatsapp_simulation.php:95
 msgid "Write Your Message"
-msgstr ""
+msgstr "اكتب رسالتك"
 
 #: inc/views/send_bulk_msg.php:39
 msgid "Premade Templates"
-msgstr ""
+msgstr "قوالب جاهزة"
 
 #: inc/views/send_bulk_msg.php:42 inc/views/whatsapp_simulation.php:132
 msgid "Send Media"
-msgstr ""
+msgstr "ارسل رسالة مصورة"
 
 #: inc/views/send_bulk_msg.php:85
 msgid "Client Name"
-msgstr ""
+msgstr "اسم العميل"
 
 #: inc/views/send_bulk_msg.php:88
 msgid "Select Message Clients"
-msgstr ""
+msgstr "اختر عملاء الرسالة"
 
 #: inc/views/send_bulk_msg.php:99
 msgid "List Name"
-msgstr ""
+msgstr "اسم القائمة"
 
 #: inc/views/send_bulk_msg.php:100
 msgid "Number of Clients"
-msgstr ""
+msgstr "عدد العملاء"
 
 #: inc/views/send_bulk_msg.php:102
 msgid "Select Clients Lists"
-msgstr ""
+msgstr "اختر قائمة العملاء"
 
 #: inc/views/whatsapp_simulation.php:11
 msgid "Remaining Messages Counter"
-msgstr ""
+msgstr "عدد الرسائل المتبقية"
 
 #: inc/views/whatsapp_simulation.php:76
 msgid "Keep Your Phone Connected"
-msgstr ""
+msgstr "ابقي هاتفك متصل بالانترنت"
 
 #: inc/views/whatsapp_simulation.php:97
 msgid "Send"
-msgstr ""
+msgstr "ارسل"
 
 #: inc/plugins/extra_acf_fields/fields/connection_button.php:46
 msgid "Connection Button"
@@ -1074,7 +1074,7 @@ msgstr "RoboChat"
 
 #. Description of the plugin
 msgid "Saas WhatsApp custom web solution , bulk messaging and bot builder."
-msgstr ""
+msgstr "منصة واتساب ويب , تمكن من ارسال رسائل جماعية ,وانشاء شات بوت"
 
 #. URI of the plugin
 #. Author URI of the plugin
