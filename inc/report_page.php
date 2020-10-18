@@ -36,11 +36,6 @@ function current_sql($process =  '*'){
 			$where .= ' ('.$field['name'].' >= "'.$_REQUEST[$from].'" AND '.$field['name'].'<  "'.$_REQUEST[$to].'"  ) ';
 		}
 	}
-
-
-
-
-
 	return  $sql.$where ; 
 }
 function current_per_page(){
@@ -71,23 +66,12 @@ function general_report_fields(){
 			'name'	=> 'updated_at',
 			'sort' => true,
 			'type' => 'date',
-		),
-		/*
-		'msg_body'    		=> __( 'Body', 'robo' ),
-		'msg_type'    		=> __( 'Type', 'robo' ),
-		'msg_caption'    	=> __( 'Caption', 'robo' ),
-		'is_sent'    		=> __( 'Is Sent', 'robo' ),
-		'source'    		=> __( 'Source', 'robo' ),
-		'status'    		=> __( 'Status', 'robo' ),
-		'user'    			=> __( 'User', 'robo' ),
-		'created_at'    	=> __( 'Created at', 'robo' ),
-		'updated_at'    	=> __( 'Updated at', 'robo' ),	
-		*/
+		)
 	); 
 }
 
 
-class robo_msgs_list extends WP_List_Table {
+class robo_general_msgs_report extends WP_List_Table {
 
 	/** Class constructor */
 	public function __construct() {
@@ -413,7 +397,7 @@ class SP_Plugin {
 			'option'  => 'customers_per_page'
 		];
 		add_screen_option( $option, $args );
-		$this->msgs_list = new robo_msgs_list();
+		$this->msgs_list = new robo_general_msgs_report();
 	}
 
 

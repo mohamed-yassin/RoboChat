@@ -4,6 +4,9 @@ session_start();
 
 // Gloabal Functions
 function pre($array , $title= ''){
+	if(production){
+		return ;
+	}
 	echo $title != '' ?  "<h3>$title</h3>" :  '';
 	echo "<pre>" ;
 	print_r ($array);

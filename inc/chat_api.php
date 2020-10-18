@@ -134,7 +134,6 @@ function chat_api_main_processes(){
     }
 
     $result = @json_decode($result,true);
-    pre($result);
     die();
 }
 function make_response_ul($ul,$ul_name=''){

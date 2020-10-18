@@ -6,11 +6,11 @@ function show_msgs(id,new_msgs=0,fake=0,reset_counter=0,active_this=0) {
 	document.getElementById("name").innerHTML  =  document.getElementById(id+"_name").innerHTML ;
 	document.getElementById("pic").src = document.getElementById(id+"_pic").src;
 	document.getElementById(msgs_box).innerHTML = '';
-	document.getElementById('current_contact').value =  id ;
+	document.getElementById('current_client').value =  id ;
 	handle_send_msg_ability();
 	
-	var contact_msgs = JSON.parse(get_msgs_from_hdn_inpt(id));
-	jQuery.each(contact_msgs , function( key, msg ){
+	var client_msgs = JSON.parse(get_msgs_from_hdn_inpt(id));
+	jQuery.each(client_msgs , function( key, msg ){
 		if(!(fake ==  0 &&  msg.fake == 1) ){
 			//append_msg_html(msg);
 		}
@@ -31,7 +31,7 @@ function show_msgs(id,new_msgs=0,fake=0,reset_counter=0,active_this=0) {
 function scroll_to_last_msg(){
 	var element = document.getElementById('messages');
 	element.scrollTop = element.scrollHeight;	
-	var current_contact =  document.getElementById('current_contact').value ; 
+	var current_client =  document.getElementById('current_client').value ; 
 	reset_msg_counters ();
 }
 function append_msg_html(msg_data) {
@@ -93,10 +93,10 @@ function obj_to_array(obj){
 	return array; 
 }
 function handle_send_msg_ability() {
-	var current_contact =  document.getElementById('current_contact').value ; 
-	if(current_contact !=  0){
-		var current_contact_status = document.getElementById(current_contact +"_available").value  ;
-		if(current_contact_status == 2 ){ // if it allready available for the user : close it 
+	var current_client =  document.getElementById('current_client').value ; 
+	if(current_client !=  0){
+		var current_client_status = document.getElementById(current_client +"_available").value  ;
+		if(current_client_status == 2 ){ // if it allready available for the user : close it 
 			document.getElementById("input").disabled = false ;
 			document.getElementById("upload_media_button").disabled = false ;
 	
@@ -118,7 +118,7 @@ function sendMessage (){
 
 	document.getElementById('input').value  = '';
 	if(msg.length  > 0 || files.length > 0  ){
-		var num   = document.getElementById('current_contact').value ; 
+		var num   = document.getElementById('current_client').value ; 
 		var sub   = document.getElementById('sub').value ; 
 		var _wpnonce = document.getElementById('current_wpnonce').value ; 
 		var sign  = document.getElementById(num+'_signature').value ; 
@@ -157,20 +157,20 @@ function append_sent_msg(data){
 }
 function update_session(current_user){
 	
-	var current_contact =  document.getElementById('current_contact').value ;
+	var current_client =  document.getElementById('current_client').value ;
 	var sub =  document.getElementById('sub').value ;
-	var available =  document.getElementById(current_contact +'_available').value ;
+	var available =  document.getElementById(current_client +'_available').value ;
 
-	if(current_contact !=  0){ // if their is a selected contact 
+	if(current_client !=  0){ // if their is a selected client 
 		if(2 > 1){
-			var current_contact_status = document.getElementById(current_contact +"_available").value  ;
+			var current_client_status = document.getElementById(current_client +"_available").value  ;
 			jQuery.ajax({
-				type: "post",url: "admin-ajax.php",data: { action: 'update_session_action' , contact : current_contact , user : current_user , sub : sub  },
+				type: "post",url: "admin-ajax.php",data: { action: 'update_session_action' , client : current_client , user : current_user , sub : sub  },
 				success: function(sessions){ 
 					jQuery.each(sessions , function( session_key, session ){
 						update_session_graphical(session_key,session);
 					});
-					document.getElementById('current_contact').value =  current_contact ;
+					document.getElementById('current_client').value =  current_client ;
 					handle_send_msg_ability();
 				}
 			});	
@@ -188,30 +188,30 @@ function pre(obj){
 	};
 	console.log(keepKeyOrder(obj));
 }
-function update_session_graphical(current_contact,session){
+function update_session_graphical(current_client,session){
 	
 	var status_code =  session[0];
 	
 
-	if(document.getElementById(current_contact +"_available") !== null)
+	if(document.getElementById(current_client +"_available") !== null)
 	{
-		document.getElementById(current_contact +"_available").value = status_code;
+		document.getElementById(current_client +"_available").value = status_code;
 		if(status_code == 2 ){  // current user serving
-			document.getElementById(current_contact + "_available_icon").classList.add('fa-comments');
-			document.getElementById(current_contact + "_available_icon").classList.remove('outcome-msg');
-			document.getElementById(current_contact + "_available_icon").classList.add('income-msg');
+			document.getElementById(current_client + "_available_icon").classList.add('fa-comments');
+			document.getElementById(current_client + "_available_icon").classList.remove('outcome-msg');
+			document.getElementById(current_client + "_available_icon").classList.add('income-msg');
 			
-			// document.getElementById(current_contact + "_signature").value = 1; make problem : after the 
+			// document.getElementById(current_client + "_signature").value = 1; make problem : after the 
 		}else if(status_code == 0){ // another user serving
-			document.getElementById(current_contact + "_available_icon").classList.add('fa-comments');
-			document.getElementById(current_contact + "_available_icon").classList.remove('income-msg');
-			document.getElementById(current_contact + "_available_icon").classList.add('outcome-msg');
-			document.getElementById(current_contact + "_signature").value = 0  ;
+			document.getElementById(current_client + "_available_icon").classList.add('fa-comments');
+			document.getElementById(current_client + "_available_icon").classList.remove('income-msg');
+			document.getElementById(current_client + "_available_icon").classList.add('outcome-msg');
+			document.getElementById(current_client + "_signature").value = 0  ;
 		}else{ // no one serving 
-			document.getElementById(current_contact + "_available_icon").classList.remove('fa-comments'); 
-			document.getElementById(current_contact + "_available_icon").classList.remove('income-msg');
-			document.getElementById(current_contact + "_available_icon").classList.remove('outcome-msg');
-			document.getElementById(current_contact + "_signature").value = 0  ;
+			document.getElementById(current_client + "_available_icon").classList.remove('fa-comments'); 
+			document.getElementById(current_client + "_available_icon").classList.remove('income-msg');
+			document.getElementById(current_client + "_available_icon").classList.remove('outcome-msg');
+			document.getElementById(current_client + "_signature").value = 0  ;
 		}
 	}else{
 		// crete a new div;
@@ -221,7 +221,7 @@ function update_data(){
 	var last_message_number = document.getElementById("last_message_number").value ;
 	var _wpnonce 	= document.getElementById('current_wpnonce').value ; 
 	var sub = document.getElementById('sub').value ; 
-	var current_contact = document.getElementById('current_contact').value ;
+	var current_client = document.getElementById('current_client').value ;
 	jQuery.ajax({
 		type: "post",url: "admin-ajax.php",data: { action: 'update_data_action' , last_message_number : last_message_number  , _wpnonce , _wpnonce , sub : sub },
 		beforeSend: function() {jQuery("#helloworld").fadeOut('fast');}, 
@@ -245,55 +245,55 @@ function update_data(){
 	});	
 }
 function update_msgs_graphical(msgs){
-	jQuery.each(msgs , function( contact, contact_msgs ){
-		move_to_top(contact);
+	jQuery.each(msgs , function( client, client_msgs ){
+		move_to_top(client);
 		var new_recieved_msgs =  0;
 		
-		jQuery.each(contact_msgs.msgs , function( key, msg ){
+		jQuery.each(client_msgs.msgs , function( key, msg ){
 			if(msg.fromMe != 1){
 				new_recieved_msgs ++ ;
 			}
 		});
 		
-		var current_contact_unread_msgs =  document.getElementById(contact+"_new_msgs_counter").value  ; 
-		current_contact_unread_msgs = parseInt(current_contact_unread_msgs) + parseInt(new_recieved_msgs);
-		document.getElementById(contact+"_msg_counter").style.display = 'block'; 
-		document.getElementById(contact+"_new_msgs_counter").value =  current_contact_unread_msgs
-		document.getElementById(contact+"_msg_counter").innerHTML = current_contact_unread_msgs;
+		var current_client_unread_msgs =  document.getElementById(client+"_new_msgs_counter").value  ; 
+		current_client_unread_msgs = parseInt(current_client_unread_msgs) + parseInt(new_recieved_msgs);
+		document.getElementById(client+"_msg_counter").style.display = 'block'; 
+		document.getElementById(client+"_new_msgs_counter").value =  current_client_unread_msgs
+		document.getElementById(client+"_msg_counter").innerHTML = current_client_unread_msgs;
 	
 		// update the current msgs saced in the hidden inputs 	
-		var old_contact_msgs = JSON.parse(get_msgs_from_hdn_inpt(contact));  // old messeges -> day -> day_msgs
-		all_msgs =  jQuery.extend(old_contact_msgs, contact_msgs.msgs);
-		document.getElementById(contact+'_hdn_inpt').value = "";
-		document.getElementById(contact+'_hdn_inpt').value =  JSON.stringify(all_msgs);
+		var old_client_msgs = JSON.parse(get_msgs_from_hdn_inpt(client));  // old messeges -> day -> day_msgs
+		all_msgs =  jQuery.extend(old_client_msgs, client_msgs.msgs);
+		document.getElementById(client+'_hdn_inpt').value = "";
+		document.getElementById(client+'_hdn_inpt').value =  JSON.stringify(all_msgs);
 
 		// update the last msg
-		document.getElementById(contact+'_last_msg').innerHTML =  contact_msgs.last_msg ;
-		document.getElementById(contact+'_last_msg').classList.add('font-weight-bold');	
+		document.getElementById(client+'_last_msg').innerHTML =  client_msgs.last_msg ;
+		document.getElementById(client+'_last_msg').classList.add('font-weight-bold');	
 
 		
 		
-		if(contact_msgs.last_msg_direction != false){ // comming msg      fas fa-arrow-up outcome-msg      fa-arrow-up 
-			document.getElementById(contact + "_arrow_class").classList.add('outcome-msg');
-			document.getElementById(contact + "_arrow_class").classList.add('fa-arrow-up');
+		if(client_msgs.last_msg_direction != false){ // comming msg      fas fa-arrow-up outcome-msg      fa-arrow-up 
+			document.getElementById(client + "_arrow_class").classList.add('outcome-msg');
+			document.getElementById(client + "_arrow_class").classList.add('fa-arrow-up');
 
-			document.getElementById(contact + "_arrow_class").classList.remove('income-msg');
-			document.getElementById(contact + "_arrow_class").classList.remove('fa-arrow-down');
+			document.getElementById(client + "_arrow_class").classList.remove('income-msg');
+			document.getElementById(client + "_arrow_class").classList.remove('fa-arrow-down');
 		}else{
-			document.getElementById(contact + "_arrow_class").classList.add('income-msg');
-			document.getElementById(contact + "_arrow_class").classList.add('fa-arrow-down');
+			document.getElementById(client + "_arrow_class").classList.add('income-msg');
+			document.getElementById(client + "_arrow_class").classList.add('fa-arrow-down');
 
-			document.getElementById(contact + "_arrow_class").classList.remove('outcome-msg');
-			document.getElementById(contact + "_arrow_class").classList.remove('fa-arrow-up');
+			document.getElementById(client + "_arrow_class").classList.remove('outcome-msg');
+			document.getElementById(client + "_arrow_class").classList.remove('fa-arrow-up');
 		}
 
 		// change the content of the curren selected contect
-		if(contact == document.getElementById('current_contact').value ){
-			document.getElementById(contact+"_msg_counter").innerHTML = current_contact_unread_msgs ;
-			if(current_contact_unread_msgs > 0){
-				document.getElementById(contact+"_msg_counter").style.display = 'block'; 
+		if(client == document.getElementById('current_client').value ){
+			document.getElementById(client+"_msg_counter").innerHTML = current_client_unread_msgs ;
+			if(current_client_unread_msgs > 0){
+				document.getElementById(client+"_msg_counter").style.display = 'block'; 
 			}
-			show_msgs(contact,current_contact_unread_msgs) ;
+			show_msgs(client,current_client_unread_msgs) ;
 		}
 	});
 }
@@ -302,21 +302,21 @@ jQuery( document ).ready( function( $ ) {
 });
 
 function reset_defults(){
-	if(!document.getElementsByName("current_contact")){
-		document.getElementById('current_contact').value =  0 ;
+	if(!document.getElementsByName("current_client")){
+		document.getElementById('current_client').value =  0 ;
 	}		
 }
 function move_to_top(id){
-	const contact = document.getElementById(id); 
+	const client = document.getElementById(id); 
 	const list = document.getElementById("chat-list"); 
-	list.prepend(contact);
+	list.prepend(client);
 }
 /****************************************************** Executive Code ******************************************************/
 reset_defults();
 jQuery(".chat-list-item").click(function(e){
 	var current =  this.id;
 	// show_msgs(current);
-	// change the selected contact / mark the contact
+	// change the selected client / mark the client
 	jQuery(".active").each(function() {
 		document.getElementById(this.id).classList.remove('active');
 	});	
@@ -399,10 +399,10 @@ jQuery(function(n) {
     })
 });
 function reset_msg_counters(){
-	var current_contact =  document.getElementById('current_contact').value ; 
+	var current_client =  document.getElementById('current_client').value ; 
 	document.getElementById('float').style.display = 'none';
-	document.getElementById(current_contact+'_new_msgs_counter').value = 0;
-	document.getElementById(current_contact+'_msg_counter').style.display = 'none';
+	document.getElementById(current_client+'_new_msgs_counter').value = 0;
+	document.getElementById(current_client+'_msg_counter').style.display = 'none';
 }
 jQuery(".float").click(function(e){ // no changing
 	scroll_to_last_msg();

@@ -63,20 +63,20 @@ function send_instant_msg() {
 }
 function update_session()
 {
-	$contact = (string)$_REQUEST['contact']; 
+	$client = (string)$_REQUEST['client']; 
 	$user 	 = get_current_user_id();
 	$sub 	 = $_REQUEST['sub'];  // need to be more secure 
 	$sessions   = get_current_sessions($sub);
 	$date = time();  
 
-	if ( ! isset($sessions[$contact])   ||  $sessions[$contact][0] == 0  ){              // allow the user to serve the client which is not served  
-		$sessions[$contact] = array($user , $date)  ;		
-	}elseif ($sessions[$contact][0] == $user ) {            // the user free the client
-		$sessions[$contact] = array( 0, $date ) ;
+	if ( ! isset($sessions[$client])   ||  $sessions[$client][0] == 0  ){              // allow the user to serve the client which is not served  
+		$sessions[$client] = array($user , $date)  ;		
+	}elseif ($sessions[$client][0] == $user ) {            // the user free the client
+		$sessions[$client] = array( 0, $date ) ;
 	}else {
-		$time_def =  $date - $sessions[$contact][1];
+		$time_def =  $date - $sessions[$client][1];
 		if($time_def >  session_duration ){                // if the user didn't served with the client for a long time , free the client 
-			$sessions[$contact] = array(0 , $date )  ;
+			$sessions[$client] = array(0 , $date )  ;
 		}
 	}
 

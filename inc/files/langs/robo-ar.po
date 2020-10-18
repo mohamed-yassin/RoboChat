@@ -2,18 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RoboChat\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-07 08:08+0000\n"
-"PO-Revision-Date: 2020-10-07 08:08+0000\n"
+"POT-Creation-Date: 2020-10-11 01:00+0000\n"
+"PO-Revision-Date: 2020-10-11 01:00+0000\n"
 "Last-Translator: \n"
-"Language-Team: Arabic\n"
+"Language-Team: العربية\n"
 "Language: ar\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100 >= 3 "
-"&& n%100<=10 ? 3 : n%100 >= 11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100 >= 3 && n%100<=10 ? 3 : n%100 >= 11 && n%100<=99 ? 4 : 5;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.4.3; wp-5.5.1"
+"X-Loco-Version: 2.4.3; wp-5.4.2"
 
 #: inc/acf.php:11 inc/meta_bxs.php:47
 msgid "Phone"
@@ -27,7 +26,7 @@ msgstr "مجموعة حقول جديدة"
 msgid "chat box"
 msgstr "صندوق الدردشة"
 
-#: inc/chat_api.php:37 inc/chat_api.php:63 inc/chat_api.php:221
+#: inc/chat_api.php:37 inc/chat_api.php:63 inc/chat_api.php:220
 msgid "Please call admin to re-check your data"
 msgstr "من فضلك تواصل مع الادارة لمراجعة معلوماتك"
 
@@ -40,12 +39,8 @@ msgid "Scan the code, then press the button again"
 msgstr "امسح الرمز ، ثم اضغط على الزر مرة أخرى"
 
 #: inc/chat_api.php:126
-msgid ""
-"Based on the chat API, operations will not be communicated on the server for "
-"5 minutes from now and all API responses will be incomplete </br>"
-msgstr ""
-"بناء علي ال CHAT API ، لن يتم تنفيذ عمليات على الخادم لمدة 5 دقائق من الآن "
-"وستكون جميع استجابات واجهة برمجة التطبيقات غير مكتملة </br>"
+msgid "Based on the chat API, operations will not be communicated on the server for 5 minutes from now and all API responses will be incomplete </br>"
+msgstr "بناء علي ال CHAT API ، لن يتم تنفيذ عمليات على الخادم لمدة 5 دقائق من الآن وستكون جميع استجابات واجهة برمجة التطبيقات غير مكتملة </br>"
 
 #: inc/chat_api.php:133
 msgid "There is a problem with the update"
@@ -88,8 +83,8 @@ msgid "1- Only CSV files accepted"
 msgstr "1- تقبل ملفات CSV فقط"
 
 #: inc/clients.php:75
-msgid "2- To make it safe : please don't upload more than 500 contact per time"
-msgstr "2- لجعل العملية آمنة: يرجى عدم تحميل أكثر من 500 جهة اتصال في كل مرة"
+msgid "2- To make it safe : please don't upload more than 500 client per time"
+msgstr ""
 
 #: inc/clients.php:78 inc/views/add_bulk_clients.php:36
 msgid "upload CSV"
@@ -631,8 +626,7 @@ msgstr ""
 msgid " Header"
 msgstr "المقدمه"
 
-#: inc/crb.php:72 inc/crb.php:141 inc/crb.php:171 inc/crb.php:201
-#: inc/report_page.php:58 inc/report_page.php:216
+#: inc/crb.php:72 inc/crb.php:141 inc/crb.php:171 inc/crb.php:201 inc/report_page.php:53 inc/report_page.php:200
 msgid "Body"
 msgstr ""
 
@@ -676,7 +670,7 @@ msgstr ""
 msgid "Header"
 msgstr ""
 
-#: inc/crb.php:139 inc/report_page.php:217
+#: inc/crb.php:139 inc/report_page.php:201
 msgid "Type"
 msgstr ""
 
@@ -724,7 +718,7 @@ msgstr ""
 msgid "Search By"
 msgstr ""
 
-#: inc/general_views.php:135 inc/report_page.php:394
+#: inc/general_views.php:135 inc/report_page.php:378
 msgid "Search"
 msgstr ""
 
@@ -756,216 +750,211 @@ msgstr ""
 msgid "Template Composer"
 msgstr ""
 
-#: inc/msgs.php:46
+#: inc/msgs.php:45
 msgid "No Messages Yet"
 msgstr ""
 
-#: inc/msgs.php:206
+#: inc/msgs.php:205
 msgid "Write the message"
 msgstr ""
 
-#: inc/msgs.php:210
+#: inc/msgs.php:209
 msgid "Premade Codes"
 msgstr ""
 
-#: inc/msgs.php:224 inc/views/send_bulk_msg.php:56
-#: inc/views/whatsapp_simulation.php:116
+#: inc/msgs.php:223 inc/views/send_bulk_msg.php:56 inc/views/whatsapp_simulation.php:116
 msgid "Emojy"
 msgstr ""
 
-#: inc/msgs.php:253
+#: inc/msgs.php:252
 msgid "Current User"
 msgstr ""
 
-#: inc/msgs.php:254 inc/views/send_bulk_msg.php:86
+#: inc/msgs.php:253 inc/views/send_bulk_msg.php:86
 msgid "Client Phone"
 msgstr ""
 
-#: inc/report_page.php:52 inc/report_page.php:215
+#: inc/report_page.php:47 inc/report_page.php:199
 msgid "Number"
 msgstr ""
 
-#: inc/report_page.php:64 inc/report_page.php:223
+#: inc/report_page.php:59 inc/report_page.php:207
 msgid "Created at"
 msgstr ""
 
-#: inc/report_page.php:70 inc/report_page.php:224
+#: inc/report_page.php:65 inc/report_page.php:208
 msgid "Updated at"
 msgstr ""
 
-#: inc/report_page.php:96
+#: inc/report_page.php:80
 msgid "Customer"
 msgstr ""
 
-#: inc/report_page.php:97
+#: inc/report_page.php:81
 msgid "Customers"
 msgstr ""
 
-#: inc/report_page.php:158
+#: inc/report_page.php:142
 msgid "No Messages."
 msgstr ""
 
-#: inc/report_page.php:184
+#: inc/report_page.php:168
 msgid "Bulk Message"
 msgstr ""
 
-#: inc/report_page.php:186
+#: inc/report_page.php:170
 msgid "Chat Bot"
 msgstr ""
 
-#: inc/report_page.php:188
+#: inc/report_page.php:172
 msgid "Customer Services"
 msgstr ""
 
-#: inc/report_page.php:192
+#: inc/report_page.php:176
 msgid "&#x2714;"
 msgstr ""
 
-#: inc/report_page.php:194
+#: inc/report_page.php:178
 msgid "X"
 msgstr ""
 
-#: inc/report_page.php:200
+#: inc/report_page.php:184
 msgid "Undefined User"
 msgstr ""
 
-#: inc/report_page.php:218
+#: inc/report_page.php:202
 msgid "Caption"
 msgstr ""
 
-#: inc/report_page.php:219
+#: inc/report_page.php:203
 msgid "Is Sent"
 msgstr ""
 
-#: inc/report_page.php:220
+#: inc/report_page.php:204
 msgid "Source"
 msgstr ""
 
-#: inc/report_page.php:221 inc/system_related_pages.php:39
+#: inc/report_page.php:205 inc/system_pages.php:39
 msgid "Status"
 msgstr ""
 
-#: inc/report_page.php:222
+#: inc/report_page.php:206
 msgid "User"
 msgstr ""
 
-#: inc/report_page.php:356
+#: inc/report_page.php:340
 msgid "General Reports"
 msgstr ""
 
-#: inc/report_page.php:379
+#: inc/report_page.php:363
 msgid "No Subscriptions added yet"
 msgstr ""
 
-#: inc/system_related_pages.php:6
+#: inc/system_pages.php:6
 msgid "Reports"
 msgstr ""
 
-#: inc/system_related_pages.php:13
+#: inc/system_pages.php:13
 msgid "Subscriptions Orders"
 msgstr ""
 
-#: inc/system_related_pages.php:23
+#: inc/system_pages.php:23
 msgid "Active"
 msgstr "نشط"
 
-#: inc/system_related_pages.php:24
+#: inc/system_pages.php:24
 msgid "On Hold"
 msgstr ""
 
-#: inc/system_related_pages.php:25
+#: inc/system_pages.php:25
 msgid "Cancelled"
 msgstr ""
 
-#: inc/system_related_pages.php:26
+#: inc/system_pages.php:26
 msgid "Pending"
 msgstr ""
 
-#: inc/system_related_pages.php:33
+#: inc/system_pages.php:33
 msgid "Chat API"
 msgstr ""
 
-#: inc/system_related_pages.php:33
+#: inc/system_pages.php:33
 msgid "Not Defined Yet"
 msgstr ""
 
-#: inc/system_related_pages.php:34
+#: inc/system_pages.php:34
 msgid "details"
 msgstr ""
 
-#: inc/system_related_pages.php:37
+#: inc/system_pages.php:37
 msgid "ID"
 msgstr ""
 
-#: inc/system_related_pages.php:38 inc/views/robochat_settings.php:13
+#: inc/system_pages.php:38 inc/views/robochat_settings.php:13
 msgid "Name"
 msgstr ""
 
-#: inc/system_related_pages.php:40
+#: inc/system_pages.php:40
 msgid "Slug"
 msgstr ""
 
-#: inc/system_related_pages.php:41
+#: inc/system_pages.php:41
 msgid "Gate Way"
 msgstr ""
 
-#: inc/system_related_pages.php:42
+#: inc/system_pages.php:42
 msgid "Subscription Details"
 msgstr "تفاصيل الاشتراك"
 
-#: inc/system_related_pages.php:59
+#: inc/system_pages.php:59
 msgid "General Settings"
 msgstr "الاعدادات العامة"
 
-#: inc/system_related_pages.php:61
+#: inc/system_pages.php:61
 msgid "Rename Subscriptions"
 msgstr "إعادة تسمية الاشتراكات"
 
-#: inc/system_related_pages.php:81
-msgid "PLease contact Sales Department to check your account activation"
-msgstr "الرجاء الاتصال بقسم المبيعات للتحقق من تنشيط حسابك"
+#: inc/system_pages.php:81
+msgid "PLease client Sales Department to check your account activation"
+msgstr ""
 
-#: inc/system_related_pages.php:99
+#: inc/system_pages.php:99
 msgid "The daily balance has run out"
 msgstr "لقد نفد الرصيد اليومي"
 
-#: inc/system_related_pages.php:111
+#: inc/system_pages.php:111
 msgid "Sorry, the link is incorrect or you do not have the permissions"
 msgstr "عذرا ، الرابط غير صحيح أو ليس لديك الأذونات"
 
-#: inc/system_related_pages.php:119
+#: inc/system_pages.php:119
 msgid "There is a problem :: if you reload the page and still exist,"
 msgstr "هناك مشكلة :: في حاله قمت باعادة تحميل الصفحة ومازالت المشكلة قائمة"
 
-#: inc/system_related_pages.php:120
+#: inc/system_pages.php:120
 msgid "1- Make sure that your phone is connected to the Internet"
 msgstr "1- تأكد من أن هاتفك متصل بالإنترنت"
 
-#: inc/system_related_pages.php:121
+#: inc/system_pages.php:121
 msgid "2- And opening the WhatsApp program on the mobile"
 msgstr "2- وفتح برنامج الواتس اب على الجوال"
 
-#: inc/system_related_pages.php:122
+#: inc/system_pages.php:122
 msgid "3- Terminate your WhatsApp connection with any other services"
 msgstr "3- قم بإنهاء اتصال WhatsApp الخاص بك مع أي خدمات أخرى"
 
-#: inc/system_related_pages.php:124
-msgid ""
-"There is a problem with the contact information, please contact customer "
-"service"
-msgstr "هناك مشكلة في معلومات الاتصال , من فضلك تواصل مع خدمة العملاء"
+#: inc/system_pages.php:124
+msgid "There is a problem with the client information, please client customer service"
+msgstr ""
 
-#: inc/system_related_pages.php:132
-msgid ""
-"The account cannot be accessed. Please contact the customer service to "
-"activate the account"
-msgstr "لا يمكن الوصول إلى الحساب. يرجى الاتصال بخدمة العملاء لتفعيل الحساب"
+#: inc/system_pages.php:132
+msgid "The account cannot be accessed. Please client the customer service to activate the account"
+msgstr ""
 
-#: inc/system_related_pages.php:173 inc/views/robochat_settings.php:11
+#: inc/system_pages.php:173 inc/views/robochat_settings.php:11
 msgid "Subscription"
 msgstr "الاشتراك"
 
-#: inc/system_related_pages.php:190
+#: inc/system_pages.php:190
 msgid "RoboChat Settings"
 msgstr "إعدادات RoboChat"
 
@@ -974,9 +963,8 @@ msgid "1- Only csv files accepted"
 msgstr "1- تقبل ملفات csv فقط"
 
 #: inc/views/add_bulk_clients.php:33
-msgid ""
-"2- To make it is safe : please do not upload more than 500 contact per time"
-msgstr "لعملية امنة: يرجي عدم رفع اكثر من 500 عميل في المرة الواحدة"
+msgid "2- To make it is safe : please do not upload more than 500 client per time"
+msgstr ""
 
 #: inc/views/qr_code.php:1
 msgid "Scan the code using the WhatsApp app,then reload the page again"
@@ -986,8 +974,7 @@ msgstr "امسح الرمز باستخدام تطبيق WhatsApp ، ثم أعد 
 msgid "No Automated Answering"
 msgstr "تعطيل الرد الالي"
 
-#: inc/views/send_bulk_msg.php:10 inc/views/send_bulk_msg.php:73
-#: inc/views/send_bulk_msg.php:108
+#: inc/views/send_bulk_msg.php:10 inc/views/send_bulk_msg.php:73 inc/views/send_bulk_msg.php:108
 msgid "Add New Message"
 msgstr "أضف رسالة جديدة"
 
@@ -1043,11 +1030,7 @@ msgstr "ارسل"
 msgid "Connection Button"
 msgstr ""
 
-#: inc/plugins/extra_acf_fields/fields/connection_button.php:68
-#: inc/plugins/extra_acf_fields/fields/open_port.php:68
-#: inc/plugins/extra_acf_fields/fields/pre_made_data - Copy.php:68
-#: inc/plugins/extra_acf_fields/fields/pre_made_data.php:68
-#: inc/plugins/extra_acf_fields/fields/web_hook_link.php:62
+#: inc/plugins/extra_acf_fields/fields/connection_button.php:68 inc/plugins/extra_acf_fields/fields/open_port.php:68 inc/plugins/extra_acf_fields/fields/pre_made_data - Copy.php:68 inc/plugins/extra_acf_fields/fields/pre_made_data.php:68 inc/plugins/extra_acf_fields/fields/web_hook_link.php:62
 msgid "Error! Please enter a higher value"
 msgstr ""
 
@@ -1059,8 +1042,7 @@ msgstr ""
 msgid "Parent Blog"
 msgstr ""
 
-#: inc/plugins/extra_acf_fields/fields/pre_made_data - Copy.php:46
-#: inc/plugins/extra_acf_fields/fields/pre_made_data.php:46
+#: inc/plugins/extra_acf_fields/fields/pre_made_data - Copy.php:46 inc/plugins/extra_acf_fields/fields/pre_made_data.php:46
 msgid "Pre Made Data"
 msgstr ""
 

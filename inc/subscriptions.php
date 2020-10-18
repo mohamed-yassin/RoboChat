@@ -197,8 +197,8 @@ function is_client_screen(){
 function rand_sub_code() {
     $randomString =  '';
 
-    $num_of_characters =  3; 
-    $num_of_numbers    =  2;
+    $num_of_characters = 3; 
+    $num_of_numbers    = 2;
     
     $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $numbers    = '0123456789';
@@ -214,4 +214,29 @@ function rand_sub_code() {
     }
 
     return $randomString;
+}
+function has_access_to_this_sub(){
+    $sub  = $_GET['sub'];
+    $subs = subs_option_field_array();
+    return in_array($sub,$subs) ?  true :  false ; 
+}
+function current_sub_page_url($extention = NULL,$gets=array())
+{
+    foreach ($gets as $key) {
+        $extention =  isset($_GET[$key]) && $_GET[$key] != '' ? $extention."&$key=".$_GET[$key] :  $extention;
+    }
+    return admin_url('admin.php?page='.$_GET['page'].$extention);
+}
+function get_page_sub_id($name = 'page')
+{
+    if(isset($_GET[$name])){
+        $slug   = $_GET[$name];
+        $slug   = explode('_', $slug);
+        $index  = count($slug) -1 ; 
+        $slug   = $slug[$index];  
+        $sub    = related_sub_id($slug); 
+    }else {
+        $sub =  0;
+    }
+    return  $sub;
 }

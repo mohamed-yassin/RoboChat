@@ -91,7 +91,7 @@ function add_sub_to_blog($blog,$sub){
     restore_current_blog();
     return $slug; 
 }
-function related_msgs_table($table){
+function related_msgs_table($table=''){
     $sub    =  get_page_sub_id();
     return get_msgs_table_name($sub,$table);
 }
@@ -161,9 +161,9 @@ function dp_insert_multi_rows($row_arrays = array(), $wp_table_name) {
 }
 function update_msgs_archive($msgs=array())
 {
-    $table      = related_msgs_table('archieve');
-    $msgs   = get_json(files.'messages.json');
-    pre($msgs);
+    $table = related_msgs_table('archieve');
+    $msgs  = get_json(files.'messages.json');
+
     global $wpdb;
     $keys =  array(
         'id', 'body', 'fromMe', 'self', 'isForwarded', 'author', 'time', 'chatId', 'messageNumber', 'type', 'senderName', 'quotedMsgBody', 'quotedMsgId', 'chatName', 'caption'

@@ -26,7 +26,7 @@
     
     <input type="hidden" name="action" value="compose_messages">
     <input type="hidden" name="redirect" value="<?= current_sub_page_url('&process=send_msg'); ?>">
-    <input type="hidden" name="table" value="<?= related_msgs_table(); ?>">
+    <input type="hidden" name="table" value="<?= related_msgs_table('queried'); ?>">
 
     <div class="justify-self-end align-items-center flex-row d-flex" id="input-area">
 		<input type='hidden' name='files' id='files' value=''>

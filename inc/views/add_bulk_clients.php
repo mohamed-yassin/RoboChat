@@ -30,7 +30,7 @@
             </br>
             <?= __('1- Only csv files accepted','robo')?>
             </br>
-            <?= __('2- To make it is safe : please do not upload more than 500 contact per time','robo')?>
+            <?= __('2- To make it is safe : please do not upload more than 500 client per time','robo')?>
             </td>
         </tr>
         <?php submit_button(__('upload CSV','robo'));?>

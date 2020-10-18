@@ -78,7 +78,7 @@ function whatsappapi_options_page() {
 		$token 				 = $sub_connection_data['token'];
 
 		if($api == '' || $token == ''){
-			echo "<h2>" .  __('PLease contact Sales Department to check your account activation','robo') . "</h2>" ;
+			echo "<h2>" .  __('PLease client Sales Department to check your account activation','robo') . "</h2>" ;
 		}else {
 			$chatapi_sub_status =  chatapi_sub_status($api,$token);
 			if(isset($chatapi_sub_status['accountStatus']) && $chatapi_sub_status['accountStatus'] == 'authenticated'){
@@ -113,7 +113,7 @@ function whatsappapi_options_page() {
 				}
 			}else {
 				if(production  !=  true ){
-					pre($chatapi_sub_status);
+					pre($chatapi_sub_status ,  'chatapi_sub_status');
 				}
 				if(isset($chatapi_sub_status['accountStatus']) &&  $chatapi_sub_status['accountStatus'] == 'loading') {
 					_e("There is a problem :: if you reload the page and still exist,",'robo'); echo ('</br>');
@@ -121,7 +121,7 @@ function whatsappapi_options_page() {
 					_e("2- And opening the WhatsApp program on the mobile",'robo'); echo ('</br>');
 					_e("3- Terminate your WhatsApp connection with any other services",'robo'); echo ('</br>');
 				}elseif (! isset($chatapi_sub_status['accountStatus'])) {
-					_e('There is a problem with the contact information, please contact customer service','robo') ; 
+					_e('There is a problem with the client information, please client customer service','robo') ; 
 				}else{
 					$data['qr'] = $chatapi_sub_status['qrCode'] ;
 					view('qr_code', $data);
@@ -129,7 +129,7 @@ function whatsappapi_options_page() {
 			}
 		}
 	}else {
-		_e('The account cannot be accessed. Please contact the customer service to activate the account','robo') ; 
+		_e('The account cannot be accessed. Please client the customer service to activate the account','robo') ; 
 	}
 }
 
@@ -204,4 +204,8 @@ function robo_general_report_render(){
 }
 function robo_reports_render(){
 	view('reports');
+}
+function edit_wordpress_dashboard_footer () 
+{
+    //echo '<span id="footer-thankyou">Developed by <a href="http://www.designerswebsite.com" target="_blank">Your Name</a></span>';
 }

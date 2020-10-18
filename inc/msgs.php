@@ -1,6 +1,5 @@
 <?php 
 function prepare_msgs($msgs){
-    pre($msgs);
     $clients    = get_clients();
     $sessions   = available_sessions(get_page_sub_id());
     $unset_clients =  array();
@@ -9,9 +8,9 @@ function prepare_msgs($msgs){
             $chat_id = pure_phone($msg->chatId);
             $msg->real_time = date("H:i",$msg->time);
 
-            $contact_info = contact_info(message_reciever_number($msg->chatId)) ;
-            $prepared_msgs[$chat_id]['name'] =  isset($contact_info['name']) ? $contact_info['name'] :  $msg->chatName ;
-            $prepared_msgs[$chat_id]['img']  =  isset($contact_info['img']) && $contact_info['img'] != '' ? $contact_info['img']   :  dflt_user_img ; 
+            $client_info = client_info(msg_reciever_number($msg->chatId)) ;
+            $prepared_msgs[$chat_id]['name'] =  isset($client_info['name']) ? $client_info['name'] :  $msg->chatName ;
+            $prepared_msgs[$chat_id]['img']  =  isset($client_info['img']) && $client_info['img'] != '' ? $client_info['img']   :  dflt_user_img ; 
 
             $prepared_msgs[$chat_id]['available']  =  isset($sessions[$chat_id]['available']) ? $sessions[$chat_id]['available'] : 1 ;                    
             $prepared_msgs[$chat_id]['available_icon']      =  isset($sessions[$chat_id]['available_icon']) ?  $sessions[$chat_id]['available_icon'] :  '';                    
@@ -30,7 +29,7 @@ function prepare_msgs($msgs){
 
             // clear the clients list 
             if(isset($clients[$chat_id])){
-                $unset_clients[$chat_id]['name']        = isset($contact_info['name']) ? $contact_info['name'] :  $msg->chatName ;
+                $unset_clients[$chat_id]['name']        = isset($client_info['name']) ? $client_info['name'] :  $msg->chatName ;
                 $unset_clients[$chat_id]['last_msg']  = $msg->body;
                 $unset_clients[$chat_id]['msgs'][]      = $msg;
                 unset($clients[$chat_id]);
@@ -52,14 +51,14 @@ function prepare_msgs($msgs){
     array_multisort(array_column($prepared_msgs, 'original_last_msg_time'), SORT_DESC, $prepared_msgs);
     return $prepared_msgs  ;
 }
-function translate_short_codes($msg , $contact = FALSE  ){
-    $contact_info =  contact_info(pure_phone($contact)) ; 
-    if($contact != FALSE  &&  $contact_info != FALSE){
+function translate_short_codes($msg , $client = FALSE  ){
+    $client_info =  client_info(pure_phone($client)) ; 
+    if($client != FALSE  &&  $client_info != FALSE){
         $searchfor[] = '{{first_name}}';
-        $replacing[] = $contact_info['first_name'];
+        $replacing[] = $client_info['first_name'];
 
         $searchfor[] = '{{phone}}';
-        $replacing[] = $contact_info['phone'];
+        $replacing[] = $client_info['phone'];
     }
 
     // General
@@ -255,4 +254,23 @@ function get_available_codes(){
         __('Client First Name') =>  'first_name',
     );
     return  $codes ;
+}
+function msg_time($time){
+    $time =  date("H:i d/m",$time) ;
+    return  $time; 
+}
+function  msg_day($time){
+    return date("d/m",$time) ;
+}
+function msg_reciever_number($chatid){
+    $number  =  explode ('@' , $chatid);
+    $number  =  pure_phone ($number[0]);
+    return $number ;
+}
+
+function is_group($chatId){
+    $id   =  explode ('@' , $chatId);
+    $type =  explode ('.' , $id[1])[0];
+
+    return $type == 'g' ?  true :  false ;
 }

@@ -94,9 +94,9 @@ function send_message($data){
   {
     return do_chatapi_api('sendLink',  $data ,  true)  ;
   }
-  function external_api_sendContact($data)
+  function external_api_sendclient($data)
   {
-    return do_chatapi_api('sendContact',  $data ,  true)  ;
+    return do_chatapi_api('sendclient',  $data ,  true)  ;
   }
   function external_api_sendLocation($data)
   {

@@ -34,8 +34,7 @@ define('allowed_msgs_per_min', 10);
 $understrap_includes = array(
 	'config',								// Main Config Settings
 	'base_functions',						// Common Base Used function 
-	'system_related_pages', 				// Create the ystem related pages
-	'admin_pages_functions',    			// admin pages related 
+	'system_pages', 				// Create the ystem related pages
 	'dp', 									// dp related functions
 	'subscriptions',						// subscriptions related functions
 	'cpt', 									// regist custom post types 

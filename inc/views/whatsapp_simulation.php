@@ -20,29 +20,29 @@
 			<div class="row" id="chat-list" style="overflow:auto;">
 				<?php 
 		
-			foreach ($main_msgs_array as $key => $contact) { 
+			foreach ($main_msgs_array as $key => $client) { 
 				
-				$main_id  	 =  message_reciever_number($key) ;
-				$arrow_class =  $contact['last_msg_direction'] == 1 ? "fas fa-arrow-up outcome-msg" :  "fas fa-arrow-down income-msg" ;
+				$main_id  	 =  msg_reciever_number($key) ;
+				$arrow_class =  $client['last_msg_direction'] == 1 ? "fas fa-arrow-up outcome-msg" :  "fas fa-arrow-down income-msg" ;
 			?>
-				<div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom  main-contact" id="<?= $main_id ;?>" onclick="show_msgs('<?= $main_id ;?>')" >
-					<img id="<?= $main_id?>_pic" src="<?= $contact['img']; ?>" alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
+				<div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom  main-client" id="<?= $main_id ;?>" onclick="show_msgs('<?= $main_id ;?>')" >
+					<img id="<?= $main_id?>_pic" src="<?= $client['img']; ?>" alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
 					<div class="w-50">
 						<div id="<?= $main_id?>_name" class="name">
-							<?= $contact['name']; ?> 
-							<i id="<?= $main_id ?>_available_icon"  class="fas <?= $contact['available_icon']; ?>"></i>	
+							<?= $client['name']; ?> 
+							<i id="<?= $main_id ?>_available_icon"  class="fas <?= $client['available_icon']; ?>"></i>	
 						</div>
 						<div class="small last-message"><i id="<?= $main_id?>_arrow_class" class="<?= $arrow_class; ?>"></i>
-							<span id='<?= $main_id ?>_last_msg' ><?= $contact['last_msg']; ?></span>
+							<span id='<?= $main_id ?>_last_msg' ><?= $client['last_msg']; ?></span>
 						</div>
 					</div>
 					<div class="flex-grow-1 text-right">
-						<div class="small time"><?= $contact['last_msg_time']; ?></div>
+						<div class="small time"><?= $client['last_msg_time']; ?></div>
 						<p  class="msg-counter" id="<?= $main_id ?>_msg_counter"></i>0</p>			
 
 					</div>
-					<input id="<?= $main_id ?>_hdn_inpt" type ="hidden" value='<?= json_encode($contact['msgs'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);     ; ?>' >
-					<input id="<?= $main_id ?>_available" type ="hidden" value='<?= $contact['available']; ?>' >
+					<input id="<?= $main_id ?>_hdn_inpt" type ="hidden" value='<?= json_encode($client['msgs'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);     ; ?>' >
+					<input id="<?= $main_id ?>_available" type ="hidden" value='<?= $client['available']; ?>' >
 					<input id="<?= $main_id ?>_signature" type ="hidden" value='0' >
 					<input id="<?= $main_id ?>_new_msgs_counter" type ="hidden" value='0' >
 				</div>
@@ -86,9 +86,9 @@
 					<i id="lock" class="fas fa-lock text-muted px-3" style="font-size:1.5rem;"></i>
 				</span>
 				<input type='hidden' name='files' id='files' value=''>
-				<input id="current_open_contacts" type ="hidden" value="">
+				<input id="current_open_clients" type ="hidden" value="">
 				<input id="handle_send_msg_ability" type ="hidden" value="0">
-				<input id="current_contact"  name= "current_contact" type ="hidden" value="0">
+				<input id="current_client"  name= "current_client" type ="hidden" value="0">
 				<input id="current_wpnonce"  name= "current_wpnonce" type ="hidden" value="<?= robo_nonce() ?>">
 				<input id="sub" name="sub" type="hidden" value="<?=  get_page_sub_id() ?>" >
 				<input id="last_message_number" name="last_message_number" type="hidden" value="<?=  $last_message_number ?>" >

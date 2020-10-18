@@ -33,7 +33,7 @@ add_filter( 'woocommerce_account_menu_items', 'bbloomer_add_premium_support_link
 // 4. Add content to the new endpoint
   
 function bbloomer_premium_support_content() {
-echo '<h3>Premium WooCommerce Support</h3><p>Welcome to the WooCommerce support area. As a premium customer, you can submit a ticket should you have any WooCommerce issues with your website, snippets or customization. <i>Please contact your theme/plugin developer for theme/plugin-related support.</i></p>';
+echo '<h3>Premium WooCommerce Support</h3><p>Welcome to the WooCommerce support area. As a premium customer, you can submit a ticket should you have any WooCommerce issues with your website, snippets or customization. <i>Please client your theme/plugin developer for theme/plugin-related support.</i></p>';
 echo do_shortcode( ' /* your shortcode here */ ' );
 }
   

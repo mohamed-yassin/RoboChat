@@ -17,8 +17,6 @@ function internal_api_talk_to_bot( $data ) {
               $parametars['caption']= $bot_answer['caption'];
               $parametars['filename']='chat-image.jpg';
               
-            //return $sub ; 
-              
               //return pre($parametars) ;
               return whatsapp_send_messege($sub,$parametars,$bot_answer['type']);
             }
@@ -54,8 +52,8 @@ function  active_chatbox_info($slug , $info ){ // @@@
   return  carbon_get_post_meta ( $chatbox , $info ) ; 
 }
 function last_interact_code($sub,$phone,$client_name){
-  $contact            = get_contact_by_phone($phone , $client_name);
-  $last_interact_code = get_post_meta( $contact, last_interact_code_name($sub) , true );
+  $client            = get_client_by_phone($phone , $client_name);
+  $last_interact_code = get_post_meta( $client, last_interact_code_name($sub) , true );
   $explode = explode('_',$last_interact_code);
   if(count($explode) >  2){ // exist
     $time = $explode[0];
@@ -64,11 +62,11 @@ function last_interact_code($sub,$phone,$client_name){
     $def =  $now - $time ;
     if($def > $session_duration ){
       $last_interact_code = zero_level_interact($explode[1]);
-      update_post_meta( $contact , last_interact_code_name($sub) , $last_interact_code );
+      update_post_meta( $client , last_interact_code_name($sub) , $last_interact_code );
     }
   }else {
     $last_interact_code = '' ; 
-    update_post_meta( $contact , last_interact_code_name($sub) , $last_interact_code );
+    update_post_meta( $client , last_interact_code_name($sub) , $last_interact_code );
   }
   return $last_interact_code  ;
 }
@@ -104,25 +102,25 @@ function bot_answer_msg($selected ,  $msg_error = '' ){
     'caption' => $caption,
   ); 
 }
-function update_last_interact_code($contact , $field_name ,$lang =  'df' , $path  = ''){
+function update_last_interact_code($client , $field_name ,$lang =  'df' , $path  = ''){
   $last_interact_code = time()."_".$lang; 
   $last_interact_code = $path != '' ? $last_interact_code."_".$path :  $last_interact_code ; 
-  update_post_meta( $contact , $field_name  , $last_interact_code );
+  update_post_meta( $client , $field_name  , $last_interact_code );
   return $last_interact_code ;
 }
 
 function bot_answer($slug,$msg){ // @@
   $phone        = pure_phone($msg['author']);
   $client_name  = $msg['senderName'] ; 
-  $contact      = get_contact_by_phone($phone , $client_name);
+  $client      = get_client_by_phone($phone , $client_name);
   $field_name   = last_interact_code_name($slug);
   $chatbox      = active_chatbox($slug); 
 
-  $last_interact_code = get_post_meta( $contact, $field_name , true );
+  $last_interact_code = get_post_meta( $client, $field_name , true );
 
   if($last_interact_code ==  ''){ // if no session
     $df_lang = active_chatbox_info($slug , 'defult_language');
-    update_last_interact_code($contact , $field_name , $df_lang );
+    update_last_interact_code($client , $field_name , $df_lang );
 
     $selected = active_chatbox_info($slug , $df_lang )[0] ;
     return bot_answer_msg( $selected ) ;
@@ -137,7 +135,7 @@ function bot_answer($slug,$msg){ // @@
   $session    = active_chatbox_info($slug , 'session_duration' );
 
   if($def >  $session){ // Expired Session 
-    update_last_interact_code($contact , $field_name , $lang );
+    update_last_interact_code($client , $field_name , $lang );
     $selected = active_chatbox_info($slug , $lang )[0] ;
     return bot_answer_msg( $selected ) ;
   }
@@ -152,7 +150,7 @@ function bot_answer($slug,$msg){ // @@
   // their is a bug where the user use the same ar,en,fr 
   foreach ($langs as $language) {
     if( $selected[$language.'_checkbox'] ==  true && strtolower($body) == strtolower($selected[$language.'_slug'])  ){
-      update_last_interact_code($contact , $field_name , $language );
+      update_last_interact_code($client , $field_name , $language );
 
       $selected = active_chatbox_info($slug , $language )[0] ;
       return bot_answer_msg( $selected ) ;
@@ -177,13 +175,13 @@ function bot_answer($slug,$msg){ // @@
     }
     // check for avilability 
     if ($selected_2 !=  false ){
-      update_last_interact_code($contact , $field_name , $lang , $path);
+      update_last_interact_code($client , $field_name , $lang , $path);
       return bot_answer_msg( $selected_2) ;  
     }
   }
 
   if($body == $selected['back_home'] )  { // back home
-    update_last_interact_code($contact , $field_name , $lang );
+    update_last_interact_code($client , $field_name , $lang );
     return bot_answer_msg( $selected ) ;
   }
 
@@ -203,7 +201,7 @@ function bot_answer($slug,$msg){ // @@
       }
     }
     
-    update_last_interact_code($contact , $field_name , $lang ,  $path  );
+    update_last_interact_code($client , $field_name , $lang ,  $path  );
     return bot_answer_msg( $selected ) ;
   }
 

@@ -113,9 +113,9 @@ add_action( 'rest_api_init', function () {
     ) );
 } );
 add_action( 'rest_api_init', function () {
-    register_rest_route( slug.'/v1', '/sendContact', array(
+    register_rest_route( slug.'/v1', '/sendclient', array(
       'methods' => 'POST',
-      'callback' => 'external_api_sendContact',
+      'callback' => 'external_api_sendclient',
     ) );
 } );
 add_action( 'rest_api_init', function () {
